@@ -2,6 +2,7 @@ package com.increff.employee.model;
 
 public class ProductData extends ProductForm {
     private int productId;
+
     private int brandId;
 
     public int getBrandId() {

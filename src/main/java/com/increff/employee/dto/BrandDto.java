@@ -3,6 +3,7 @@ package com.increff.employee.dto;
 import com.increff.employee.model.BrandData;
 //import com.increff.employee.model.ProductData;
 import com.increff.employee.model.BrandForm;
+import com.increff.employee.model.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;
@@ -19,7 +20,9 @@ public class BrandDto {
     @Autowired
     private BrandService service;
 
-    public void add(BrandForm f){
+    public void add(BrandForm f)throws  ApiException{
+        int brandId = getBrandIdFromName(f);
+        System.out.println(brandId);
         BrandPojo p = convert(f);
         service.add(p);
     }
@@ -66,5 +69,22 @@ public class BrandDto {
         d.setId(p.getId());
 //        data.setMessage("Hola !");
         return d;
+    }
+
+    private int getBrandIdFromName(BrandForm f) throws ApiException{
+//        System.out.println(f.getBrandName() + f.getCategoryName());
+        System.out.println(f.getBrand()+f.getCategory());
+
+        BrandPojo p = service.getBrandIdPojo(f.getBrand(),f.getCategory());
+        if(p!=null){
+            throw new ApiException("The brand can't be added as given brand-category already exists !!");
+        }
+        else{
+//            System.out.println("The product can be added, to dikkat kya h");
+//            System.out.println("hello");
+//            System.out.println("Hi");
+            return 0;
+        }
+
     }
 }

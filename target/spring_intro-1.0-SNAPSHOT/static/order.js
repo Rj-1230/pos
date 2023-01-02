@@ -1,62 +1,57 @@
 
-function getProductUrl(){
+function getOrderUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/api/product";
-}
-
-function getBrandUrl(){
-	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/api/brand";
+	return baseUrl + "/api/order";
 }
 
 //BUTTON ACTIONS
-//function addProduct(event){
+function addOrder(event){
+	//Set the values to update
+	var $form = $("#order-form");
+	var json = toJsons($form);
+//	Form converted to JSON format
+    console.log(json);
+
+	var url = getOrderUrl();
+	console.log(url);
+//	url = localhost:9000/pos/api/order
+
+//    AJAX call is done
+	$.ajax({
+	   url: url,
+	   type: 'POST',
+	   data: json,
+	   headers: {
+//	   Header is added mandatorily
+       	'Content-Type': 'application/json'
+       },
+	   success: function(response) {
+	   		console.log("this is response" + response);
+            document.getElementById('logg').innerHTML=response;
+	   		getOrderList();     //...
+	   },
+	   error: function(){
+	   		alert("An error has occurred");
+	   }
+	});
+
+	return false;
+}
+
+//This function is called on clicking of update button in the edit modal form
+//function updateOrder(event){
+//	$('#edit-order-modal').modal('toggle');
+//	//edit-order-model is the id given to the entire block which gets toggled up when we click on Update button
+//
+//	var id = $("#order-edit-form input[name=id]").val();
+//	//edit-order-form is the id given to the form inside the above mentioned block which opens for editing
+////	That order's id (not CSS ID )value is fetched and given to the variable id
+//
+//	var url = getOrderUrl() + "/" + id;
+////	url = = localhost:9000/order/api/order/{id}
+//
 //	//Set the values to update
-//	var $form = $("#product-form");
-//	var json = toJson($form);
-////	Form converted to JSON format
-//
-//	var url = getProductUrl();
-//	console.log("Here");
-////	url = localhost:9000/pos/api/product
-//
-////    AJAX call is done
-//	$.ajax({
-//	   url: url,
-//	   type: 'POST',
-//	   data: json,
-//	   headers: {
-////	   Header is added mandatorily
-//       	'Content-Type': 'application/json'
-//       },
-//	   success: function(response) {
-//	   console.log("this is response" + response);
-//	   document.getElementById('logg').innerHTML=response;
-////	   		console.log("Product created");
-//	   		getProductList();     //...
-//	   },
-//	   error: function(){
-//	   		alert("An error has occurred");
-//	   }
-//	});
-//
-//	return false;
-//}
-//
-////This function is called on clicking of update button in the edit modal form
-//function updateProduct(event){
-//	$('#edit-product-modal').modal('toggle');
-//	//edit-product-model is the id given to the entire block which gets toggled up when we click on Update button
-//
-//	var id = $("#product-edit-form input[name=productId]").val();
-//	//edit-product-form is the id given to the form inside the above mentioned block which opens for editing
-////	That product's id (not CSS ID )value is fetched and given to the variable id
-//
-//	var url = getProductUrl() + "/" + id;
-////	url = = localhost:9000/product/api/product/{id}
-//
-//	//Set the values to update
-//	var $form = $("#product-edit-form");
+//	var $form = $("#order-edit-form");
 //	var json = toJson($form);
 ////    The form is converted to JSON and a PUT request (update) is called and thus details are updated
 //	$.ajax({
@@ -67,8 +62,8 @@ function getBrandUrl(){
 //       	'Content-Type': 'application/json'
 //       },
 //	   success: function(response) {
-//	   		console.log("Product details are updated");
-//	   		getProductList();     //...
+//	   		console.log("Order details are updated");
+//	   		getOrderList();     //...
 //	   },
 //	   error: function(){
 //	   		alert("An error has occurred");
@@ -79,15 +74,15 @@ function getBrandUrl(){
 //}
 
 
-function getProductList(){
-	var url = getProductUrl();
+function getOrderList(){
+	var url = getOrderUrl();
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
-	   		console.log("All products fetched");
+	   		console.log("Order-category data fetched");
 	   		console.log(data);
-	   		displayProductList(data);     //...
+	   		displayOrderList(data);     //...
 	   },
 	   error: function(){
 	   		alert("An error has occurred");
@@ -95,34 +90,15 @@ function getProductList(){
 	});
 }
 
-function getBrandsList(){
-	var url = getBrandUrl();
-	$.ajax({
-	   url: url,
-	   type: 'GET',
-	   success: function(data) {
-	   		console.log("All brands fetched");
-	   		console.log(data);
-	   		displayBrandsList(data);     //...
-	   },
-	   error: function(){
-	   		alert("An error has occurred");
-	   }
-	});
-}
-
-
-
-
-//function deleteProduct(id){
-//	var url = getProductUrl() + "/" + id;
+//function deleteOrder(id){
+//	var url = getOrderUrl() + "/" + id;
 //
 //	$.ajax({
 //	   url: url,
 //	   type: 'DELETE',
 //	   success: function(data) {
-//	   		console.log("product deleted");
-//	   		getProductList();     //...
+//	   		console.log("order deleted");
+//	   		getOrderList();     //...
 //	   },
 //	   error: function(){
 //	   		alert("An error has occurred");
@@ -132,21 +108,20 @@ function getBrandsList(){
 
 ////UI DISPLAY METHODS
 
-//All the products are listed with the delete and edit button having event handlers upon click
-function displayProductList(data){
-	console.log('Printing product data');
-	var $tbody = $('#product-table').find('tbody');
+//All the orders are listed with the delete and edit button having event handlers upon click
+function displayOrderList(data){
+	console.log('Printing order-category data');
+	var $tbody = $('#order-table').find('tbody');
 	$tbody.empty();
+//	ello
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditProduct(' + e.productId + ')">Edit</button>'
-		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteProduct(' + e.productId+ ')">Delete</button>'
+		console.log(e.orderId)
+		var buttonHtml ='<button class="btn btn-warning"> <a href="orderItem/'+e.orderId+'" class="link link-dark">Edit</a></button>'
 		var row = '<tr>'
-		+ '<td>' + e.productId + '</td>'
-		+ '<td>' + e.barcode + '</td>'
-		+ '<td>'  + e.brandId + '</td>'
-		+ '<td>'  + e.name + '</td>'
-		+ '<td>'  + e.mrp + '</td>'
+		+ '<td>' + e.orderId + '</td>'
+		+ '<td>' + e.customerName + '</td>'
+		+ '<td>' + e.orderTime + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
@@ -154,53 +129,36 @@ function displayProductList(data){
 }
 
 
-function displayBrandsList(data){
-	console.log('Printing brand data');
-	var newOptions = {"Option 1": "value1",
-      "Option 2": "value2",
-      "Option 3": "value3"
-    };
-	var $el = $("#inputBrand");
-    $el.empty(); // remove old options
-    $.each(newOptions, function(key,value) {
-      $el.append($("<option></option>")
-         .attr("value", value).text(key));
-    });
-}
-
-
 //As the edit button is clicked in the table , its id is passed to this method and the method is called
-//function displayEditProduct(id){
-//	var url = getProductUrl() + "/" + id;
+//function displayEditorder(id){
+//	var url = getOrderUrl() + "/" + id;
 //	$.ajax({
 //	   url: url,
 //	   type: 'GET',
 //	   success: function(data) {
-//	   		console.log("Product data is fetched");
+//	   		console.log("Order data is fetched");
 //	   		console.log(data);
 ////	   		Till here it was a normal GET reuqest
-////            Now the function displayProduct is called
-////        This will edit the product's data and feed into the table
-//	   		displayProduct(data);     //...
+////            Now the function displayOrder is called
+////        This will edit the order's data and feed into the table
+//	   		displayOrder(data);     //...
 //	   },
 //	   error: function(){
 //	   		alert("An error has occurred");
 //	   }
 //	});
 //}
-//
-//function displayProduct(data){
-//	$("#product-edit-form input[name=barcode]").val(data.barcode);
-//	$("#product-edit-form input[name=brandId]").val(data.brandId);
-//	$("#product-edit-form input[name=name]").val(data.name);
-//	$("#product-edit-form input[name=mrp]").val(data.mrp);
-//	$("#product-edit-form input[name=productId]").val(data.productId);
-//	$('#edit-product-modal').modal('toggle');
+
+//function displayOrder(data){
+//	$("#order-edit-form input[name=order]").val(data.order);
+//	$("#order-edit-form input[name=category]").val(data.category);
+//	$("#order-edit-form input[name=id]").val(data.id);
+//	$('#edit-order-modal').modal('toggle');
 //}
 
 
 //    HELPER METHOD
-    function toJson($form){
+    function toJsons($form){
         var serialized = $form.serializeArray();
         console.log(serialized);
         var s = '';
@@ -216,13 +174,11 @@ function displayBrandsList(data){
 
 //INITIALIZATION CODE
 function init(){
-//	$('#add-product').click(addProduct);
+	$('#add-order').click(addOrder);
 
-////	On clicking the button update, updateproduct is called
-//	$('#update-product').click(updateProduct);
-	$('#refresh-data').click(getProductList);
+//	On clicking the button update, updateorder is called
+	$('#refresh-data').click(getOrderList);
 }
 
 $(document).ready(init);
-$(document).ready(getProductList);
-$(document).ready(getBrandsList);
+$(document).ready(getOrderList);

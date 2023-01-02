@@ -4,11 +4,47 @@ function getProductUrl(){
 	return baseUrl + "/api/product";
 }
 
+function getBrandUrl(){
+	var baseUrl = $("meta[name=baseUrl]").attr("content")
+	return baseUrl + "/api/brand";
+}
+
+ function getBrandOption() {
+        selectElement = document.querySelector('#inputBrand');
+        output = selectElement.options[selectElement.selectedIndex].value;
+        return output;
+//        document.querySelector('.output').textContent = output;
+    }
+
+     function getCategoryOption() {
+            selectElement = document.querySelector('#inputCategory');
+            output = selectElement.options[selectElement.selectedIndex].value;
+            return output
+    //        document.querySelector('.output').textContent = output;
+        }
 //BUTTON ACTIONS
 function addProduct(event){
+console.log("Hello bro");
+//   var a =  getBrandOption();
+//   console.log(a);
+   var b = getCategoryOption();
+   console.log(b);
+
+console.log("Hello bro");
+
 	//Set the values to update
 	var $form = $("#product-form");
 	var json = toJson($form);
+	console.log(typeof(json))
+//	Object.assign(json,{'brandName':a});
+//Object.assign(json,{'categoryName':b});
+json = json.substr(0,json.length-1);
+json+=`,"brandName":"${ getBrandOption()}","categoryName":"${ getCategoryOption()}"}`;
+console.log("Hello sisss");
+
+console.log(json);
+console.log("Hello siss");
+
 //	Form converted to JSON format
 
 	var url = getProductUrl();
@@ -90,6 +126,25 @@ function getProductList(){
 	});
 }
 
+function getBrandsList(){
+	var url = getBrandUrl();
+	$.ajax({
+	   url: url,
+	   type: 'GET',
+	   success: function(data) {
+	   		console.log("All brands fetched");
+	   		console.log(data);
+	   		displayBrandsList(data);     //...
+	   },
+	   error: function(){
+	   		alert("An error has occurred");
+	   }
+	});
+}
+
+
+
+
 function deleteProduct(id){
 	var url = getProductUrl() + "/" + id;
 
@@ -116,7 +171,7 @@ function displayProductList(data){
 	for(var i in data){
 		var e = data[i];
 		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditProduct(' + e.productId + ')">Edit</button>'
-		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteProduct(' + e.productId+ ')">Delete</button>'
+		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteProduct(' + e.productId+ ')" disabled>Delete</button>'
 		var row = '<tr>'
 		+ '<td>' + e.productId + '</td>'
 		+ '<td>' + e.barcode + '</td>'
@@ -127,6 +182,48 @@ function displayProductList(data){
 		+ '</tr>';
         $tbody.append(row);
 	}
+}
+
+
+function displayBrandsList(data){
+    getBrandOption();
+    console.log(typeof(data))
+	console.log(data);
+	var i=1;
+//	var a = data[i].brand;
+	console.log(a)
+//	var obj =
+//	for(var i in data){
+//	}
+
+
+	var newBrands = {
+    };
+    var newCategs = {
+        };
+    for(var i in data){
+    var a=data[i].brand;
+    var b = data[i].category;
+    Object.assign(newBrands,{[a]:a})
+    Object.assign(newCategs,{[b]:b})
+    }
+
+    console.log(newBrands);
+
+	var $elB = $("#inputBrand");
+	var $elC = $("#inputCategory");
+
+    $elB.empty(); // remove old options
+    $.each(newBrands, function(key,value) {
+      $elB.append($("<option></option>")
+         .attr("value", value).text(key));
+    });
+
+    $elC.empty(); // remove old options
+        $.each(newCategs, function(key,value) {
+          $elC.append($("<option></option>")
+             .attr("value", value).text(key));
+        });
 }
 
 
@@ -169,6 +266,8 @@ function displayProduct(data){
         for(s in serialized){
             data[serialized[s]['name']] = serialized[s]['value']
         }
+
+        console.log(data);
         var json = JSON.stringify(data);
         console.log(json);
         return json;
@@ -186,3 +285,4 @@ function init(){
 
 $(document).ready(init);
 $(document).ready(getProductList);
+$(document).ready(getBrandsList);

@@ -3,6 +3,10 @@ html {
 	min-height: 100%;
 }
 
+.link{
+style-decoration:none;
+}
+
 .demo-wrap {
   overflow: hidden;
   position: relative;

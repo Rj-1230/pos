@@ -3,47 +3,59 @@
 <html lang="en">
 
 <head th:replace="snippets.html :: name_head"></head>
-
+<title> Inventory </title>
 <body>
 
 <nav th:replace="snippets.html :: name_navbar"></nav>
 
 <div class="container">
     <br>
-    <br>
-
-    <h3>Inventory </h3>
-
     <!-- Top row with form-->
-    <div class="row">
+    <!--  <card>-->
+    <div class="row card mx-auto" style="width: 40rem;">
+        <div class="space">
+            <!--      Blank row-->
+        </div>
+        <h3 class="text-center">Inventory</h3>
         <div class="col-12">
-            <form class="form-inline" id="inventory-form">
+            <form id="inventory-form">
                 <div class="form-group">
-                    <label for="inputInventory" class="col-sm-2 col-form-label">Product ID</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="productId" id="inputInventory" placeholder="Enter Product ID">
-                    </div>
+                    <label for="inputProdID">Product Id </label>
+                    <input type="text" class="form-control" name="productId" id="inputProdID" placeholder="Enter product ID">
                 </div>
                 <div class="form-group">
-                    <label for="inputCategory" class="col-sm-2 col-form-label">Quantity</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="quantity" id="inputCategory" placeholder="Enter quantity">
-                    </div>
+                    <label for="inputQuantity">Quantity</label>
+                    <input type="text" class="form-control" name="quantity" id="inputQuantity" placeholder="Enter product's quantity">
                 </div>
-                <button type="button" class="btn btn-primary" id="add-inventory">Add</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-success" id="refresh-data">Refresh</button>
-                &nbsp;
-                <button type="button" class="btn btn-link" id="upload-data" style="margin-left:100px">Upload</button>
+                <div class="half-space">
+                    <!--      Blank row -->
+                </div>
+
+                <button type="button" class="btn btn-primary" id="add-inventory" style="margin-left:20px">Add</button>
+
+                <button type="button" class="btn btn-success" id="refresh-data" style="margin-left:20px">Refresh</button>
+                <button type="button" class="btn btn-link" id="upload-data" style="margin-left:40px">Upload</button>
             </form>
+
+        </div>
+
+        <div class="space">
+            <!--      Blank row -->
         </div>
     </div>
-
-
-    <!-- Blank Row -->
+    <div class="half-space">
+        <!--      Blank row-->
+    </div>
+    <!--  </card>-->
     <div class="row text-danger" id="logg">
 
     </div>
+    <div class="space">
+        <!--      Blank row-->
+    </div>
+
+    <!-- Blank Row -->
+
     <div class="row">
 
         <!-- Table -->
@@ -59,12 +71,14 @@
                 <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Nestle</td>
+                    <td>barcode001</td>
+                    <td>120</td>
                     <td>Edit | Delete</td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Dabur</td>
+                    <td>barcode002</td>
+                    <td>250</td>
                     <td>Edit | Delete</td>
                 </tr>
                 </tbody>
@@ -73,75 +87,76 @@
         </div>
     </div>
 
-    <!-- Employee Edit Modal -->
-    <div class="modal" tabindex="-1" role="dialog" id="edit-inventory-modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Inventory or its category </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline" id="inventory-edit-form">
-                        <div class="form-group">
-                            <label for="inputInventory" class="col-sm-2 col-form-label">Inventory</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="inventory" placeholder="Enter inventory name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="category" placeholder="Enter inventory's category">
-                            </div>
-                        </div>
-                        <input type="hidden" name="id" >
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="update-inventory">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    &lt;!&ndash; Brand Edit Modal &ndash;&gt;-->
+<!--    <div class="modal" tabindex="-1" role="dialog" id="edit-brand-modal">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title">Edit Brand or its category </h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
 
-    <!--  For upload button-->
+<!--                    <form class="form-inline" id="brand-edit-form">-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="inputProdID" class="col-sm-2 col-form-label">Product Id </label>-->
+<!--                            <div class="col-sm-10">-->
+<!--                                <input type="text" class="form-control" name="brand" placeholder="Enter brand name">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>-->
+<!--                            <div class="col-sm-10">-->
+<!--                                <input type="text" class="form-control" name="category" placeholder="Enter brand's category">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <input type="hidden" name="id" >-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
+<!--                    <button type="button" class="btn btn-primary" id="update-brand">Update</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <!--  &lt;!&ndash; Employee Edit Modal &ndash;&gt;-->
-    <!--  <div class="modal" tabindex="-1" role="dialog" id="upload-employee-modal">-->
-    <!--    <div class="modal-dialog" role="document">-->
-    <!--      <div class="modal-content">-->
+<!--    &lt;!&ndash;  For upload button&ndash;&gt;-->
 
-    <!--        <div class="modal-header">-->
-    <!--          <h5 class="modal-title">Upload Employee</h5>-->
-    <!--          <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-    <!--            <span aria-hidden="true">&times;</span>-->
-    <!--          </button>-->
-    <!--        </div>-->
+<!--    &lt;!&ndash; Brand Edit Modal &ndash;&gt;-->
+<!--    <div class="modal" tabindex="-1" role="dialog" id="upload-brand-modal">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
 
-    <!--        <div class="modal-body">-->
-    <!--          <div class="employee-file">-->
-    <!--            <input type="file" class="custom-file-input" id="employeeFile">-->
-    <!--            <label class="custom-file-label" for="employeeFile" id="employeeFileName">Choose file</label>-->
-    <!--          </div>-->
-    <!--          <a th:href="@{/sample/employee.tsv}" target="_blank">Download Sample</a>-->
-    <!--          <br>-->
-    <!--          Rows: <span id="rowCount">0</span>,-->
-    <!--          Processed: <span id="processCount">0</span>,-->
-    <!--          Errors: <span id="errorCount">0</span>-->
-    <!--        </div>-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title">Upload Brand</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
 
-    <!--        <div class="modal-footer">-->
-    <!--          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
-    <!--          <button type="button" class="btn btn-primary" id="process-data">Upload</button>-->
-    <!--          <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--  </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="brand-file">-->
+<!--                        <input type="file" class="custom-file-input" id="brandFile">-->
+<!--                        <label class="custom-file-label" for="brandFile" id="brandFileName">Choose file</label>-->
+<!--                    </div>-->
+<!--                    <a th:href="@{/sample/brand.tsv}" target="_blank">Download Sample</a>-->
+<!--                    <br>-->
+<!--                    Rows: <span id="rowCount">0</span>,-->
+<!--                    Processed: <span id="processCount">0</span>,-->
+<!--                    Errors: <span id="errorCount">0</span>-->
+<!--                </div>-->
+
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
+<!--                    <button type="button" class="btn btn-primary" id="process-data">Upload</button>-->
+<!--                    <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
 </div> <!-- Container end-->
 

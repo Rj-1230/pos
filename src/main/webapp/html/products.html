@@ -12,7 +12,7 @@
     <br>
     <br>
 
-<!--    <h3>Products </h3>-->
+    <!--    <h3>Products </h3>-->
 
     <!-- Top row with form-->
     <div class="row card mx-auto" style="width: 40rem;">
@@ -29,19 +29,26 @@
                 </div>
                 <div class="form-group">
                     <label for="inputBrand" >Brand name </label>
-                    <input type="text" class="form-control" name="brandName" id="inputBrand" placeholder="Enter brand name of product">
+                    <select class="form-control" id="inputBrand" name="brandName">
+                        <option>Brand A</option>
+                        <option>Brand B</option>
+
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="inputCategory" >Category</label>
-                    <input type="text" class="form-control" name="categoryName" id="inputCategory" placeholder="Enter category of product">
+                    <select class="form-control" id="inputCategory" name="categoryName">
+                        <option>Category A</option>
+                        <option>Category B</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="inputProduct">Product</label>
-                        <input type="text" class="form-control" name="name" id="inputProduct" placeholder="Enter product name">
+                    <input type="text" class="form-control" name="name" id="inputProduct" placeholder="Enter product name">
                 </div>
                 <div class="form-group">
                     <label for="inputMrp">MRP</label>
-                        <input type="text" class="form-control" name="mrp" id="inputMrp" placeholder="Enter product's MRP">
+                    <input type="text" class="form-control" name="mrp" id="inputMrp" placeholder="Enter product's MRP">
 
                 </div>
                 <div class="half-space">
@@ -128,13 +135,13 @@
                         <div class="form-group">
                             <label for="inputBrand" class="col-sm-2 col-form-label">Brand name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="brand" placeholder="Enter brand name">
+                                <input type="text" class="form-control" name="brandName" placeholder="Enter brand name">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputCategory" class="col-sm-2 col-form-label">Brand name</label>
+                            <label for="inputCategory" class="col-sm-2 col-form-label">Category name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="category" placeholder="Enter category name">
+                                <input type="text" class="form-control" name="categoryName" placeholder="Enter category name">
                             </div>
                         </div>
                         <div class="form-group">

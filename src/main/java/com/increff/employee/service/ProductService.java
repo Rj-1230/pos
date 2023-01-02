@@ -87,4 +87,15 @@ public class ProductService {
         p.setBarcode(p.getBarcode().toLowerCase().trim());
         p.setName(p.getName().toLowerCase().trim());
     }
+
+    public ProductPojo getProductIdFromBarcode(String barcode)throws ApiException{
+        try{
+            ProductPojo p = dao.getPojo(barcode);
+            return p;
+        }
+        catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
 }

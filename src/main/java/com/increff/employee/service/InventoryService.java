@@ -27,11 +27,13 @@ public class InventoryService {
         ProductPojo a = serviceP.get(p.getProductId());
         InventoryPojo b = get(p.getProductId());
         if(a==null) {
+//            is given product ID se koi Product POjo ni h
             System.out.println("hello3");
             throw new ApiException("The product with given Product Id does not exists !!");
         }
         else if(b!=null){
-            throw new ApiException("This product already exists in the inventory !!");
+//            iska mtlb b non null hai and product already h inventory m
+            throw new ApiException("This product already exists in the inventory !! You can edit its quantity if u wish");
         }
         else{
             System.out.println("hello5");

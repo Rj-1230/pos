@@ -20,6 +20,7 @@ public class InventoryDto {
     private InventoryService service;
 
     public void add(InventoryForm f) throws ApiException {
+
         InventoryPojo p = convert(f);
         service.add(p);
     }

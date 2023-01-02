@@ -24,9 +24,19 @@ public class BrandController {
 
     @ApiOperation(value="Adding a brand")
     @RequestMapping(path="/api/brand", method = RequestMethod.POST)
-    public void add(@RequestBody BrandForm f){
+    public String add(@RequestBody BrandForm f) throws ApiException{
 //        BrandPojo p = convert(BrandForm);
-        dto.add(f);
+        String message = "Brand-category added successfully";
+        try {
+            dto.add(f);
+        }
+        catch (Exception e)
+        {
+            System.out.println("This is exception message : " + e);
+            message = e.getMessage();
+        }
+        System.out.println(message);
+        return message;
     }
 
     @ApiOperation(value="Deleting a brand")

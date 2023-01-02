@@ -51,7 +51,7 @@ public class BrandDao {
 //        removed the auto incrementing of ID manually
 //        em.persist(p);
         try{
-//            System.out.println(brandName + categoryName);
+            System.out.println(brandName + categoryName);
             TypedQuery<BrandPojo> query = em.createQuery(select_pojo, BrandPojo.class);
             query.setParameter("brand", brandName);
             query.setParameter("category", categoryName);

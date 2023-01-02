@@ -2,6 +2,7 @@ package com.increff.employee.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,10 +42,27 @@ public class UIController {
     public ModelAndView orders() {
         return mav("orders.html");
     }
+
+    @RequestMapping(value = "/ui/orderItems")
+    public ModelAndView orderItem() {
+        return mav("orderItems.html");
+    }
+
+    @RequestMapping(value = "/ui/orderItem/{id}")
+    public ModelAndView orderItem(@PathVariable int id) {
+        return mav("orderItem.html", id);
+    }
     private ModelAndView mav(String page) {
         ModelAndView mav = new ModelAndView(page);
-        int a=10;
-        mav.addObject("info", new InfoData(a));
+        mav.addObject("info", new InfoData());
+        mav.addObject("baseUrl", baseUrl);
+        return mav;
+    }
+
+    private ModelAndView mav(String page, int id) {
+        ModelAndView mav = new ModelAndView(page);
+        mav.addObject("info", new InfoData());
+        mav.addObject("orderId", id);
         mav.addObject("baseUrl", baseUrl);
         return mav;
     }

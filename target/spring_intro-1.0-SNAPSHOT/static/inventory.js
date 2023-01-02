@@ -113,10 +113,11 @@ function displayInventoryList(data){
 	console.log('Printing inventory-category data');
 	var $tbody = $('#inventory-table').find('tbody');
 	$tbody.empty();
+//	ello
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditinventory(' + e.id + ')">Edit</button>'
-		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteInventory(' + e.id + ')">Delete</button>'
+		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditinventory(' + e.productId + ')" >Edit</button>'
+		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteInventory(' + e.productId + ')" disabled>Delete</button>'
 		var row = '<tr>'
 		+ '<td>' + e.productId + '</td>'
 		+ '<td>' + e.quantity + '</td>'

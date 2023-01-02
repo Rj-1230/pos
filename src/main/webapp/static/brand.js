@@ -24,7 +24,8 @@ function addBrand(event){
        	'Content-Type': 'application/json'
        },
 	   success: function(response) {
-	   		console.log("Brand-category created");
+	   		console.log("This is my response" + response);
+	   		document.getElementById('logger').innerHTML=response;
 	   		getBrandList();     //...
 	   },
 	   error: function(){
@@ -113,7 +114,7 @@ function displayBrandList(data){
 	for(var i in data){
 		var e = data[i];
 		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditbrand(' + e.id + ')">Edit</button>'
-		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteBrand(' + e.id + ')">Delete</button>'
+		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteBrand(' + e.id + ')" disabled>Delete</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.brand + '</td>'

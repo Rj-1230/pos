@@ -2,6 +2,15 @@ package com.increff.employee.model;
 
 public class InventoryData {
     private int productId;
+//    private String barcode;
+//
+//    public String getBarcode() {
+//        return barcode;
+//    }
+//
+//    public void setBarcode(String barcode) {
+//        this.barcode = barcode;
+//    }
     private int quantity;
 
 
