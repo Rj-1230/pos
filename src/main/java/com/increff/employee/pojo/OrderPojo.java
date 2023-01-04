@@ -1,17 +1,20 @@
 package com.increff.employee.pojo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 //import java.time.String;
 
 @Entity
+@Table(name="orders")
+//Order is a reserved keyword so use diff table name
 public class OrderPojo {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_generator")
+    @SequenceGenerator(name="order_generator", sequenceName = "order_seq", allocationSize=1,initialValue = 101)
+    @Column(name="MyOrderID", nullable=false, length=512)
     private int orderId;
 
+    @Column(name="CustomerName", nullable=false, length=512)
     private String customerName;
 
     public String getCustomerName() {

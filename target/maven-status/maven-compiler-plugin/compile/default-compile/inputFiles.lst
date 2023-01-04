@@ -8,6 +8,7 @@ C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\emplo
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\spring\DbConfig.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\service\OrderItemService.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\model\InventoryForm.java
+C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\model\ProductUpdateForm.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\pojo\OrderItemPojo.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\spring\SpringConfig.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\dto\InventoryDto.java
@@ -20,6 +21,7 @@ C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\emplo
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\service\ProductService.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\model\AboutAppData.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\service\BrandService.java
+C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\model\CustomerNameForm.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\dto\OrderItemDto.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\dao\ProductDao.java
 C:\Users\Aashish\IdeaProjects\spring_testing_pos\src\main\java\com\increff\employee\model\BrandForm.java

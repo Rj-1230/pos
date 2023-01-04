@@ -117,7 +117,7 @@ function displayOrderList(data){
 	for(var i in data){
 		var e = data[i];
 		console.log(e.orderId)
-		var buttonHtml ='<button class="btn btn-warning"> <a href="orderItem/'+e.orderId+'" class="link link-dark">Edit</a></button>'
+		var buttonHtml ='<button class="btn btn-dark" > <a href="orderItem/'+e.orderId+'" style="text-decoration:none; color:white;">Edit Order</a></button>'
 		var row = '<tr>'
 		+ '<td>' + e.orderId + '</td>'
 		+ '<td>' + e.customerName + '</td>'

@@ -22,7 +22,8 @@ public class OrderService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(OrderPojo p) throws ApiException {
-//        normalize(p);
+
+        normalize(p);
             System.out.println("hello5");
             dao.insert(p);
     }
@@ -63,6 +64,6 @@ public class OrderService {
 
     protected static void normalize(OrderPojo p) {
 //        p.setBarcode(p.getBarcode().toLowerCase().trim());
-
+    p.setCustomerName(p.getCustomerName().toLowerCase().trim());
     }
 }

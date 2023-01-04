@@ -1,10 +1,13 @@
 package com.increff.employee.dto;
 
+import com.increff.employee.model.OrderForm;
 import com.increff.employee.model.OrderItemData;
 import com.increff.employee.model.OrderItemForm;
 import com.increff.employee.pojo.OrderItemPojo;
+import com.increff.employee.pojo.OrderPojo;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
+import com.increff.employee.service.InventoryService;
 import com.increff.employee.service.OrderItemService;
 import com.increff.employee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ import java.util.List;
 
 public class OrderItemDto {
     @Autowired
+    private InventoryService serviceI;
+    @Autowired
     private OrderItemService service;
     @Autowired
     private ProductService serviceP;
@@ -29,7 +34,8 @@ public class OrderItemDto {
         OrderItemPojo o = convert(f);
         o.setSellingPrice(p.getMrp());
         o.setProductId(p.getProductId());
-        System.out.println("a");
+        serviceI.subFromInventory(p.getProductId(),o.getQuantity());
+//        System.out.println("a");
         service.add(o);
     }
 
@@ -48,6 +54,11 @@ public class OrderItemDto {
         ProductPojo p  = getProductIdFromBarcode(f);
         o.setProductId(p.getProductId());
         o.setSellingPrice(p.getMrp());
+        service.update(id,o);
+        //before returning , we need to convert our OrderItemPojo type data into OrderItemData format
+    }
+    public void update(@PathVariable int id, @RequestBody OrderForm f) throws ApiException {
+        OrderPojo o = convert(f);
         service.update(id,o);
         //before returning , we need to convert our OrderItemPojo type data into OrderItemData format
     }
@@ -88,6 +99,13 @@ public class OrderItemDto {
         OrderItemPojo p = new OrderItemPojo();
         p.setOrderId(f.getOrderId());
         p.setQuantity(f.getQuantity());
+        return p;
+    }
+
+    private static OrderPojo convert(OrderForm f){
+        //The convert method will convert JSON format data received into OrderItemPojo format
+        OrderPojo p = new OrderPojo();
+        p.setCustomerName(f.getCustomerName());
         return p;
     }
 

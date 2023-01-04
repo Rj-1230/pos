@@ -1,4 +1,5 @@
 var orderId;
+var customerName;
 function getOrderItemUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/orderItem";
@@ -75,6 +76,7 @@ function addOrderItem(event){
 
 
 function getOrderItemList(){
+//    customerName[0].toUpperCase();
 	var url = getOrderItemUrl() + "s/" + orderId;
 	$.ajax({
 	   url: url,
@@ -110,6 +112,10 @@ function getOrderItemList(){
 
 //All the orderItems are listed with the delete and edit button having event handlers upon click
 function displayOrderItemList(data){
+
+console.log('Printing customer name');
+	console.log(customerName);
+
 
 	console.log('Printing orderItems data');
 	console.log(data);
@@ -181,9 +187,13 @@ function init(){
 	$('#add-orderItem').click(addOrderItem);
 
 	orderId= $("meta[name=orderId]").attr("content");
+	customerName= $("meta[name=customerName]").attr("content");
+	customerName[0].toUpperCase();
 	console.log("Hieee");
 	console.log("Hieee"+orderId);
+	console.log(customerName);
 	document.getElementById('inputOrderId').value=orderId;
+	document.getElementById('inputCustomerName').value=customerName;
 //	On clicking the button update, updateorderItem is called
 	$('#refresh-data').click(getOrderItemList);
 }

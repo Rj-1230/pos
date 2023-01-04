@@ -61,11 +61,32 @@ public class InventoryService {
     }
 
     @Transactional(rollbackOn  = ApiException.class)
-    public void update(int id, InventoryPojo p) throws ApiException {
+    public void addIn(int id, InventoryPojo p) throws ApiException {
         InventoryPojo ex = getCheck(id);
-        ex.setQuantity(p.getQuantity());
+        ex.setQuantity(p.getQuantity()+ex.getQuantity());
         dao.update(p);
     }
+    @Transactional(rollbackOn  = ApiException.class)
+    public void subIn(int id, InventoryPojo p) throws ApiException {
+        InventoryPojo ex = getCheck(id);
+        if(ex.getQuantity()-p.getQuantity() <0){
+            throw new ApiException("The product's quantity can't be removed because there is not sufficient quantity in the inventory");
+        }
+        ex.setQuantity(ex.getQuantity()-p.getQuantity());
+        dao.update(p);
+    }
+
+    @Transactional(rollbackOn  = ApiException.class)
+    public void subFromInventory(int id, int quantity) throws ApiException {
+        InventoryPojo ex = getCheck(id);
+        if(ex.getQuantity()-quantity <0){
+            throw new ApiException("The product can't be added to order as there is not sufficient quantity in the inventory");
+        }
+        ex.setQuantity(ex.getQuantity()-quantity);
+        System.out.println("Done");
+        return;
+    }
+
 
     @Transactional
     public InventoryPojo getCheck(int id) throws ApiException {

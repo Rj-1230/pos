@@ -3,6 +3,7 @@ com\increff\employee\dto\BrandDto.class
 com\increff\employee\model\OrderForm.class
 com\increff\employee\model\ProductForm.class
 com\increff\employee\dto\InventoryDto.class
+com\increff\employee\model\ProductUpdateForm.class
 com\increff\employee\dto\ProductDto.class
 com\increff\employee\controller\OrderController.class
 com\increff\employee\dao\OrderDao.class
@@ -39,6 +40,7 @@ com\increff\employee\spring\SpringConfig.class
 com\increff\employee\model\InfoData.class
 com\increff\employee\dto\OrderDto.class
 com\increff\employee\pojo\OrderItemPojo.class
+com\increff\employee\model\CustomerNameForm.class
 com\increff\employee\spring\DbConfig.class
 com\increff\employee\controller\BrandController.class
 com\increff\employee\model\OrderItemData.class

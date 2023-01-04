@@ -38,13 +38,13 @@ console.log("Hello bro");
 	console.log(typeof(json))
 //	Object.assign(json,{'brandName':a});
 //Object.assign(json,{'categoryName':b});
-json = json.substr(0,json.length-1);
-json+=`,"brandName":"${ getBrandOption()}","categoryName":"${ getCategoryOption()}"}`;
+//json = json.substr(0,json.length-1);
+//json+=`,"brandName":"${ getBrandOption()}","categoryName":"${ getCategoryOption()}"}`;
 console.log("Hello sisss");
 
 console.log(json);
 console.log("Hello siss");
-
+console.log(json);
 //	Form converted to JSON format
 
 	var url = getProductUrl();
@@ -89,6 +89,8 @@ function updateProduct(event){
 	//Set the values to update
 	var $form = $("#product-edit-form");
 	var json = toJson($form);
+	console.log(json);
+
 //    The form is converted to JSON and a PUT request (update) is called and thus details are updated
 	$.ajax({
 	   url: url,
@@ -191,7 +193,6 @@ function displayBrandsList(data){
 	console.log(data);
 	var i=1;
 //	var a = data[i].brand;
-	console.log(a)
 //	var obj =
 //	for(var i in data){
 //	}
@@ -249,7 +250,6 @@ function displayEditProduct(id){
 
 function displayProduct(data){
 	$("#product-edit-form input[name=barcode]").val(data.barcode);
-	$("#product-edit-form input[name=brandId]").val(data.brandId);
 	$("#product-edit-form input[name=name]").val(data.name);
 	$("#product-edit-form input[name=mrp]").val(data.mrp);
 	$("#product-edit-form input[name=productId]").val(data.productId);
@@ -274,6 +274,108 @@ function displayProduct(data){
     }
 
 
+
+
+// FILE UPLOAD METHODS
+var fileData = [];
+var errorData = [];
+var processCount = 0;
+
+
+function processData(){
+	var file = $('#productFile')[0].files[0];
+	readFileData(file, readFileDataCallback);
+}
+
+function readFileDataCallback(results){
+	fileData = results.data;
+	uploadRows();
+}
+
+function uploadRows(){
+	//Update progress
+	updateUploadDialog();
+	//If everything processed then return
+	if(processCount==fileData.length){
+		return;
+	}
+
+	//Process next row
+	var row = fileData[processCount];
+	processCount++;
+
+	var json = JSON.stringify(row);
+	console.log(json);
+
+//	json = json.substr(0,json.length-1);
+//    json+=`,"brandName":"${ getBrandOption()}","categoryName":"${ getCategoryOption()}"}`;
+//    console.log("Hello sisss");
+
+	console.log(json);
+	var url = getProductUrl();
+
+	//Make ajax call
+	$.ajax({
+	   url: url,
+	   type: 'POST',
+	   data: json,
+	   headers: {
+       	'Content-Type': 'application/json'
+       },
+	   success: function(response) {
+	   		uploadRows();
+	   		getProductList();
+	   		console.log("Successssshuaa BROOOOOOOOOOO")
+
+	   },
+	   error: function(response){
+	   		row.error=response.responseText
+	   		errorData.push(row);
+	   		uploadRows();
+	   }
+	});
+
+	console.log("Finallllyy uploaded");
+
+}
+
+function downloadErrors(){
+	writeFileData(errorData);
+}
+
+
+function resetUploadDialog(){
+	//Reset file name
+	var $file = $('#productFile');
+	$file.val('');
+	$('#productFileName').html("Choose File");
+	//Reset various counts
+	processCount = 0;
+	fileData = [];
+	errorData = [];
+	//Update counts
+	updateUploadDialog();
+}
+
+function updateUploadDialog(){
+	$('#rowCount').html("" + fileData.length);
+	$('#processCount').html("" + processCount);
+	$('#errorCount').html("" + errorData.length);
+}
+
+function updateFileName(){
+	var $file = $('#productFile');
+	var fileName = $file.val();
+	$('#productFileName').html(fileName);
+}
+
+function displayUploadData(){
+ 	resetUploadDialog();
+	$('#upload-product-modal').modal('toggle');
+}
+
+
+
 //INITIALIZATION CODE
 function init(){
 	$('#add-product').click(addProduct);
@@ -281,6 +383,11 @@ function init(){
 ////	On clicking the button update, updateproduct is called
 	$('#update-product').click(updateProduct);
 	$('#refresh-data').click(getProductList);
+
+	$('#upload-data').click(displayUploadData);
+        	$('#process-data').click(processData);
+        	$('#download-errors').click(downloadErrors);
+            $('#productFile').on('change', updateFileName)
 }
 
 $(document).ready(init);

@@ -98,4 +98,15 @@ public class ProductService {
             return null;
         }
     }
+
+    public ProductPojo getBrandIdFromProductId(int id)throws ApiException{
+        try{
+            ProductPojo p = dao.getPojo(id);
+            return p;
+        }
+        catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
 }

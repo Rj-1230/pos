@@ -55,10 +55,17 @@ public class InventoryController {
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }
 
-    @ApiOperation(value="Updating details of a particular product in the inventory")
-    @RequestMapping(path="/api/inventory/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
-        dto.update(id,f);
+    @ApiOperation(value="Adding items of a particular product in the inventory")
+    @RequestMapping(path="/api/inventoryAdd/{id}", method = RequestMethod.PUT)
+    public void addToInventory(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+        dto.addIn(id,f);
+        //before returning , we need to convert our InventoryPojo type data into InventoryData format
+    }
+
+    @ApiOperation(value="Removing items of a particular product in the inventory")
+    @RequestMapping(path="/api/inventorySub/{id}", method = RequestMethod.PUT)
+    public void removeFromInventory(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+        dto.subIn(id,f);
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }
 

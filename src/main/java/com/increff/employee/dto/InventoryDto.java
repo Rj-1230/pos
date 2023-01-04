@@ -35,12 +35,17 @@ public class InventoryDto {
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }
 
-    public void update(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+    public void addIn(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
         InventoryPojo p = convert(f);
-        service.update(id,p);
+        service.addIn(id,p);
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }
 
+    public void subIn(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+        InventoryPojo p = convert(f);
+        service.subIn(id,p);
+        //before returning , we need to convert our InventoryPojo type data into InventoryData format
+    }
     public List<InventoryData> getAll(){
         List<InventoryPojo> list = service.getAll();
         List<InventoryData> list2 = new ArrayList<InventoryData>();

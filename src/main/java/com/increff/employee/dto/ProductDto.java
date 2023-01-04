@@ -4,6 +4,7 @@ import com.google.protobuf.Api;
 import com.increff.employee.model.ProductData;
 import com.increff.employee.model.ProductForm;
 import com.increff.employee.model.ProductForm;
+import com.increff.employee.model.ProductUpdateForm;
 import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
@@ -44,9 +45,14 @@ public class ProductDto {
         //before returning , we need to convert our ProductPojo type data into ProductData format
     }
 
-    public void update(@PathVariable int id, @RequestBody ProductForm f) throws ApiException {
-        ProductPojo p = convert(f);
-        int brandId = getBrandIdFromName(f);
+    public void update(@PathVariable int id, @RequestBody ProductUpdateForm f) throws ApiException {
+        ProductPojo p = convertUpdate(f);
+        int brandId = getBrandIdFromProductId(id);
+        System.out.println("Hellooooooooooooo");
+
+        System.out.println(brandId);
+        System.out.println("Hellooooooooooooo");
+
         p.setBrandId(brandId);
         service.update(id,p);
         //before returning , we need to convert our ProductPojo type data into ProductData format
@@ -73,7 +79,26 @@ public class ProductDto {
         return p.getId();
     }
 
+    private int getBrandIdFromProductId(int id) throws ApiException{
+//        System.out.println(f.getBrandName() + f.getCategoryName());
+
+        ProductPojo p = service.getBrandIdFromProductId(id);
+        if(p==null){
+            throw new ApiException("The product can't be updated as no such brand-category exists !!");
+        }
+        return p.getBrandId();
+    }
+
     private static ProductPojo convert(ProductForm f){
+        //The convert method will convert JSON format data received into ProductPojo format
+        ProductPojo p = new ProductPojo();
+        p.setName(f.getName());
+        p.setBarcode(f.getBarcode());
+        p.setMrp(f.getMrp());
+        return p;
+    }
+
+    private static ProductPojo convertUpdate(ProductUpdateForm f){
         //The convert method will convert JSON format data received into ProductPojo format
         ProductPojo p = new ProductPojo();
         p.setName(f.getName());

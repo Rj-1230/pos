@@ -1,5 +1,11 @@
 package com.increff.employee.controller;
 
+import com.increff.employee.dto.OrderDto;
+import com.increff.employee.model.OrderData;
+import com.increff.employee.service.ApiException;
+import io.swagger.annotations.Api;
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +16,9 @@ import com.increff.employee.model.InfoData;
 
 @Controller
 public class UIController {
+
+    @Autowired
+    OrderDto dto;
 
     @Value("${app.baseUrl}")
     private String baseUrl;
@@ -49,8 +58,9 @@ public class UIController {
     }
 
     @RequestMapping(value = "/ui/orderItem/{id}")
-    public ModelAndView orderItem(@PathVariable int id) {
-        return mav("orderItem.html", id);
+    public ModelAndView orderItem(@PathVariable int id) throws ApiException {
+        OrderData data = dto.get(id);
+        return mav("orderItem.html", data);
     }
     private ModelAndView mav(String page) {
         ModelAndView mav = new ModelAndView(page);
@@ -59,10 +69,11 @@ public class UIController {
         return mav;
     }
 
-    private ModelAndView mav(String page, int id) {
+    private ModelAndView mav(String page, OrderData d) {
         ModelAndView mav = new ModelAndView(page);
         mav.addObject("info", new InfoData());
-        mav.addObject("orderId", id);
+        mav.addObject("orderId", d.getOrderId());
+        mav.addObject("customerName", d.getCustomerName());
         mav.addObject("baseUrl", baseUrl);
         return mav;
     }

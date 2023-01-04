@@ -1,6 +1,8 @@
 package com.increff.employee.controller;
 
 import com.increff.employee.dto.OrderItemDto;
+import com.increff.employee.model.OrderData;
+import com.increff.employee.model.OrderForm;
 import com.increff.employee.model.OrderItemData;
 import com.increff.employee.model.OrderItemForm;
 import com.increff.employee.service.ApiException;
@@ -25,7 +27,6 @@ public class OrderItemController {
         String message = "OrderItem added successfully";
         try {
 //            OrderItemPojo p = convert(orderItemForm);
-            System.out.println("barcode from " + f.getBarcode());
             dto.add(f);
         }
         catch (Exception e)
@@ -70,6 +71,13 @@ public class OrderItemController {
     @RequestMapping(path="/api/orderItems/{id}", method = RequestMethod.GET)
     public List<OrderItemData> getAll(@PathVariable int id){
         return dto.getAll(id);
+        //before returning , we need to convert our OrderPojo type data into OrderData format
+    }
+
+    @ApiOperation(value="Editing the customer name of a given order")
+    @RequestMapping(path="/api/orderItems/{id}", method = RequestMethod.PUT)
+    public void updateCustomer(@PathVariable int id, @RequestBody OrderForm f) throws ApiException{
+        dto.update(id, f);
         //before returning , we need to convert our OrderPojo type data into OrderData format
     }
 }

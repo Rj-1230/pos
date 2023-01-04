@@ -87,76 +87,112 @@
         </div>
     </div>
 
-<!--    &lt;!&ndash; Brand Edit Modal &ndash;&gt;-->
-<!--    <div class="modal" tabindex="-1" role="dialog" id="edit-brand-modal">-->
-<!--        <div class="modal-dialog" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title">Edit Brand or its category </h5>-->
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
+    <!-- Inventory Edit Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="edit-inventory-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Inventory </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-<!--                    <form class="form-inline" id="brand-edit-form">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="inputProdID" class="col-sm-2 col-form-label">Product Id </label>-->
-<!--                            <div class="col-sm-10">-->
-<!--                                <input type="text" class="form-control" name="brand" placeholder="Enter brand name">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>-->
-<!--                            <div class="col-sm-10">-->
-<!--                                <input type="text" class="form-control" name="category" placeholder="Enter brand's category">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <input type="hidden" name="id" >-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
-<!--                    <button type="button" class="btn btn-primary" id="update-brand">Update</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+                    <form class="form-inline" id="inventory-edit-form">
+                        <div class="form-group">
+                            <label for="inputProdID" class="col-sm-2 col-form-label">Product Id </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="productId" placeholder="Enter product ID" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputQuantity" class="col-sm-2 col-form-label">No. of items to add </label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="quantity" placeholder="Enter quantity">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" >
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="addInventory">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!--    &lt;!&ndash;  For upload button&ndash;&gt;-->
+    <!-- Inventory Edit (Subtract) Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="sub-inventory-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Inventory </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-<!--    &lt;!&ndash; Brand Edit Modal &ndash;&gt;-->
-<!--    <div class="modal" tabindex="-1" role="dialog" id="upload-brand-modal">-->
-<!--        <div class="modal-dialog" role="document">-->
-<!--            <div class="modal-content">-->
+                    <form class="form-inline" id="sub-edit-form">
+                        <div class="form-group">
+                            <label for="inputProdID" class="col-sm-2 col-form-label">Product Id </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="productId" placeholder="Enter product ID" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputQuantity" class="col-sm-2 col-form-label">No. of items to reduce</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="quantity" placeholder="Enter quantity">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" >
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="subInventory">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title">Upload Brand</h5>-->
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
+    <!--  For upload button-->
 
-<!--                <div class="modal-body">-->
-<!--                    <div class="brand-file">-->
-<!--                        <input type="file" class="custom-file-input" id="brandFile">-->
-<!--                        <label class="custom-file-label" for="brandFile" id="brandFileName">Choose file</label>-->
-<!--                    </div>-->
-<!--                    <a th:href="@{/sample/brand.tsv}" target="_blank">Download Sample</a>-->
-<!--                    <br>-->
-<!--                    Rows: <span id="rowCount">0</span>,-->
-<!--                    Processed: <span id="processCount">0</span>,-->
-<!--                    Errors: <span id="errorCount">0</span>-->
-<!--                </div>-->
+    <!-- Brand Edit Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="upload-inventory-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
-<!--                    <button type="button" class="btn btn-primary" id="process-data">Upload</button>-->
-<!--                    <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload Brand</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="inventory-file">
+                        <input type="file" class="custom-file-input" id="inventoryFile">
+                        <label class="custom-file-label" for="inventoryFile" id="inventoryFileName">Choose file</label>
+                    </div>
+                    <a th:href="@{/sample/inventory.tsv}" target="_blank">Download Sample</a>
+                    <br>
+                    Rows: <span id="rowCount">0</span>,
+                    Processed: <span id="processCount">0</span>,
+                    Errors: <span id="errorCount">0</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="process-data">Upload</button>
+                    <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div> <!-- Container end-->
 

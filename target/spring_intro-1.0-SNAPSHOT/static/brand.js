@@ -209,6 +209,7 @@ function uploadRows(){
        },
 	   success: function(response) {
 	   		uploadRows();
+	   		getBrandList();
 
 	   },
 	   error: function(response){
