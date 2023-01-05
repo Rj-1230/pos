@@ -29,7 +29,7 @@ public class OrderItemService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(OrderItemPojo p) throws ApiException {
-//        System.out.println("b");
+        System.out.println("boololooooo");
             dao.insert(p);
     }
 
@@ -60,7 +60,7 @@ public class OrderItemService {
         OrderItemPojo ex = getCheck(id);
         ex.setOrderId(p.getOrderId());
         ex.setQuantity(p.getQuantity());
-        ex.setProductId(p.getProductId());
+        ex.setProductName(p.getProductName());
         ex.setSellingPrice(p.getSellingPrice());
         dao.update(p);
     }

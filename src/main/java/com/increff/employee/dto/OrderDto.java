@@ -3,11 +3,7 @@ package com.increff.employee.dto;
 import com.increff.employee.model.DateFilterForm;
 import com.increff.employee.model.OrderData;
 import com.increff.employee.model.OrderForm;
-import com.increff.employee.model.OrderItemForm;
-import com.increff.employee.pojo.BrandPojo;
-import com.increff.employee.pojo.OrderItemPojo;
 import com.increff.employee.pojo.OrderPojo;
-import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;
 import com.increff.employee.service.OrderService;
@@ -34,13 +30,14 @@ public class OrderDto {
     @Autowired
     private ProductService serviceP;
 
-    public void add(OrderForm f) throws ApiException {
+    public int add(OrderForm f) throws ApiException {
         OrderPojo o = convert(f);
         o.setOrderCreateTime(getCurrentDateTime());
-        o.setStatus("InCart");
+        o.setStatus("inCart");
         o.setOrderPlaceTime("");
         normalize(o);
-        service.add(o);
+
+        return  service.add(o);
     }
 
     public void delete(@PathVariable int id){
@@ -105,6 +102,7 @@ public class OrderDto {
     private static OrderPojo convert(OrderForm f){
         //The convert method will convert JSON format data received into OrderItemPojo format
         OrderPojo p = new OrderPojo();
+        p.setCustomerPhone(f.getCustomerPhone());
         p.setCustomerName(f.getCustomerName());
         return p;
     }
@@ -116,6 +114,7 @@ public class OrderDto {
         d.setOrderCreateTime(p.getOrderCreateTime());
         d.setOrderPlaceTime(p.getOrderPlaceTime());
         d.setCustomerName(p.getCustomerName());
+        d.setCustomerPhone(p.getCustomerPhone());
 //        System.out.println(getCurrentTime());
 //        data.setMessage("Hola !");
         return d;

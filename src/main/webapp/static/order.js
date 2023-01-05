@@ -121,7 +121,10 @@ function displayOrderList(data){
 		var row = '<tr>'
 		+ '<td>' + e.orderId + '</td>'
 		+ '<td>' + e.customerName + '</td>'
-		+ '<td>' + e.orderTime + '</td>'
+		+ '<td>' + e.customerPhone + '</td>'
+		+ '<td>' + e.orderCreateTime + '</td>'
+		+ '<td>' + e.orderPlaceTime + '</td>'
+		+ '<td>' + e.status + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);

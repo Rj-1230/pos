@@ -24,7 +24,7 @@ public class OrderItemDao {
 
     public void insert(OrderItemPojo p) {
 //        removed the auto incrementing of ID manually
-        System.out.println("c");
+        System.out.println("nskjfeafc");
 
         em.persist(p);
     }

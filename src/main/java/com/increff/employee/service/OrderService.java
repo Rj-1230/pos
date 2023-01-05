@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static com.increff.employee.util.GetCurrentTime.getCurrentDateTime;
+
 @Service
 public class OrderService {
 
@@ -21,8 +23,10 @@ public class OrderService {
 
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(OrderPojo p) throws ApiException {
-            dao.insert(p);
+    public int add(OrderPojo p) throws ApiException {
+        return dao.insert(p);
+
+
     }
 
     @Transactional
@@ -49,6 +53,14 @@ public class OrderService {
         ex.setOrderPlaceTime(p.getOrderPlaceTime());
         ex.setCustomerName(p.getCustomerName());
         dao.update(p);
+    }
+
+    @Transactional(rollbackOn  = ApiException.class)
+    public void updateStatus(int id) throws ApiException {
+//        normalize(p);
+        OrderPojo ex = getCheck(id);
+        ex.setStatus("placed");
+        ex.setOrderPlaceTime(getCurrentDateTime());
     }
 
     @Transactional

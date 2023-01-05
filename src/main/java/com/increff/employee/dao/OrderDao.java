@@ -24,9 +24,11 @@ public class OrderDao {
     @PersistenceContext
     EntityManager em;
 
-    public void insert(OrderPojo p) {
+    public int insert(OrderPojo p) {
 //        removed the auto incrementing of ID manually
         em.persist(p);
+        em.flush();
+        return p.getOrderId();
     }
 
     public OrderPojo getPojo(String barcode) {

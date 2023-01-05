@@ -25,12 +25,14 @@
                 <div class="half-space">
                     <!--      Blank row -->
                 </div>
-                <div class="form-group">
-                    <label for="inputCustomerName">Customer Name : </label>
-                    <input type="text" class="form-control" name="customerName" id="inputCustomerName" placeholder="Enter customer's name">
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="inputCustomerName">Customer Name : </label>-->
+<!--                    <input type="text" class="form-control" name="customerName" id="inputCustomerName" placeholder="Enter customer's name">-->
+<!--                </div>-->
+                <button class="btn btn-dark" > <a href="cart" style="text-decoration:none; color:white;">Add your items to cart</a></button>
 
-                <button type="button" class="btn btn-primary mx-auto text-center" id="add-order">Create a new order now</button><br><br>
+<!--                <button type="button" class="btn btn-primary mx-auto text-center" id="add-order"></button>-->
+                <br><br>
                 <button type="button" class="btn btn-success" id="refresh-data" style="margin-left:20px">Refresh</button>
 <!--                <button type="button" class="btn btn-link" id="upload-data" style="margin-left:40px">Upload</button>-->
             </form>
@@ -63,7 +65,12 @@
                 <tr>
                     <th scope="col">Order ID</th>
                     <th scope="col">Customer Name</th>
-                    <th scope="col">Order Time</th>
+                    <th scope="col">Mobile No</th>
+
+                    <th scope="col">Order Creation Time</th>
+                    <th scope="col">Order Place Time</th>
+                    <th scope="col">Order Status</th>
+
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>

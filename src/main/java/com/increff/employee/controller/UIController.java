@@ -62,6 +62,12 @@ public class UIController {
         OrderData data = dto.get(id);
         return mav("orderItem.html", data);
     }
+
+    @RequestMapping(value = "/ui/cart")
+    public ModelAndView cartItems() {
+        return mav("cart.html");
+    }
+
     private ModelAndView mav(String page) {
         ModelAndView mav = new ModelAndView(page);
         mav.addObject("info", new InfoData());

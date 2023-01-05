@@ -9,7 +9,7 @@ function getOrderItemUrl(){
 function addOrderItem(event){
 	//Set the values to update
 	var $form = $("#orderItem-form");
-	var json = toJsons($form);
+	var json = toJson($form);
 //	Form converted to JSON format
     console.log(json);
 
@@ -129,7 +129,7 @@ console.log('Printing customer name');
 		var row = '<tr>'
 		+ '<td>' + e.orderItemId + '</td>'
 		+ '<td>' + e.orderId + '</td>'
-		+ '<td>' + e.productId + '</td>'
+		+ '<td>' + e.productName + '</td>'
 		+ '<td>' + e.quantity + '</td>'
 		+ '<td>' + e.sellingPrice+ '</td>'
 		+ '<td>' + buttonHtml + '</td>'
@@ -138,6 +138,79 @@ console.log('Printing customer name');
 	}
 }
 
+function updateCustomerName () {
+//	=customerName;
+//    console.log(document.getElementById('inputCustomerName').value);
+    var newName = document.getElementById('inputCustomerName').value;
+    var json={"customerName":newName};
+    console.log(json);
+    json = JSON.stringify(json);
+    console.log(json);
+
+//    var url = getOrderItemUrl();
+	var url = getOrderItemUrl() + "s/" + orderId;
+
+
+    $.ajax({
+    	   url: url,
+    	   type: 'PUT',
+    	   data: json,
+    	   headers: {
+    //	   Header is added mandatorily
+           	'Content-Type': 'application/json'
+           },
+    	   success: function(response) {
+    	   console.log("this is response" + response);
+//    	   document.getElementById('logg').innerHTML=response;
+    //	   		console.log("Product created");
+        //...
+    	   },
+    	   error: function(){
+    	   		alert("An error has occurred");
+    	   }
+    	});
+
+    	return false;
+
+}
+
+
+
+function placeOrder () {
+//	=customerName;
+//    console.log(document.getElementById('inputCustomerName').value);
+    var newName = document.getElementById('inputCustomerName').value;
+    var json={"status":"placed"};
+    console.log(json);
+    json = JSON.stringify(json);
+    console.log(json);
+
+//    var url = getOrderItemUrl();
+	var url = getOrderItemUrl() + "Place/" + orderId;
+
+
+    $.ajax({
+    	   url: url,
+    	   type: 'PUT',
+    	   data: json,
+    	   headers: {
+    //	   Header is added mandatorily
+           	'Content-Type': 'application/json'
+           },
+    	   success: function(response) {
+    	   console.log("this is response" + response);
+//    	   document.getElementById('logg').innerHTML=response;
+    //	   		console.log("Product created");
+        //...
+    	   },
+    	   error: function(){
+    	   		alert("An error has occurred");
+    	   }
+    	});
+
+    	return false;
+
+}
 
 //As the edit button is clicked in the table , its id is passed to this method and the method is called
 //function displayEditorderItem(id){
@@ -168,7 +241,7 @@ console.log('Printing customer name');
 
 
 //    HELPER METHOD
-    function toJsons($form){
+    function toJson($form){
         var serialized = $form.serializeArray();
         console.log(serialized);
         var s = '';
@@ -180,6 +253,7 @@ console.log('Printing customer name');
         console.log(json);
         return json;
     }
+
 
 
 //INITIALIZATION CODE
@@ -194,6 +268,9 @@ function init(){
 	console.log(customerName);
 	document.getElementById('inputOrderId').value=orderId;
 	document.getElementById('inputCustomerName').value=customerName;
+
+	$('#updateCustomerName').click(updateCustomerName)
+	$('#place-order').click(placeOrder)
 //	On clicking the button update, updateorderItem is called
 	$('#refresh-data').click(getOrderItemList);
 }

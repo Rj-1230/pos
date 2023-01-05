@@ -28,6 +28,9 @@ public class OrderPojo {
     @Column(name="OrderStatus",nullable = false)
     private String status;
 
+    @Column(name="CustomerPhone",nullable = false)
+    private String customerPhone;
+
 
 //    hei
 

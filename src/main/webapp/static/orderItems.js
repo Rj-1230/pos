@@ -121,7 +121,7 @@ function displayOrderItemList(data){
 		var row = '<tr>'
 		+ '<td>' + e.orderItemId + '</td>'
 		+ '<td>' + e.orderId + '</td>'
-		+ '<td>' + e.productId + '</td>'
+		+ '<td>' + e.productName + '</td>'
 		+ '<td>' + e.quantity + '</td>'
 		+ '<td>' + e.sellingPrice+ '</td>'
 		+ '<td>' + buttonHtml + '</td>'

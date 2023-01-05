@@ -6,8 +6,8 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="order_Items", uniqueConstraints={@UniqueConstraint(columnNames={"MyOrderID", "ProductID"})})
-
+@Table(name="orderItems")
+//@Table(name="orderItems", uniqueConstraints={@UniqueConstraint(columnNames={"ProductId"})})
 @Getter
 @Setter
 
@@ -15,12 +15,12 @@ public class OrderItemPojo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name="orderItem_generator", sequenceName = "orderItem_seq", allocationSize=1,initialValue = 100001)
-    @Column(name="OrderItemID", nullable=false)
+    @Column(name="OrderItemID")
     private int orderItemId;
-    @Column(name="MyOrderID", nullable=false)
+    @Column(name="OrderID", nullable=false)
     private int orderId;
-    @Column(name="ProductID", nullable=false)
-    private int productId;
+    @Column(name="Product_Name", nullable=false)
+    private String productName;
     @Column(name="ProductQuantity", nullable=false)
     private int quantity;
     @Column(name="SellingPrice", nullable=false)
