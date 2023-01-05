@@ -1,6 +1,7 @@
 package com.increff.employee.dao;
 
 import com.increff.employee.pojo.OrderPojo;
+import com.increff.employee.service.ApiException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,7 @@ public class OrderDao {
 //This is JPQL : Java Persistence Query language
     private static String delete_id = "delete from OrderPojo p where id=:id";
     private static String select_id = "select p from OrderPojo p where id=:id";
+    private static String select_date_filter = "select p from OrderPojo p where placeDateTime>=:id1 and " + "placeDateTime<=:id2";
     private static String select_barcode = "select p from OrderPojo p where barcode=:barcode";
     private static String select_all = "select p from OrderPojo p";
 
@@ -62,6 +64,22 @@ public class OrderDao {
     public void update(OrderPojo p) {
 //        return;
     }
+
+    public List<OrderPojo> selectDateFilter(String start, String end) throws ApiException
+    {
+        try{
+            TypedQuery<OrderPojo> query = getQuery(select_date_filter);
+            query.setParameter("id1", start);
+            query.setParameter("id2", end);
+            return query.getResultList();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            throw new ApiException("cannot select the orders from order table with given dates");
+        }
+    }
+
 
     TypedQuery<OrderPojo> getQuery(String jpql) {
         return em.createQuery(jpql, OrderPojo.class);

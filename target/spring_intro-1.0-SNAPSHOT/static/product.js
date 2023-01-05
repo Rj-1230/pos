@@ -1,4 +1,4 @@
-
+var newBrands = {};
 function getProductUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/product";
@@ -186,45 +186,39 @@ function displayProductList(data){
 	}
 }
 
-
-function displayBrandsList(data){
-    getBrandOption();
-    console.log(typeof(data))
-	console.log(data);
-	var i=1;
-//	var a = data[i].brand;
-//	var obj =
-//	for(var i in data){
-//	}
-
-
-	var newBrands = {
-    };
-    var newCategs = {
-        };
-    for(var i in data){
-    var a=data[i].brand;
-    var b = data[i].category;
-    Object.assign(newBrands,{[a]:a})
-    Object.assign(newCategs,{[b]:b})
+function displayCategoryList()
+{
+    var $elC = $("#inputCategory");
+    $elC.empty();
+    var a = getBrandOption();
+    for(var i=0; i<newBrands[a].length; i++)
+    {
+        $elC.append($("<option></option>")
+            .attr("value", newBrands[a]).text(newBrands[a][i]));
+    }
+}
+function displayBrandsList(data)
+{
+    for(var i in data)
+    {
+        var a = data[i].brand;
+        var b = data[i].category;
+        if(!newBrands.hasOwnProperty(a))
+            Object.assign(newBrands, {[a]:[]});
+        newBrands[a].push(b);
     }
 
     console.log(newBrands);
 
-	var $elB = $("#inputBrand");
-	var $elC = $("#inputCategory");
+    var $elB = $("#inputBrand");
 
-    $elB.empty(); // remove old options
+    $elB.empty();
+
     $.each(newBrands, function(key,value) {
-      $elB.append($("<option></option>")
-         .attr("value", value).text(key));
-    });
-
-    $elC.empty(); // remove old options
-        $.each(newCategs, function(key,value) {
-          $elC.append($("<option></option>")
-             .attr("value", value).text(key));
+          $elB.append($("<option></option>")
+             .attr("value", key).text(key));
         });
+
 }
 
 
@@ -383,7 +377,7 @@ function init(){
 ////	On clicking the button update, updateproduct is called
 	$('#update-product').click(updateProduct);
 	$('#refresh-data').click(getProductList);
-
+$('#inputBrand').change(displayCategoryList);
 	$('#upload-data').click(displayUploadData);
         	$('#process-data').click(processData);
         	$('#download-errors').click(downloadErrors);

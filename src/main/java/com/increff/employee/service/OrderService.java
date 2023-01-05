@@ -22,9 +22,6 @@ public class OrderService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(OrderPojo p) throws ApiException {
-
-        normalize(p);
-            System.out.println("hello5");
             dao.insert(p);
     }
 
@@ -47,6 +44,10 @@ public class OrderService {
     public void update(int id, OrderPojo p) throws ApiException {
         normalize(p);
         OrderPojo ex = getCheck(id);
+        ex.setStatus(p.getStatus());
+        ex.setOrderCreateTime(p.getOrderCreateTime());
+        ex.setOrderPlaceTime(p.getOrderPlaceTime());
+        ex.setCustomerName(p.getCustomerName());
         dao.update(p);
     }
 
@@ -60,6 +61,11 @@ public class OrderService {
             System.out.println(e);
             return null;
         }
+    }
+    @Transactional
+    public List<OrderPojo> selectDateFilter(String start, String end) throws ApiException
+    {
+        return dao.selectDateFilter(start, end);
     }
 
     protected static void normalize(OrderPojo p) {

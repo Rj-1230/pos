@@ -1,55 +1,28 @@
 package com.increff.employee.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="product")
+@Table(name="product", uniqueConstraints={@UniqueConstraint(columnNames={"Barcode", "BrandID","ProductName"})})
+
+@Getter
+@Setter
 public class ProductPojo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="MyProductID", nullable=false)
     private int productId;
+    @Column(name="Barcode", nullable=false)
     private String barcode;
+    @Column(name="BrandID", nullable=false)
     private int brandId;
+    @Column(name="ProductName", nullable=false)
     private String name;
+    @Column(name="Mrp", nullable=false)
     private Double mrp;
 
-    public int getProductId() {
-        return productId;
-    }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public int getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(int brandId) {
-        this.brandId = brandId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getMrp() {
-        return mrp;
-    }
-
-    public void setMrp(Double mrp) {
-        this.mrp = mrp;
-    }
 }

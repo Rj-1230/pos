@@ -1,56 +1,30 @@
 package com.increff.employee.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="order_Items")
+@Table(name="order_Items", uniqueConstraints={@UniqueConstraint(columnNames={"MyOrderID", "ProductID"})})
+
+@Getter
+@Setter
+
 public class OrderItemPojo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="orderItem_generator", sequenceName = "orderItem_seq", allocationSize=1,initialValue = 100001)
+    @Column(name="OrderItemID", nullable=false)
     private int orderItemId;
+    @Column(name="MyOrderID", nullable=false)
     private int orderId;
+    @Column(name="ProductID", nullable=false)
     private int productId;
+    @Column(name="ProductQuantity", nullable=false)
     private int quantity;
+    @Column(name="SellingPrice", nullable=false)
     private Double sellingPrice ;
 
 
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getOrderItemId() {
-        return orderItemId;
-    }
-
-    public void setOrderItemId(int orderItemId) {
-        this.orderItemId = orderItemId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(Double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
 }

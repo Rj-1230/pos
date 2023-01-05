@@ -74,6 +74,12 @@ public class OrderItemService {
     }
 
     @Transactional
+    public List<OrderItemPojo> get_order(int id)
+    {
+        return dao.selectAll(id);
+    }
+
+    @Transactional
     public OrderItemPojo getCheck(int id) throws ApiException {
         try{
             OrderItemPojo p = dao.select(id);

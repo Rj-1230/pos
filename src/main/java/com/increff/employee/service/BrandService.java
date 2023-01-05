@@ -57,16 +57,11 @@ public class BrandService {
         try{
             BrandPojo p = dao.select(id);
             return p;
-
         }
         catch(Exception e){
             System.out.println(e);
             return null;
         }
-//        if (p == null) {
-//            return null;
-////            throw new ApiException("Employee with given ID does not exit, id: " + id);
-//        }
     }
 
     protected static void normalize(BrandPojo p) {

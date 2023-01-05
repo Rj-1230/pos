@@ -1,5 +1,6 @@
 package com.increff.employee.dto;
 
+import com.increff.employee.model.DateFilterForm;
 import com.increff.employee.model.OrderData;
 import com.increff.employee.model.OrderForm;
 import com.increff.employee.model.OrderItemForm;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.increff.employee.util.GetCurrentTime.getCurrentDateTime;
+
 @Service
 
 public class OrderDto {
@@ -33,6 +36,10 @@ public class OrderDto {
 
     public void add(OrderForm f) throws ApiException {
         OrderPojo o = convert(f);
+        o.setOrderCreateTime(getCurrentDateTime());
+        o.setStatus("InCart");
+        o.setOrderPlaceTime("");
+        normalize(o);
         service.add(o);
     }
 
@@ -62,6 +69,28 @@ public class OrderDto {
         //before returning , we need to convert our OrderPojo type data into OrderData format
     }
 
+    public List<OrderData> getDateFilter(DateFilterForm form) throws ApiException
+    {
+        List<OrderData> list1 = new ArrayList<OrderData>();
+
+        String startDate = form.getStart().replace('-', '/');
+        String endDate = form.getEnd().replace('-', '/');
+        List<OrderPojo> list2 = service.selectDateFilter(startDate, endDate);
+
+        for(OrderPojo p: list2)
+            list1.add(convert(p));
+
+        return list1;
+    }
+
+    public void placeOrder(int id) throws ApiException
+    {
+        OrderPojo o = service.get(id);
+        o.setStatus("Placed");
+        o.setOrderPlaceTime(getCurrentDateTime());
+        service.update(id, o);
+    }
+
 
 //    private ProductPojo getProductIdFromBarcode(OrderForm f) throws ApiException{
 ////        System.out.println(f.getBrandName() + f.getCategoryName());
@@ -77,24 +106,24 @@ public class OrderDto {
         //The convert method will convert JSON format data received into OrderItemPojo format
         OrderPojo p = new OrderPojo();
         p.setCustomerName(f.getCustomerName());
-        p.setOrderTime(getCurrentTime());
         return p;
     }
 
     private static OrderData convert(OrderPojo p){
         OrderData d = new OrderData();
         d.setOrderId(p.getOrderId());
-        d.setOrderTime(p.getOrderTime());
+        d.setStatus(p.getStatus());
+        d.setOrderCreateTime(p.getOrderCreateTime());
+        d.setOrderPlaceTime(p.getOrderPlaceTime());
         d.setCustomerName(p.getCustomerName());
 //        System.out.println(getCurrentTime());
 //        data.setMessage("Hola !");
         return d;
     }
 
-    private static String getCurrentTime(){
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = formatter.format(date);
-        return strDate;
+    private void normalize(OrderPojo p)
+    {
+        p.setCustomerName(p.getCustomerName().toLowerCase().trim());
     }
+
 }

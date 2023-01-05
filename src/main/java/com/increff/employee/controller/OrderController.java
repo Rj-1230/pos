@@ -1,6 +1,7 @@
 package com.increff.employee.controller;
 
 import com.increff.employee.dto.OrderDto;
+import com.increff.employee.model.DateFilterForm;
 import com.increff.employee.model.OrderData;
 import com.increff.employee.model.OrderForm;
 import com.increff.employee.pojo.OrderPojo;
@@ -39,8 +40,6 @@ public class OrderController {
         return message;
     }
 
-
-
     @ApiOperation(value="Deleting a order")
     @RequestMapping(path="/api/order/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id){
@@ -61,11 +60,34 @@ public class OrderController {
         //before returning , we need to convert our OrderPojo type data into OrderData format
     }
 
+    @ApiOperation(value = "Select all order between given date")
+    @RequestMapping(path = "/api/order/dateFilter", method = RequestMethod.POST)
+    public List<OrderData> get_date_filter(@RequestBody DateFilterForm f) throws ApiException
+    {
+        return dto.getDateFilter(f);
+    }
+
     @ApiOperation(value="Getting details of all the orders")
     @RequestMapping(path="/api/order", method = RequestMethod.GET)
     public List<OrderData> getAll(){
         return dto.getAll();
         //before returning , we need to convert our OrderPojo type data into OrderData format
+    }
+
+    @ApiOperation(value = "Mark order placed")
+    @RequestMapping(path = "api/order/place/{id}", method = RequestMethod.PUT)
+    public String mark_order_placed(@PathVariable int id) throws ApiException
+    {
+        String message;
+        try{
+            dto.placeOrder(id);
+            message = "Order Placed Successfully";
+        }
+        catch (Exception e)
+        {
+            message = e.getMessage();
+        }
+        return message;
     }
 
 }

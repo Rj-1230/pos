@@ -32,8 +32,8 @@ public class InventoryService {
             throw new ApiException("The product with given Product Id does not exists !!");
         }
         else if(b!=null){
-//            iska mtlb b non null hai and product already h inventory m
-            throw new ApiException("This product already exists in the inventory !! You can edit its quantity if u wish");
+//            iska mtlb b non null hai and product already h inventory m, so add the item to existing quantity
+            b.setQuantity(b.getQuantity()+p.getQuantity());
         }
         else{
             System.out.println("hello5");
