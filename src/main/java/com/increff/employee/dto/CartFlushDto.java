@@ -29,16 +29,21 @@ public class CartFlushDto {
     @Autowired
     private OrderItemService orderItemService;
     public void add(OrderForm f) throws ApiException {
+        List<CartData>list1= cartDto.getAll();
+        if(list1.size()==0){
+            throw new ApiException("The order can't be created as the cart is empty");
+        }
         int id = orderDto.add(f);
 
 //        System.out.println(productId);
 
 
-        List<CartData>list1= cartDto.getAll();
+
 
             for(CartData d : list1){
                 OrderItemPojo o = new OrderItemPojo();
                 o.setOrderId(id);
+                o.setProductId(d.getProductId());
                 o.setProductName(d.getProductName());
                 o.setQuantity(d.getQuantity());
                 o.setSellingPrice(d.getSellingPrice());
@@ -46,9 +51,6 @@ public class CartFlushDto {
             }
 
             cartDto.deleteAll(list1);
-
-
-
 
 
     }

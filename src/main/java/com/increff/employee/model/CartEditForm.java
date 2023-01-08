@@ -7,5 +7,7 @@ import lombok.Setter;
 @Setter
 public class CartEditForm {
 private int quantity;
+private double sellingPrice;
+
 
 }

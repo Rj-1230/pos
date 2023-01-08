@@ -20,6 +20,8 @@ public class CartPojo {
     private String productName;
     @Column(name="ProductQuantity", nullable=false)
     private int quantity;
+    @Column(name="ProductId", nullable=false)
+    private int productId;
     @Column(name="SellingPrice", nullable=false)
     private Double sellingPrice ;
 

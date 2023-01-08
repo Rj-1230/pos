@@ -24,22 +24,25 @@ public class InventoryService {
     public void add(InventoryPojo p)throws ApiException {
 //        normalize(p);
 
-        ProductPojo a = serviceP.get(p.getProductId());
-        InventoryPojo b = get(p.getProductId());
+        ProductPojo a = serviceP.getProductIdFromBarcode(p.getBarcode());
         if(a==null) {
 //            is given product ID se koi Product POjo ni h
             System.out.println("hello3");
-            throw new ApiException("The product with given Product Id does not exists !!");
-        }
-        else if(b!=null){
-//            iska mtlb b non null hai and product already h inventory m, so add the item to existing quantity
-            b.setQuantity(b.getQuantity()+p.getQuantity());
+            throw new ApiException("The product with given barcode does not exists !!");
         }
         else{
-            System.out.println("hello5");
-            dao.insert(p);
-
+            p.setProductId(a.getProductId());
+            InventoryPojo b = get(p.getProductId());
+            if(b!=null){
+//                iska mtlb b non null hai and product already h inventory m, so add the item to existing quantity
+                b.setQuantity(b.getQuantity()+p.getQuantity());
+            }
+            else{
+                System.out.println("hello5");
+                dao.insert(p);
+            }
         }
+
     }
 
     @Transactional

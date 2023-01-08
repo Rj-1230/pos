@@ -52,7 +52,7 @@ public class OrderItemController {
 
     @ApiOperation(value="Updating details of a particular OrderItem")
     @RequestMapping(path="/api/orderItem/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody OrderItemForm f) throws ApiException {
+    public void update(@PathVariable int id, @RequestBody CartEditForm f) throws ApiException {
         dto.update(id,f);
         //before returning , we need to convert our OrderItemPojo type data into OrderItemData format
     }

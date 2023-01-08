@@ -15,6 +15,8 @@ public class CartDao {
 //This is JPQL : Java Persistence Query language
     private static String delete_id = "delete from CartPojo p where id=:id";
     private static String select_id = "select p from CartPojo p where id=:id";
+    private static String select_cart_id = "select p from CartPojo p where productName=:name";
+
 //    private static String select_barcode = "select p from CartPojo p where barcode=:barcode";
 //    private static String select_all_from_ID = "select p from CartPojo p where orderId=:id";
     private static String select_all = "select p from CartPojo p";
@@ -55,6 +57,12 @@ public class CartDao {
     public CartPojo select(int id) {
             TypedQuery<CartPojo> query = em.createQuery(select_id, CartPojo.class);
         query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
+    public CartPojo getCartIdFromProductName(String name) {
+        TypedQuery<CartPojo> query = em.createQuery(select_cart_id, CartPojo.class);
+        query.setParameter("name", name);
         return query.getSingleResult();
     }
 

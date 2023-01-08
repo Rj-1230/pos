@@ -3,6 +3,7 @@ package com.increff.employee.controller;
 import com.increff.employee.dto.InventoryDto;
 import com.increff.employee.model.InventoryData;
 //import com.increff.employee.model.InventoryData;
+import com.increff.employee.model.InventoryEditForm;
 import com.increff.employee.model.InventoryForm;
 import com.increff.employee.pojo.InventoryPojo;
 import com.increff.employee.pojo.ProductPojo;
@@ -57,14 +58,14 @@ public class InventoryController {
 
     @ApiOperation(value="Adding items of a particular product in the inventory")
     @RequestMapping(path="/api/inventoryAdd/{id}", method = RequestMethod.PUT)
-    public void addToInventory(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+    public void addToInventory(@PathVariable int id, @RequestBody InventoryEditForm f) throws ApiException {
         dto.addIn(id,f);
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }
 
     @ApiOperation(value="Removing items of a particular product in the inventory")
     @RequestMapping(path="/api/inventorySub/{id}", method = RequestMethod.PUT)
-    public void removeFromInventory(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+    public void removeFromInventory(@PathVariable int id, @RequestBody InventoryEditForm f) throws ApiException {
         dto.subIn(id,f);
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }

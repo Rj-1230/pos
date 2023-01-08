@@ -159,6 +159,7 @@ function displayInventoryList(data){
 		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteInventory(' + e.productId + ')" disabled>Delete</button>'
 		var row = '<tr>'
 		+ '<td>' + e.productId + '</td>'
+		+ '<td>' + e.barcode + '</td>'
 		+ '<td>' + e.quantity + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';

@@ -10,7 +10,9 @@ import javax.persistence.*;
 //@Table(name="orderItems", uniqueConstraints={@UniqueConstraint(columnNames={"ProductId"})})
 @Getter
 @Setter
-
+//
+//Hibernate properties table for null, uniqye
+//xslt file
 public class OrderItemPojo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -19,6 +21,9 @@ public class OrderItemPojo {
     private int orderItemId;
     @Column(name="OrderID", nullable=false)
     private int orderId;
+
+    @Column(name="ProductID", nullable=false)
+    private int productId;
     @Column(name="Product_Name", nullable=false)
     private String productName;
     @Column(name="ProductQuantity", nullable=false)

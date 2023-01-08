@@ -6,7 +6,7 @@
   <meta name="baseUrl" th:attr="content=${baseUrl}">
   <meta name="orderId" th:attr="content=${orderId}">
   <meta name="customerName" th:attr="content=${customerName}">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" th:href="@{/static/style.css}">
 
@@ -38,8 +38,12 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{/ui/orderItems}">Order Items</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/ui/revenue}">Sales Report</a>
+      </li>
     </ul>
   </div>
+  <button class="btn my-2 my-sm-0"><a class="nav-link" th:href="@{/ui/cart}" style="text-decoration:none;color:white">Cart <i class="fa fa-lg fa-shopping-cart" style="color:white;"></i></a></button>
 </nav>
 
 <footer class="footer" th:fragment="name_footer">

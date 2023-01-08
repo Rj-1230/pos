@@ -22,7 +22,7 @@ public class CartFlushController {
     @ApiOperation(value="Adding an item to the cart")
     @RequestMapping(path="/api/cartFlush", method = RequestMethod.POST)
     public String add(@RequestBody OrderForm f)throws ApiException {
-        String message = "Item added to cart successfully";
+        String message = "Cart emptied successfully";
         try {
 //            OrderItemPojo p = convert(orderItemForm);
             dto.add(f);

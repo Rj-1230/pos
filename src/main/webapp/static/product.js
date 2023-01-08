@@ -136,7 +136,9 @@ function getBrandsList(){
 	   success: function(data) {
 	   		console.log("All brands fetched");
 	   		console.log(data);
-	   		displayBrandsList(data);     //...
+	   		displayBrandsList(data);
+	   		displayCategoryList();
+	   		     //...
 	   },
 	   error: function(){
 	   		alert("An error has occurred");

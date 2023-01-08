@@ -1,10 +1,13 @@
 package com.increff.employee.dto;
 
 import com.increff.employee.model.InventoryData;
+import com.increff.employee.model.InventoryEditForm;
 import com.increff.employee.model.InventoryForm;
 import com.increff.employee.pojo.InventoryPojo;
+import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.InventoryService;
+import com.increff.employee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +22,17 @@ public class InventoryDto {
     @Autowired
     private InventoryService service;
 
+    @Autowired
+    private ProductService serviceP;
+
     public void add(InventoryForm f) throws ApiException {
 
-        InventoryPojo p = convert(f);
-        service.add(p);
+//        ProductPojo pp = serviceP.getProductIdFromBarcode(f.getBarcode());
+
+            InventoryPojo p = convert(f);
+//            p.setProductId(pp.getProductId());
+            service.add(p);
+
     }
 
     public void delete(@PathVariable int id){
@@ -35,13 +45,13 @@ public class InventoryDto {
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }
 
-    public void addIn(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+    public void addIn(@PathVariable int id, @RequestBody InventoryEditForm f) throws ApiException {
         InventoryPojo p = convert(f);
         service.addIn(id,p);
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
     }
 
-    public void subIn(@PathVariable int id, @RequestBody InventoryForm f) throws ApiException {
+    public void subIn(@PathVariable int id, @RequestBody InventoryEditForm f) throws ApiException {
         InventoryPojo p = convert(f);
         service.subIn(id,p);
         //before returning , we need to convert our InventoryPojo type data into InventoryData format
@@ -59,15 +69,25 @@ public class InventoryDto {
     private static InventoryPojo convert(InventoryForm f){
         //The convert method will convert JSON format data received into InventoryPojo format
         InventoryPojo p = new InventoryPojo();
-        p.setProductId(f.getProductId());
+        p.setBarcode(f.getBarcode());
+//        p.setProductId(f.getProductId());
         p.setQuantity(f.getQuantity());
         return p;
     }
 
+    private static InventoryPojo convert(InventoryEditForm f){
+        //The convert method will convert JSON format data received into InventoryPojo format
+        InventoryPojo p = new InventoryPojo();
+//        p.setBarcode(f.getBarcode());
+//        p.setProductId(f.getProductId());
+        p.setQuantity(f.getQuantity());
+        return p;
+    }
     private static InventoryData convert(InventoryPojo p){
         InventoryData d = new InventoryData();
         d.setProductId(p.getProductId());
         d.setQuantity(p.getQuantity());
+        d.setBarcode(p.getBarcode());
 //        data.setMessage("Hola !");
         return d;
     }

@@ -1,9 +1,6 @@
 package com.increff.employee.dto;
 
-import com.increff.employee.model.CustomerNameForm;
-import com.increff.employee.model.OrderForm;
-import com.increff.employee.model.OrderItemData;
-import com.increff.employee.model.OrderItemForm;
+import com.increff.employee.model.*;
 import com.increff.employee.pojo.OrderItemPojo;
 import com.increff.employee.pojo.OrderPojo;
 import com.increff.employee.pojo.ProductPojo;
@@ -33,6 +30,11 @@ public class OrderItemDto {
         ProductPojo p= getProductIdFromBarcode(f);
 //        System.out.println(productId);
         OrderItemPojo o = convert(f);
+        o.setProductId(p.getProductId());
+        System.out.println("IN DTO of order ITEM");
+        System.out.println(o.getProductId());
+
+        System.out.println("IN DTO of order ITEM");
         o.setSellingPrice(p.getMrp());
         o.setProductName(p.getName());
         serviceI.subFromInventory(p.getProductId(),o.getQuantity());
@@ -53,8 +55,15 @@ public class OrderItemDto {
     public void update(@PathVariable int id, @RequestBody OrderItemForm f) throws ApiException {
         OrderItemPojo o = convert(f);
         ProductPojo p  = getProductIdFromBarcode(f);
+        o.setProductId(p.getProductId());
         o.setProductName(p.getName());
         o.setSellingPrice(p.getMrp());
+        service.update(id,o);
+        //before returning , we need to convert our OrderItemPojo type data into OrderItemData format
+    }
+
+    public void update(@PathVariable int id, @RequestBody CartEditForm f) throws ApiException {
+        OrderItemPojo o = convert(f);
         service.update(id,o);
         //before returning , we need to convert our OrderItemPojo type data into OrderItemData format
     }
@@ -108,6 +117,14 @@ public class OrderItemDto {
         return p;
     }
 
+    private static OrderItemPojo convert(CartEditForm f){
+        //The convert method will convert JSON format data received into OrderItemPojo format
+        OrderItemPojo p = new OrderItemPojo();
+
+        p.setQuantity(f.getQuantity());
+        return p;
+    }
+
     private static OrderPojo convert(CustomerNameForm f){
         //The convert method will convert JSON format data received into OrderItemPojo format
         OrderPojo p = new OrderPojo();
@@ -119,6 +136,7 @@ public class OrderItemDto {
         OrderItemData d = new OrderItemData();
         d.setOrderItemId(p.getOrderItemId());
         d.setOrderId(p.getOrderId());
+        d.setProductId(p.getProductId());
         d.setProductName(p.getProductName());
         d.setQuantity(p.getQuantity());
         d.setSellingPrice(p.getSellingPrice());

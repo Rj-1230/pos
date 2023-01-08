@@ -8,6 +8,6 @@ import lombok.Setter;
 
 public class CategoryRevenueData {
     private String category;
-    private Integer quantity;
+    private int quantity;
     private double totalCategoryRevenue;
 }

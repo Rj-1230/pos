@@ -73,6 +73,43 @@ function addOrder(event){
 //	return false;
 //}
 
+function placeOrder (orderId) {
+//	=customerName;
+//    console.log(document.getElementById('inputCustomerName').value);
+//    var newName = document.getElementById('inputCustomerName').value;
+    var json={"status":"placed"};
+    console.log(json);
+    json = JSON.stringify(json);
+    console.log(json);
+
+//    var url = getOrderItemUrl();
+	var url = getOrderUrl() + "ItemPlace/" + orderId;
+    console.log(url);
+
+    $.ajax({
+    	   url: url,
+    	   type: 'PUT',
+    	   data: json,
+    	   headers: {
+    //	   Header is added mandatorily
+           	'Content-Type': 'application/json'
+           },
+    	   success: function(response) {
+    	   console.log("this is response" + response);
+    	   getOrderList();
+//    	   document.getElementById('logg').innerHTML=response;
+    //	   		console.log("Product created");
+        //...
+    	   },
+    	   error: function(){
+    	   		alert("An error has occurred");
+    	   }
+    	});
+
+    	return false;
+
+}
+
 
 function getOrderList(){
 	var url = getOrderUrl();
@@ -116,8 +153,14 @@ function displayOrderList(data){
 //	ello
 	for(var i in data){
 		var e = data[i];
-		console.log(e.orderId)
-		var buttonHtml ='<button class="btn btn-dark" > <a href="orderItem/'+e.orderId+'" style="text-decoration:none; color:white;">Edit Order</a></button>'
+		if(e.status=="placed"){
+		var buttonHtml ='<button class="btn btn-dark" disabled> Edit Order</button>'
+		buttonHtml+='&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" id="generate-invoice"> Generate Invoice</a></button>'
+		}
+		else{
+		var buttonHtml ='<button class="btn btn-dark"> <a href="orderItem/'+e.orderId+'" style="text-decoration:none; color:white;">Edit Order</a></button>'
+		buttonHtml+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" onclick="placeOrder('+e.orderId + ')"> Place Order </a></button>'
+		}
 		var row = '<tr>'
 		+ '<td>' + e.orderId + '</td>'
 		+ '<td>' + e.customerName + '</td>'
@@ -173,7 +216,6 @@ function displayOrderList(data){
         console.log(json);
         return json;
     }
-
 
 //INITIALIZATION CODE
 function init(){

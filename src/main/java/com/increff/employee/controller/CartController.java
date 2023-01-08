@@ -39,7 +39,7 @@ public class CartController {
 
     @ApiOperation(value="Removing an item from the cart")
     @RequestMapping(path="/api/cart/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) throws ApiException{
         dto.delete(id);
     }
 

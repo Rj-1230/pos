@@ -20,8 +20,8 @@
         <div class="col-12">
             <form id="inventory-form">
                 <div class="form-group">
-                    <label for="inputProdID">Product Id </label>
-                    <input type="text" class="form-control" name="productId" id="inputProdID" placeholder="Enter product ID">
+                    <label for="inputBarcode">Barcode</label>
+                    <input type="text" class="form-control" name="barcode" id="inputBarcode" placeholder="Enter barcode">
                 </div>
                 <div class="form-group">
                     <label for="inputQuantity">Quantity</label>
@@ -30,7 +30,6 @@
                 <div class="half-space">
                     <!--      Blank row -->
                 </div>
-
                 <button type="button" class="btn btn-primary" id="add-inventory" style="margin-left:20px">Add</button>
 
                 <button type="button" class="btn btn-success" id="refresh-data" style="margin-left:20px">Refresh</button>
@@ -64,6 +63,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Product ID</th>
+                    <th scope="col">Barcode</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -99,15 +99,15 @@
                 </div>
                 <div class="modal-body">
 
-                    <form class="form-inline" id="inventory-edit-form">
+                    <form id="inventory-edit-form">
                         <div class="form-group">
-                            <label for="inputProdID" class="col-sm-2 col-form-label">Product Id </label>
+                            <label for="inputProdID">Product Id </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="productId" placeholder="Enter product ID" readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputQuantity" class="col-sm-2 col-form-label">No. of items to add </label>
+                            <label for="inputQuantity">No. of items to add </label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control" name="quantity" placeholder="Enter quantity">
                             </div>
@@ -135,15 +135,15 @@
                 </div>
                 <div class="modal-body">
 
-                    <form class="form-inline" id="sub-edit-form">
+                    <form id="sub-edit-form">
                         <div class="form-group">
-                            <label for="inputProdID" class="col-sm-2 col-form-label">Product Id </label>
+                            <label for="inputProdID">Product Id </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="productId" placeholder="Enter product ID" readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputQuantity" class="col-sm-2 col-form-label">No. of items to reduce</label>
+                            <label for="inputQuantity">No. of items to reduce</label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control" name="quantity" placeholder="Enter quantity">
                             </div>

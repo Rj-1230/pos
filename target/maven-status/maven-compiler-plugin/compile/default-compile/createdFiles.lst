@@ -6,6 +6,7 @@ com\increff\employee\model\ProductUpdateForm.class
 com\increff\employee\dto\ProductDto.class
 com\increff\employee\controller\OrderController.class
 com\increff\employee\dao\OrderDao.class
+com\increff\employee\dto\RevenueDto.class
 com\increff\employee\service\ProductService.class
 com\increff\employee\model\OrderData.class
 com\increff\employee\dto\CartDto.class
@@ -35,6 +36,7 @@ com\increff\employee\service\CartService.class
 com\increff\employee\pojo\ProductPojo.class
 com\increff\employee\model\AboutAppData.class
 com\increff\employee\dto\OrderItemDto.class
+com\increff\employee\controller\RevenueController.class
 com\increff\employee\model\ProductData.class
 com\increff\employee\dao\BrandDao.class
 com\increff\employee\controller\InventoryController.class
@@ -46,6 +48,7 @@ com\increff\employee\dao\OrderItemDao.class
 com\increff\employee\model\ProductRevenueData.class
 com\increff\employee\dao\CartDao.class
 com\increff\employee\model\BrandForm.class
+com\increff\employee\model\InventoryEditForm.class
 com\increff\employee\controller\ProductController.class
 com\increff\employee\dto\CartFlushDto.class
 com\increff\employee\service\ApiException.class

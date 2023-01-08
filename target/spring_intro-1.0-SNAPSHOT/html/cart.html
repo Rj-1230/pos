@@ -54,8 +54,8 @@
                 <button type="button" class="btn btn-primary" id="add-cartItem" style="margin-left:20px">Add To Cart</button>
 
                 <button type="button" class="btn btn-success" id="refresh-data" style="margin-left:20px">Refresh</button>
-                <button type="button" class="btn btn-link" id="upload-data" style="margin-left:40px">Upload</button>
-                <button type="button" class="btn btn-primary" id="create-new-order" style="margin-left:40px" data-toggle="modal" data-target="#customerModal">Create Order</button>
+<!--                <button type="button" class="btn btn-link" id="upload-data" style="margin-left:40px">Upload</button>-->
+                <button type="button" class="btn btn-primary" id="create-new-order" style="margin-left:80px" data-toggle="modal" data-target="#customerModal">Create Order</button>
             </form>
 
         </div>
@@ -111,7 +111,42 @@
         </div>
     </div>
 
+<!-- cart Edit Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="edit-cart-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit cart items </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
+                <form id="cart-edit-form">
+
+                    <div class="form-group">
+                        <label for="inputQuantity">Quantity</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="quantity" placeholder="Enter product's quantity">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSellingPrice">Selling Price(discounted) :</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="sellingPrice" placeholder="Enter selling price">
+                        </div>
+                    </div>
+                    <input type="hidden" name="cartItemId" >
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="update-cart">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Brand Edit Modal -->
 <div class="modal" tabindex="-1" role="dialog" id="customerModal">
     <div class="modal-dialog" role="document">
@@ -135,13 +170,13 @@
                     </div>
                     <div class="form-group">
                         <label for="inputCustomerPhone">Mobile No. </label>
-                        <input type="text" class="form-control" name="customerPhone" id="inputCustomerPhone" placeholder="Enter mobile No. : ">
+                        <input type="text" class="form-control" name="customerPhone" maxlength="10" title="Error Message" pattern="[1-9]{1}[0-9]{9}" id="inputCustomerPhone" placeholder="Enter mobile No. : ">
                     </div>
                     <div class="half-space">
                         <!--      Blank row -->
                     </div>
 
-                    <button type="button" class="btn btn-primary" id="create-order" style="margin-left:20px">Create Order</button>
+                    <button type="button" class="btn btn-primary" id="create-order" data-dismiss="modal" style="margin-left:20px">Create Order</button>
                 </form>
             </div>
         </div>

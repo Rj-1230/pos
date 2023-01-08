@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductRevenueData {
-    private int id;
+    private int productId;
     private String barcode;
     private String name;
     private String brand;

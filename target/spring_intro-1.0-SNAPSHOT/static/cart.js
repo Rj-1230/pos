@@ -66,7 +66,9 @@ function addOrder(event){
 	   success: function(response) {
 	   		console.log("this is response" + response);
             document.getElementById('logg').innerHTML=response;
-
+            getCartItemList();
+            var baseUrl = $("meta[name=baseUrl]").attr("content");
+            window.location.href = baseUrl + "/ui/orders";
 	   },
 	   error: function(){
 	   		alert("An error has occurred");
@@ -77,39 +79,39 @@ function addOrder(event){
 }
 
 //This function is called on clicking of update button in the edit modal form
-//function updateOrderItem(event){
-//	$('#edit-orderItem-modal').modal('toggle');
-//	//edit-orderItem-model is the id given to the entire block which gets toggled up when we click on Update button
-//
-//	var id = $("#orderItem-edit-form input[name=id]").val();
-//	//edit-orderItem-form is the id given to the form inside the above mentioned block which opens for editing
-////	That orderItem's id (not CSS ID )value is fetched and given to the variable id
-//
-//	var url = getOrderItemUrl() + "/" + id;
-////	url = = localhost:9000/orderItem/api/orderItem/{id}
-//
-//	//Set the values to update
-//	var $form = $("#orderItem-edit-form");
-//	var json = toJson($form);
-////    The form is converted to JSON and a PUT request (update) is called and thus details are updated
-//	$.ajax({
-//	   url: url,
-//	   type: 'PUT',
-//	   data: json,
-//	   headers: {
-//       	'Content-Type': 'application/json'
-//       },
-//	   success: function(response) {
-//	   		console.log("OrderItem details are updated");
-//	   		getOrderItemList();     //...
-//	   },
-//	   error: function(){
-//	   		alert("An error has occurred");
-//	   }
-//	});
-//
-//	return false;
-//}
+function updateCart(event){
+	$('#edit-cart-modal').modal('toggle');
+	//edit-orderItem-model is the id given to the entire block which gets toggled up when we click on Update button
+
+	var id = $("#cart-edit-form input[name=cartItemId]").val();
+	//edit-orderItem-form is the id given to the form inside the above mentioned block which opens for editing
+//	That orderItem's id (not CSS ID )value is fetched and given to the variable id
+
+	var url = getCartUrl() + "/" + id;
+//	url = = localhost:9000/orderItem/api/orderItem/{id}
+
+	//Set the values to update
+	var $form = $("#cart-edit-form");
+	var json = toJson($form);
+//    The form is converted to JSON and a PUT request (update) is called and thus details are updated
+	$.ajax({
+	   url: url,
+	   type: 'PUT',
+	   data: json,
+	   headers: {
+       	'Content-Type': 'application/json'
+       },
+	   success: function(response) {
+	   		console.log("Cart details are updated");
+	   		getCartItemList();     //...
+	   },
+	   error: function(){
+	   		alert("An error has occurred");
+	   }
+	});
+
+	return false;
+}
 
 
 function getCartItemList(){
@@ -129,21 +131,21 @@ function getCartItemList(){
 	});
 }
 
-//function deleteOrderItem(id){
-//	var url = getOrderItemUrl() + "/" + id;
-//
-//	$.ajax({
-//	   url: url,
-//	   type: 'DELETE',
-//	   success: function(data) {
-//	   		console.log("orderItem deleted");
-//	   		getOrderItemList();     //...
-//	   },
-//	   error: function(){
-//	   		alert("An error has occurred");
-//	   }
-//	});
-//}
+function deleteCartItem(id){
+	var url = getCartUrl() + "/" + id;
+
+	$.ajax({
+	   url: url,
+	   type: 'DELETE',
+	   success: function(data) {
+	   		console.log("orderItem deleted");
+	   		getCartItemList();     //...
+	   },
+	   error: function(){
+	   		alert("An error has occurred");
+	   }
+	});
+}
 
 ////UI DISPLAY METHODS
 
@@ -162,7 +164,7 @@ function displayCartItemList(data){
 	for(var i in data){
 		var e = data[i];
 		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditCartItem(' + e.cartItemId + ')" >Edit </button>'
-		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteCartItem(' + e.cartItemId + ')" disabled>Delete</button>'
+		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteCartItem(' + e.cartItemId + ')">Delete</button>'
 		var row = '<tr>'
 		+ '<td>' + e.cartItemId + '</td>'
 		+ '<td>' + e.productName + '</td>'
@@ -177,31 +179,31 @@ function displayCartItemList(data){
 
 
 //As the edit button is clicked in the table , its id is passed to this method and the method is called
-//function displayEditorderItem(id){
-//	var url = getOrderItemUrl() + "/" + id;
-//	$.ajax({
-//	   url: url,
-//	   type: 'GET',
-//	   success: function(data) {
-//	   		console.log("OrderItem data is fetched");
-//	   		console.log(data);
-////	   		Till here it was a normal GET reuqest
-////            Now the function displayOrderItem is called
-////        This will edit the orderItem's data and feed into the table
-//	   		displayOrderItem(data);     //...
-//	   },
-//	   error: function(){
-//	   		alert("An error has occurred");
-//	   }
-//	});
-//}
+function displayEditCartItem(id){
+	var url = getCartUrl() + "/" + id;
+	$.ajax({
+	   url: url,
+	   type: 'GET',
+	   success: function(data) {
+	   		console.log("cart data is fetched");
+	   		console.log(data);
+//	   		Till here it was a normal GET reuqest
+//            Now the function displayOrderItem is called
+//        This will edit the orderItem's data and feed into the table
+	   		displayCartItem(data);     //...
+	   },
+	   error: function(){
+	   		alert("An error has occurred");
+	   }
+	});
+}
 
-//function displayOrderItem(data){
-//	$("#orderItem-edit-form input[name=orderItem]").val(data.orderItem);
-//	$("#orderItem-edit-form input[name=category]").val(data.category);
-//	$("#orderItem-edit-form input[name=id]").val(data.id);
-//	$('#edit-orderItem-modal').modal('toggle');
-//}
+function displayCartItem(data){
+	$("#cart-edit-form input[name=sellingPrice]").val(data.sellingPrice);
+	$("#cart-edit-form input[name=quantity]").val(data.quantity);
+	$("#cart-edit-form input[name=cartItemId]").val(data.cartItemId);
+	$('#edit-cart-modal').modal('toggle');
+}
 
 
 //    HELPER METHOD
@@ -222,6 +224,7 @@ function displayCartItemList(data){
 //INITIALIZATION CODE
 function init(){
 	$('#add-cartItem').click(addItemToCart);
+	$('#update-cart').click(updateCart);
 	$('#create-order').click(addOrder);
 	$('#refresh-data').click(getCartItemList);
 }

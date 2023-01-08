@@ -15,6 +15,9 @@ import javax.persistence.*;
 public class InventoryPojo {
     @Column(name="ProductQuantity", nullable=false)
     private int quantity;
+
+    @Column(name="Product_Barcode", nullable=false)
+    private String barcode;
     @Id
     @Column(name="ProductId", nullable=false)
     private int productId;

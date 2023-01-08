@@ -16,7 +16,7 @@ public class OrderDao {
 //This is JPQL : Java Persistence Query language
     private static String delete_id = "delete from OrderPojo p where id=:id";
     private static String select_id = "select p from OrderPojo p where id=:id";
-    private static String select_date_filter = "select p from OrderPojo p where placeDateTime>=:id1 and " + "placeDateTime<=:id2";
+    private static String select_date_filter = "select p from OrderPojo p where orderPlaceTime>=:start and orderPlaceTime<=:end";
     private static String select_barcode = "select p from OrderPojo p where barcode=:barcode";
     private static String select_all = "select p from OrderPojo p";
 
@@ -71,8 +71,8 @@ public class OrderDao {
     {
         try{
             TypedQuery<OrderPojo> query = getQuery(select_date_filter);
-            query.setParameter("id1", start);
-            query.setParameter("id2", end);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
             return query.getResultList();
         }
         catch(Exception e)

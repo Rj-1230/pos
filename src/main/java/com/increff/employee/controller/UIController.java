@@ -57,6 +57,11 @@ public class UIController {
         return mav("orderItems.html");
     }
 
+    @RequestMapping(value = "/ui/revenue")
+    public ModelAndView revenue() {
+        return mav("revenue.html");
+    }
+
     @RequestMapping(value = "/ui/orderItem/{id}")
     public ModelAndView orderItem(@PathVariable int id) throws ApiException {
         OrderData data = dto.get(id);

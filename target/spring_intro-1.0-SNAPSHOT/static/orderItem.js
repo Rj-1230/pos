@@ -176,41 +176,6 @@ function updateCustomerName () {
 
 
 
-function placeOrder () {
-//	=customerName;
-//    console.log(document.getElementById('inputCustomerName').value);
-    var newName = document.getElementById('inputCustomerName').value;
-    var json={"status":"placed"};
-    console.log(json);
-    json = JSON.stringify(json);
-    console.log(json);
-
-//    var url = getOrderItemUrl();
-	var url = getOrderItemUrl() + "Place/" + orderId;
-
-
-    $.ajax({
-    	   url: url,
-    	   type: 'PUT',
-    	   data: json,
-    	   headers: {
-    //	   Header is added mandatorily
-           	'Content-Type': 'application/json'
-           },
-    	   success: function(response) {
-    	   console.log("this is response" + response);
-//    	   document.getElementById('logg').innerHTML=response;
-    //	   		console.log("Product created");
-        //...
-    	   },
-    	   error: function(){
-    	   		alert("An error has occurred");
-    	   }
-    	});
-
-    	return false;
-
-}
 
 //As the edit button is clicked in the table , its id is passed to this method and the method is called
 //function displayEditorderItem(id){
@@ -270,7 +235,7 @@ function init(){
 	document.getElementById('inputCustomerName').value=customerName;
 
 	$('#updateCustomerName').click(updateCustomerName)
-	$('#place-order').click(placeOrder)
+
 //	On clicking the button update, updateorderItem is called
 	$('#refresh-data').click(getOrderItemList);
 }

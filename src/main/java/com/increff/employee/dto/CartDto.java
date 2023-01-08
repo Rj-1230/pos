@@ -29,18 +29,19 @@ public class CartDto {
         System.out.println("Hello aa");
 //        System.out.println(productId);
         CartPojo c = convert(f);
+        c.setProductId(p.getProductId());
         c.setProductName(p.getName());
         c.setSellingPrice(p.getMrp());
         c.setCounterId(1);
 //        This cpunter ID is if there will be login and diffferent counters
 //        If multiple counters, replace it by enployee ID of that counter and thus those many carts
-       serviceI.subFromInventory(p.getProductId(),c.getQuantity());
+
         System.out.println("Hello bb");
 //        System.out.println("a");
-        cartService.add(c);
+        cartService.add(c,p.getProductId(),c.getQuantity());
     }
 
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) throws ApiException{
         cartService.delete(id);
     }
 
@@ -72,7 +73,7 @@ public class CartDto {
     }
 
 
-    public void deleteAll(List<CartData> list1){
+    public void deleteAll(List<CartData> list1) throws ApiException{
         cartService.deleteAll(list1);
         //before returning , we need to convert our OrderItemPojo type data into OrderItemData format
     }
@@ -108,11 +109,13 @@ public class CartDto {
         //The convert method will convert JSON format data received into OrderItemPojo format
         CartPojo p = new CartPojo();
         p.setQuantity(f.getQuantity());
+        p.setSellingPrice(f.getSellingPrice());
         return p;
     }
 
     private static CartData convert(CartPojo p){
         CartData d = new CartData();
+        d.setProductId(p.getProductId());
         d.setCartItemId(p.getCartItemId());
         d.setProductName(p.getProductName());
         d.setQuantity(p.getQuantity());
