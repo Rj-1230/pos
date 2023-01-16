@@ -60,46 +60,9 @@ public class ProductService {
     @Transactional(rollbackOn = ApiException.class)
     public ProductPojo getProductPojoFromBarcode(String barcode) throws ApiException {
         ProductPojo a = productDao.getProductPojoFromBarcode(barcode);
-        if(!Objects.nonNull(a)){
-            throw new ApiException("The given product already exists");
+        if(Objects.isNull(a)){
+            throw new ApiException("The product with given barcode doesn't exists");
         }
         return a;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public ProductPojo getProductIdFromBarcode(String barcode)throws ApiException{
-//        try{
-//            ProductPojo p = dao.getPojo(barcode);
-//            return p;
-//        }
-//        catch(Exception e){
-//            System.out.println(e);
-//            return null;
-//        }
-//    }
-
-//    public ProductPojo getBrandIdFromProductId(int id)throws ApiException{
-//        try{
-//            ProductPojo p = dao.getPojo(id);
-//            return p;
-//        }
-//        catch(Exception e){
-//            System.out.println(e);
-//            return null;
-//        }
-//    }

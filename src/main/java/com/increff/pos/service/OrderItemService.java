@@ -1,6 +1,5 @@
 package com.increff.pos.service;
 
-import com.increff.pos.dao.OrderDao;
 import com.increff.pos.dao.OrderItemDao;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.pojo.OrderItemPojo;
@@ -22,7 +21,19 @@ public class OrderItemService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void add(OrderItemPojo p) throws ApiException {
+        InventoryPojo a = inventoryService.get(p.getProductId());
+        if(p.getQuantity()>a.getQuantity()){
+            throw new ApiException("Item can't be added to order as it exceeds the inventory. Present inventory count : "+a.getQuantity());
+        }
+        OrderItemPojo b = orderItemDao.getOrderItemPojoFromProductId(p.getProductId(),p.getOrderId());
+        inventoryService.addSub(a,false,p.getQuantity());
+        if(Objects.nonNull(b)){
+            b.setQuantity(b.getQuantity()+p.getQuantity());
+        }
+        else{
             orderItemDao.insert(p);
+        }
+
     }
 
     @Transactional(rollbackOn = ApiException.class)

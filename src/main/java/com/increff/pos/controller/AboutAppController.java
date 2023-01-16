@@ -2,7 +2,6 @@ package com.increff.pos.controller;
 
 import com.increff.pos.model.AboutAppData;
 import com.increff.pos.service.AboutAppService;
-//import com.increff.employee.service.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

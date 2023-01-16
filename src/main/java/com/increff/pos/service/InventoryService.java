@@ -21,9 +21,6 @@ public class InventoryService {
     @Transactional(rollbackOn = ApiException.class)
     public void addSub(InventoryPojo newP, boolean x,int quantity)throws ApiException {
         ProductPojo a = productService.getProductPojoFromBarcode(newP.getBarcode());
-        if(!Objects.nonNull(a)){
-            throw new ApiException("The product with given barcode does not exists !!");
-        }
         newP.setProductId(a.getProductId());
         InventoryPojo exP = get(newP.getProductId());
         if(Objects.nonNull(exP)){

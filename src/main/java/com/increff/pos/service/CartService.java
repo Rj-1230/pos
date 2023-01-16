@@ -27,12 +27,12 @@ public class CartService {
     private CartDao cartDao;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(CartPojo p,int id) throws ApiException {
-        InventoryPojo a = inventoryService.get(id);
+    public void add(CartPojo p) throws ApiException {
+        InventoryPojo a = inventoryService.get(p.getProductId());
         if(p.getQuantity()>a.getQuantity()){
             throw new ApiException("Item can't be added to cart as it exceeds the inventory. Present inventory count : "+a.getQuantity());
         }
-        CartPojo b = cartDao.getCartIdFromProductName(p.getProductName());
+        CartPojo b = cartDao.getCartPojoFromProductId(p.getProductId());
         if(Objects.nonNull(b)){
             b.setQuantity(b.getQuantity()+p.getQuantity());
         }
@@ -96,7 +96,7 @@ public class CartService {
                 throw new ApiException("The item "+d.getProductName()+" can't be added to order because sufficient amount not present in inventory");
             }
         }
-
+        System.out.println("Hello1");
         int orderId = orderService.addOrder(p);
 
         for(CartData d : list1){
@@ -105,12 +105,20 @@ public class CartService {
             o.setProductId(d.getProductId());
             o.setProductName(d.getProductName());
             InventoryPojo a = inventoryService.get(d.getProductId());
+            System.out.println("Helloa");
             inventoryService.addSub(a,false,d.getQuantity());
+            System.out.println("Hellob");
             o.setQuantity(d.getQuantity());
             o.setSellingPrice(d.getSellingPrice());
             orderItemService.add(o);
+            System.out.println("Helloc");
+
         }
+        System.out.println("Hello2");
+
         deleteAll(list1);
+        System.out.println("Hell3");
+
     }
 
 }

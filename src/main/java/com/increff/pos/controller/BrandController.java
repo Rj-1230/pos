@@ -4,12 +4,17 @@ import com.increff.pos.dto.BrandDto;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
 import com.increff.pos.service.ApiException;
+import com.increff.pos.service.Forbidden;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.increff.pos.util.SecurityUtil.getAuthentication;
 
 @RestController
 @Api
@@ -19,8 +24,9 @@ public class BrandController {
     private BrandDto brandDto;
 
     @ApiOperation(value="Adding a brand")
-    @RequestMapping(path="/api/brand", method = RequestMethod.POST)
-    public void add(@RequestBody BrandForm f) throws ApiException{
+    @RequestMapping(path="/api/admin/brand", method = RequestMethod.POST)
+    public void add(@RequestBody BrandForm f) throws ApiException, Forbidden {
+        Authentication auth = getAuthentication();
             brandDto.add(f);
     }
 

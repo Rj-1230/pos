@@ -1,37 +1,17 @@
 package com.increff.pos.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 @Component
+@Getter
+@Setter
+@Scope(value="session", proxyMode= ScopedProxyMode.TARGET_CLASS)
 public class InfoData {
-
     private String message;
-    private String errorMessage;
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public InfoData() {
-        message = "Activity time: " + LocalDateTime.now().toString();
-        errorMessage = "Hii";
-    }
-    public InfoData(int i) {
-//        message = "Activity time: " + LocalDateTime.now().toString();
-        errorMessage = "Hellloooooo";
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
+    private String role;
+    private String email;
 }

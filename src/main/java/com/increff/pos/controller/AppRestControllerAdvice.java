@@ -1,7 +1,9 @@
 package com.increff.pos.controller;
 
+import com.increff.pos.handler.CustomAccessDeniedHandler;
 import com.increff.pos.model.MessageData;
 import com.increff.pos.service.ApiException;
+import com.increff.pos.service.Forbidden;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,4 +27,13 @@ public class AppRestControllerAdvice {
 		data.setMessage("An unknown error has occurred - " + e.getMessage());
 		return data;
 	}
+
+
+//	@ExceptionHandler(CustomAccessDeniedHandler.class)
+//	@ResponseStatus(HttpStatus.FORBIDDEN)
+//	public MessageData handle(CustomAccessDeniedHandler e) {
+//		MessageData data = new MessageData();
+//		data.setMessage("The user is not given access. Please contact supervisor");
+//		return data;
+//	}
 }

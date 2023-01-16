@@ -32,23 +32,6 @@ public class ProductDao {
         }
     }
 
-//    public ProductPojo getBrandPojoFromProductId(int id) {
-////        removed the auto incrementing of ID manually
-////        em.persist(p);
-//
-//        try{
-//            TypedQuery<ProductPojo> query = em.createQuery(select_id, ProductPojo.class);
-//            query.setParameter("id", id);
-//            System.out.println("Product exists");
-//            return query.getSingleResult();
-//        }
-//        catch(Exception e){
-//            System.out.println(e);
-//            return null;
-//        }
-//    }
-
-
     public int delete(int id) {
         Query query = em.createQuery(delete_id);
         query.setParameter("id", id);

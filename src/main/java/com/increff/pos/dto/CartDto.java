@@ -30,7 +30,7 @@ public class CartDto {
         normalize(f);
         ProductPojo p= productService.getProductPojoFromBarcode(f.getBarcode());
         CartPojo c = convert(f,p);
-        cartService.add(c,p.getProductId());
+        cartService.add(c);
     }
 
     public void delete(@PathVariable int id) throws ApiException{

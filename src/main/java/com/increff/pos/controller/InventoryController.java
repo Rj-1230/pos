@@ -45,7 +45,7 @@ public class InventoryController {
         return inventoryDto.getInventoryReport();
     }
 
-    @ApiOperation(value="Adding or removing a product from the inventory")
+    @ApiOperation(value="Adding or removing a product's certain quantity from the inventory")
     @RequestMapping(path="/api/inventoryAddSub", method = RequestMethod.POST)
     public void addSub(@RequestBody InventoryForm f) throws ApiException{
         inventoryDto.addSub(f);

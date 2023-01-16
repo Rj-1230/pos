@@ -1,5 +1,6 @@
 package com.increff.pos.controller;
 
+import com.increff.pos.dto.ReportDto;
 import com.increff.pos.dto.RevenueDto;
 import com.increff.pos.model.BrandRevenueData;
 import com.increff.pos.model.CategoryRevenueData;
@@ -21,26 +22,29 @@ import java.util.List;
 public class RevenueController {
 
     @Autowired
-    private RevenueDto dto;
+    private RevenueDto revenueDto;
+
+    @Autowired
+    private ReportDto reportDto;
 
     @ApiOperation(value = "Get Revenue on product items with date as filter")
     @RequestMapping(path = "/api/revenue-product", method = RequestMethod.POST)
     public List<ProductRevenueData> get_revenue_product(@RequestBody DateFilterForm form) throws ApiException
     {
-        return dto.get_revenue_product(form);
+        return revenueDto.get_revenue_product(form);
     }
 
     @ApiOperation(value = "Get Revenue on product items with date as filter")
     @RequestMapping(path = "/api/revenue-brand", method = RequestMethod.POST)
     public List<BrandRevenueData> get_revenue_brand(@RequestBody DateFilterForm form) throws ApiException
     {
-        return dto.get_revenue_brand(form);
+        return revenueDto.get_revenue_brand(form);
     }
 
     @ApiOperation(value = "Get Revenue on product items with date as filter")
     @RequestMapping(path = "/api/revenue-category", method = RequestMethod.POST)
     public List<CategoryRevenueData> get_revenue_category(@RequestBody DateFilterForm form) throws ApiException
     {
-        return dto.get_revenue_category(form);
+        return revenueDto.get_revenue_category(form);
     }
 }

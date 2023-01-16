@@ -23,15 +23,12 @@ public class OrderItemDto {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    InventoryService inventoryService;
 
     public void add(OrderItemForm f) throws ApiException {
         checkNullable(f);
+        normalize(f);
         ProductPojo p= productService.getProductPojoFromBarcode(f.getBarcode());
         OrderItemPojo o = convert(f,p);
-        InventoryPojo a = inventoryService.get(o.getProductId());
-        inventoryService.addSub(a,false,o.getQuantity());
         orderItemService.add(o);
     }
 

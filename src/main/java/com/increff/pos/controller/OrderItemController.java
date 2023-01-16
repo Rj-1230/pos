@@ -55,17 +55,4 @@ public class OrderItemController {
         return orderItemDto.getAll(id);
     }
 
-//    @ApiOperation(value="Editing the customer name of a given order")
-//    @RequestMapping(path="/api/orderItems/{id}", method = RequestMethod.PUT)
-//    public void updateCustomer(@PathVariable int id, @RequestBody CustomerNameForm f) throws ApiException{
-//        orderItemDto.update(id, f);
-//        //before returning , we need to convert our OrderPojo type data into OrderData format
-//    }
-
-//    @ApiOperation(value="Making order placed by changing status")
-//    @RequestMapping(path="/api/orderItemPlace/{id}", method = RequestMethod.PUT)
-//    public void updateStatus(@PathVariable int id) throws ApiException{
-//        orderItemDto.update(id);
-//        //before returning , we need to convert our OrderPojo type data into OrderData format
-//    }
 }

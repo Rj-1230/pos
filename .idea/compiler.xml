@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pos" />
+        <module name="increff-pos" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="increff-store" target="1.8" />
+      <module name="pos" target="1.8" />
       <module name="spring_intro" target="1.8" />
     </bytecodeTargetLevel>
   </component>

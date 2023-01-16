@@ -18,39 +18,37 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductDto dto;
+    private ProductDto productDto;
 
     @ApiOperation(value="Adding a product")
     @RequestMapping(path="/api/product", method = RequestMethod.POST)
     public void add(@RequestBody ProductForm f)throws ApiException{
-            dto.add(f);
+            productDto.add(f);
     }
-
-
 
     @ApiOperation(value="Deleting a product")
     @RequestMapping(path="/api/product/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id){
-        dto.delete(id);
+        productDto.delete(id);
     }
 
     @ApiOperation(value="Getting details of a product from id")
     @RequestMapping(path="/api/product/{id}", method = RequestMethod.GET)
     public ProductData get(@PathVariable int id) throws ApiException {
-        return dto.get(id);
+        return productDto.get(id);
         //before returning , we need to convert our ProductPojo type data into ProductData format
     }
 
     @ApiOperation(value="Updating details of a particular Product")
     @RequestMapping(path="/api/product/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable int id, @RequestBody ProductUpdateForm f) throws ApiException {
-        dto.update(id,f);
+        productDto.update(id,f);
     }
 
     @ApiOperation(value="Getting details of all the products")
     @RequestMapping(path="/api/product", method = RequestMethod.GET)
     public List<ProductData> getAll(){
-        return dto.getAll();
+        return productDto.getAll();
     }
 
 }
