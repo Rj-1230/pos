@@ -3,6 +3,8 @@ package com.increff.pos.controller;
 import com.increff.pos.dto.BrandDto;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
+import com.increff.pos.model.BrandReportData;
+import com.increff.pos.model.InventoryReportData;
 import com.increff.pos.service.ApiException;
 import com.increff.pos.service.Forbidden;
 import io.swagger.annotations.Api;
@@ -24,7 +26,7 @@ public class BrandController {
     private BrandDto brandDto;
 
     @ApiOperation(value="Adding a brand")
-    @RequestMapping(path="/api/admin/brand", method = RequestMethod.POST)
+    @RequestMapping(path="/api/supervisor/brand", method = RequestMethod.POST)
     public void add(@RequestBody BrandForm f) throws ApiException, Forbidden {
         Authentication auth = getAuthentication();
             brandDto.add(f);
@@ -32,7 +34,7 @@ public class BrandController {
 
     //    Although delete is disabled from UI, but method made for future use
     @ApiOperation(value="Deleting a brand")
-    @RequestMapping(path="/api/brand/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path="/api/supervisor/brand/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id){
         brandDto.delete(id);
     }
@@ -44,7 +46,7 @@ public class BrandController {
     }
 
     @ApiOperation(value="Updating details of a particular brand-category combo")
-    @RequestMapping(path="/api/brand/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path="/api/supervisor/brand/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
         brandDto.update(id,f);
     }
@@ -54,4 +56,11 @@ public class BrandController {
     public List<BrandData> getAll() {
         return brandDto.getAll();
     }
+
+//    @ApiOperation(value = "Get brand report of product items with brand-category")
+//    @RequestMapping(path = "/api/brandReport", method = RequestMethod.GET)
+//    public List<BrandReportData> getBrandReport() throws ApiException
+//    {
+//        return brandDto.getBrandReport();
+//    }
 }

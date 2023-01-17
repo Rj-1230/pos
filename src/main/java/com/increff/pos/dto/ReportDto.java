@@ -22,7 +22,7 @@ public class ReportDto {
     ReportService service;
 
     @Autowired
-    OrderDao orderDao;
+    OrderService orderService;
 
     @Autowired
     OrderItemService orderItemService;
@@ -35,13 +35,14 @@ public class ReportDto {
         Integer totalItems = 0;
         Double totalRevenue = 0.0;
 
-        String startDate = correctFormat(date.toString()) + " 00:00:00";
-        String endDate = correctFormat(date.toString()) + " 23:59:59";
+//        String startDate = correctFormat(date.toString()) + " 00:00:00";
+//        String endDate = correctFormat(date.toString()) + " 23:59:59";
 
-        List<OrderPojo> orderPojoList = orderDao.selectDateFilter(startDate, endDate);
-
+        String startDate = date + " 00:00:00";
+        String endDate = date + " 23:59:59";
+        System.out.println(startDate+"   "+endDate);
+        List<OrderPojo> orderPojoList = orderService.selectOrderByDateFilter(startDate, endDate);
         Integer totalOrders = orderPojoList.size();
-
         for (OrderPojo o : orderPojoList) {
             Integer id = o.getOrderId();
             List<OrderItemPojo> orderItemPojoList = orderItemService.getAll(id);
@@ -64,7 +65,12 @@ public class ReportDto {
         }
     }
 
-    String correctFormat(String date) {
-        return date.replace('-', '/');
+
+    public List<DailyReportPojo> getAllReport() throws ApiException {
+        return service.getAllReport();
     }
+
+//    String correctFormat(String date) {
+//        return date.replace('-', '/');
+//    }
 }

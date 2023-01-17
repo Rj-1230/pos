@@ -1,3 +1,4 @@
+var role;
 var newBrands = {};
 function getProductUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
@@ -8,6 +9,12 @@ function getBrandUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/brand";
 }
+
+function getSupervisorProductUrl(){
+	var baseUrl = $("meta[name=baseUrl]").attr("content")
+	return baseUrl + "/api/supervisor/product";
+}
+
 
  function getBrandOption() {
         selectElement = document.querySelector('#inputBrand');
@@ -26,7 +33,7 @@ function addProduct(event){
    var b = getCategoryOption();
 	var $form = $("#product-form");
 	var json = toJson($form);
-	var url = getProductUrl();
+	var url = getSupervisorProductUrl();
 	$.ajax({
 	   url: url,
 	   type: 'POST',
@@ -54,7 +61,7 @@ function addProduct(event){
 
 function updateProduct(event){
 	var id = $("#product-edit-form input[name=productId]").val();
-	var url = getProductUrl() + "/" + id;
+	var url = getSupervisorProductUrl() + "/" + id;
 	var $form = $("#product-edit-form");
 	var json = toJson($form);
 	$.ajax({
@@ -66,7 +73,7 @@ function updateProduct(event){
        },
 	   success: function(response) {
 	   		getProductList();
-	   		$('#edit-brand-modal').modal('hide');
+	   		$('#edit-product-modal').modal('hide');
             document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
             document.getElementById('toast-container').classList.add('bg-success');
             document.getElementById('my-message').innerHTML="The product was updated successfully";
@@ -114,7 +121,7 @@ function getBrandsList(){
 
 
 function deleteProduct(id){
-	var url = getProductUrl() + "/" + id;
+	var url = getSupervisorProductUrl() + "/" + id;
 
 	$.ajax({
 	   url: url,
@@ -136,8 +143,14 @@ function displayProductList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml ='<button class="btn btn-dark" onclick="displayEditProduct(' + e.productId + ')"> <i class="bi bi-pen"></i></button>'
-        buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteProduct(' + e.productId+ ')" disabled><i class="bi bi-trash"></i></button>'
+		var buttonHtml=''
+		if(role=='supervisor'){
+		buttonHtml +='<button class="btn btn-dark" onclick="displayEditProduct(' + e.productId + ')"> <i class="bi bi-pen"></i></button>'
+		}
+		else{
+		buttonHtml +='<button class="btn btn-dark" onclick="displayEditProduct(' + e.productId + ')" disabled> <i class="bi bi-pen"></i></button>'
+
+		}
 		var row = '<tr>'
 		+ '<td>' + e.productId + '</td>'
 		+ '<td>' + e.barcode + '</td>'
@@ -235,6 +248,8 @@ function init(){
     $('#process-data').click(processData);
     $('#download-errors').click(downloadErrors);
     $('#myFile').on('change', updateFileName)
+    role= $("meta[name=role]").attr("content");
+
 }
 
 $(document).ready(init);

@@ -61,6 +61,7 @@ com\increff\pos\service\InventoryService.class
 com\increff\pos\model\CartData.class
 com\increff\pos\service\CartService.class
 com\increff\pos\scheduler\ReportScheduler.class
+com\increff\pos\model\BrandReportData.class
 com\increff\pos\model\InventoryForm.class
 com\increff\pos\controller\AccessDeniedController.class
 com\increff\pos\model\CategoryRevenueData.class

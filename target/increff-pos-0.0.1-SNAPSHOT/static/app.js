@@ -1,4 +1,4 @@
-
+var role;
 //HELPER METHOD
 function toJson($form){
     var serialized = $form.serializeArray();
@@ -146,3 +146,20 @@ function displayUploadData(){
  	resetUploadDialog();
 	$('#upload-file-modal').modal('toggle');
 }
+
+
+
+function init(){
+    role= $("meta[name=role]").attr("content");
+	if(role=='supervisor'){
+	document.getElementById("nav-supervisor").style.display = "block";
+	}
+    	if(role=='operator'){
+    	var x = document.getElementsByClassName("supervisor");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = 'none';
+        }
+        }
+}
+$(document).ready(init);

@@ -102,4 +102,13 @@ public class NullCheckHelper {
         }
     }
 
+
+    public static void checkNullable(UserForm f) throws ApiException {
+        if(Objects.equals(f.getEmail(), "")){
+            throw new ApiException("Email can't be empty");
+        }
+        if(Objects.equals(f.getPassword(), "")){
+            throw new ApiException("The password can't be empty");
+        }
+    }
 }

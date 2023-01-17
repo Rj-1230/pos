@@ -78,5 +78,13 @@ public class OrderService {
         return orderDao.selectDateFilter(startDate,endDate);
     }
 
+    @Transactional
+    public List<OrderPojo> selectOrderByDateFilter(String start, String endDate) throws ApiException {
+        try {
+            return orderDao.selectDateFilter(start, endDate);
+        } catch (Exception e) {
+            throw new ApiException(e.getMessage());
+        }
+    }
 
 }

@@ -4,15 +4,24 @@ import com.increff.pos.model.*;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.CartPojo;
 import com.increff.pos.pojo.ProductPojo;
+import com.increff.pos.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+@Service
 
 public class CartDtoHelper {
+    @Autowired
+    private CartService cartService;
 
     public static List<CartData> getAllCartItems(List<CartPojo> list){
         List<CartData> list2 = new ArrayList<CartData>();
         for(CartPojo p: list){
+            if(p.getQuantity()==0){
+                continue;
+            }
             list2.add(convert(p));
         }
         return list2;

@@ -85,3 +85,16 @@ body {
   z-index: 999999;
   overflow: visible !important;
 }
+
+
+#dropMenu a{
+color:rgba(255,255,255,.5);}
+
+#dropMenu a:hover{
+color: black;}
+
+
+table td,th{
+text-align: center;
+  vertical-align: middle;
+  }

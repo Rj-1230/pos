@@ -16,6 +16,5 @@ public class UserPojo{
     private int id;
     private String email;
     private String password;
-    private String role;
 
 }

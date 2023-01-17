@@ -26,6 +26,7 @@ public abstract class AbstractUiController {
 		ModelAndView mav = new ModelAndView(page);
 
 		mav.addObject("info", info);
+		mav.addObject("role", info.getRole());
 		mav.addObject("baseUrl", baseUrl);
 		return mav;
 	}

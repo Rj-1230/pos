@@ -6,6 +6,7 @@ import com.increff.pos.model.BrandRevenueData;
 import com.increff.pos.model.CategoryRevenueData;
 import com.increff.pos.model.DateFilterForm;
 import com.increff.pos.model.ProductRevenueData;
+import com.increff.pos.pojo.DailyReportPojo;
 import com.increff.pos.service.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,5 +47,12 @@ public class RevenueController {
     public List<CategoryRevenueData> get_revenue_category(@RequestBody DateFilterForm form) throws ApiException
     {
         return revenueDto.get_revenue_category(form);
+    }
+
+    @ApiOperation(value = "Get scheduled daily sales report ")
+    @RequestMapping(path = "/api/dailyReport", method = RequestMethod.GET)
+    public List<DailyReportPojo> getDailySales() throws ApiException
+    {
+        return reportDto.getAllReport();
     }
 }

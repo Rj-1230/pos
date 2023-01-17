@@ -47,10 +47,10 @@ public class RevenueDto {
             map.put(p.getProductId(), productRevenueData);
         }
 ////      converting the date into required formate
-//        String startDate = form.getStart() + " 00:00:00";
-//        String endDate = form.getEnd() + " 23:59:59";
+        String startDate = form.getStart() + " 00:00:00";
+        String endDate = form.getEnd() + " 23:59:59";
 
-        List<OrderPojo> orderPojoList = orderService.selectDateFilter(form);
+        List<OrderPojo> orderPojoList = orderService.selectOrderByDateFilter(startDate,endDate);
 
 //        System.out.println(startDate+endDate + "   " + orderPojoList.size());
 
@@ -62,7 +62,7 @@ public class RevenueDto {
 //            System.out.println(orderId);
             List<OrderItemPojo> orderItemPojoList = orderItemService.getAll(orderId);
 
-            System.out.println("Hello"+orderItemPojoList.size());
+//            System.out.println("Hello"+orderItemPojoList.size());
             for(OrderItemPojo p: orderItemPojoList)
             {
                 int productId = p.getProductId();
@@ -80,7 +80,7 @@ public class RevenueDto {
 //        Converting map to list
         for (Map.Entry<Integer, ProductRevenueData> e: map.entrySet())
         {
-            System.out.println(e.getValue().getQuantity());
+//            System.out.println(e.getValue().getQuantity());
             if(e.getValue().getQuantity()==0){
                 continue;
             }

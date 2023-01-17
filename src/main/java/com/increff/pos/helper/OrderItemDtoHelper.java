@@ -55,6 +55,8 @@ public class OrderItemDtoHelper {
     public static List<OrderItemData> getAllOrderItemsOfAgivenOrder(List<OrderItemPojo> list) {
         List<OrderItemData> list2 = new ArrayList<OrderItemData>();
         for (OrderItemPojo p : list) {
+            if(p.getQuantity()==0)
+                continue;
             list2.add(convert(p));
         }
         return list2;

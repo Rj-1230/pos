@@ -1,18 +1,18 @@
-
+var role;
 function getBrandUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/brand";
 }
-function getAdminBrandUrl(){
+function getSupervisorBrandUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/api/admin/brand";
+	return baseUrl + "/api/supervisor/brand";
 }
 
 //BUTTON ACTIONS
 function addBrand(event){
 	var $form = $("#brand-form");
 	var json = toJson($form);
-	var url = getAdminBrandUrl();
+	var url = getSupervisorBrandUrl();
 
 	$.ajax({
 	   url: url,
@@ -42,7 +42,7 @@ function addBrand(event){
 
 function updateBrand(event){
     var id = $("#brand-edit-form input[name=id]").val();
-	var url = getBrandUrl() + "/" + id;
+	var url = getSupervisorBrandUrl() + "/" + id;
 	var $form = $("#brand-edit-form");
 	var json = toJson($form);
 	$.ajax({
@@ -85,7 +85,7 @@ function getBrandList(){
 }
 
 function deleteBrand(id){
-	var url = getBrandUrl() + "/" + id;
+	var url = getSupervisorBrandUrl() + "/" + id;
 
 	$.ajax({
 	   url: url,
@@ -109,8 +109,13 @@ function displayBrandList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml ='<button class="btn btn-dark" onclick="displayEditbrand(' + e.id + ')"> <i class="bi bi-pen"></i></button>'
-		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteBrand(' + e.id + ')" disabled><i class="bi bi-trash"></i></button>'
+		var buttonHtml=''
+		if(role=='supervisor'){
+		    buttonHtml+='<button class="btn btn-dark" onclick="displayEditbrand(' + e.id + ')"> <i class="bi bi-pen"></i></button>'
+		}
+		else{
+		    buttonHtml+='<button class="btn btn-dark" onclick="displayEditbrand(' + e.id + ')" disabled> <i class="bi bi-pen"></i></button>'
+		}
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.brand + '</td>'
@@ -161,6 +166,7 @@ getBrandList();
 
 //INITIALIZATION CODE
 function init(){
+    role= $("meta[name=role]").attr("content");
 	$('#add-brand').click(addBrand);
 	$('#update-brand').click(updateBrand);
 	$('#refresh-data').click(getBrandList);

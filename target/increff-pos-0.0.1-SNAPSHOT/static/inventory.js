@@ -1,13 +1,19 @@
+var role;
 function getInventoryUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/inventory";
+}
+
+function getSupervisorInventoryUrl(){
+	var baseUrl = $("meta[name=baseUrl]").attr("content")
+	return baseUrl + "/api/supervisor/inventory";
 }
 
 //BUTTON ACTIONS
 function addInventory(event){
 	var $form = $("#inventory-form");
 	var json = toJson($form);
-	var url = getInventoryUrl()+"AddSub";
+	var url = getSupervisorInventoryUrl()+"AddSub";
 
 	$.ajax({
 	   url: url,
@@ -36,7 +42,7 @@ function addInventory(event){
 function addToInventory(event){
 	$('#add-inventory-modal').modal('toggle');
 //	var id = $("#add-edit-form input[name=productId]").val();
-	var url = getInventoryUrl() + "AddSub";
+	var url = getSupervisorInventoryUrl() + "AddSub";
     var $form = $("#add-edit-form");
 	var json = toJson($form);
 
@@ -68,7 +74,7 @@ function addToInventory(event){
 function subFromInventory(event){
 
 	$('#sub-inventory-modal').modal('toggle');
-	var url = getInventoryUrl() + "AddSub";
+	var url = getSupervisorInventoryUrl() + "AddSub";
 	var $form = $("#sub-edit-form");
 
 	var json = toJson($form);
@@ -118,7 +124,7 @@ function getInventoryList(){
 }
 
 function deleteInventory(id){
-	var url = getInventoryUrl() + "/" + id;
+	var url = getSupervisorInventoryUrl() + "/" + id;
 
 	$.ajax({
 	   url: url,
@@ -138,9 +144,15 @@ function displayInventoryList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml ='<button class="btn btn-dark" onclick="displayEditInventory(' +e.productId + ')" ><i class="bi bi-plus"></i> </button>'
+		var buttonHtml=''
+		if(role=='supervisor'){
+	     buttonHtml +='<button class="btn btn-dark" onclick="displayEditInventory(' +e.productId + ')" ><i class="bi bi-plus"></i> </button>'
 		buttonHtml +='&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-dark" onclick="displayEditInventorys(' + e.productId + ')" ><i class="bi bi-dash"></i></button>'
-		buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteInventory(' + e.productId + ')" disabled><i class="bi bi-trash"></i></button>'
+		}
+		else{
+		buttonHtml +='<button class="btn btn-dark" onclick="displayEditInventory(' +e.productId + ')" disabled><i class="bi bi-plus"></i> </button>'
+        		buttonHtml +='&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-dark" onclick="displayEditInventorys(' + e.productId + ')" disabled><i class="bi bi-dash"></i></button>'
+		}
 		var row = '<tr>'
 		+ '<td>' + e.productId + '</td>'
 		+ '<td>' + e.barcode + '</td>'
@@ -218,6 +230,7 @@ getInventoryList();
 
 //INITIALIZATION CODE
 function init(){
+    role= $("meta[name=role]").attr("content");
 	$('#add-inventory').click(addInventory);
 	$('#addInventory').click(addToInventory);
 	$('#subInventory').click(subFromInventory);

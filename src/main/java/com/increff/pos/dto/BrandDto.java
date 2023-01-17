@@ -1,7 +1,9 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.helper.BrandDtoHelper;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
+import com.increff.pos.model.BrandReportData;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.service.ApiException;
 import com.increff.pos.service.BrandService;
@@ -20,6 +22,9 @@ import static com.increff.pos.helper.NullCheckHelper.*;
 public class BrandDto {
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private BrandDtoHelper brandDtoHelper;
 
     public void add(BrandForm f)throws  ApiException{
         checkNullable(f);
@@ -45,4 +50,8 @@ public class BrandDto {
         return getAllBrands(brandService.getAll());
     }
 
+//    public List<BrandReportData> getBrandReport() throws ApiException
+//    {
+//        return brandDtoHelper.getBrandReportBrandCategory();
+//    }
 }

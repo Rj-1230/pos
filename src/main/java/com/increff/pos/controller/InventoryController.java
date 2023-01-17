@@ -21,7 +21,7 @@ public class InventoryController {
     private InventoryDto inventoryDto;
 
     @ApiOperation(value="Deleting a product from Inventory")
-    @RequestMapping(path="/api/inventory/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path="/api/supervisor/inventory/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id) throws ApiException{
         inventoryDto.delete(id);
     }
@@ -46,7 +46,7 @@ public class InventoryController {
     }
 
     @ApiOperation(value="Adding or removing a product's certain quantity from the inventory")
-    @RequestMapping(path="/api/inventoryAddSub", method = RequestMethod.POST)
+    @RequestMapping(path="/api/supervisor/inventoryAddSub", method = RequestMethod.POST)
     public void addSub(@RequestBody InventoryForm f) throws ApiException{
         inventoryDto.addSub(f);
     }
