@@ -12,7 +12,7 @@
 
 
 
-<div class="container">
+<div class="container"  style="margin-bottom:20px;">
 
   <div th:replace="snippets.html :: name_toast"></div>
 
@@ -51,7 +51,7 @@
   </div>
   <br>
   <br>
-  <div class="row card mx-auto" style="width: 40rem;">
+  <div class="row card mx-auto" style="width: 40rem; color:white;background-color:#343a40!important;">
     <div class="space">
 <!--      Blank row-->
     </div>
@@ -85,14 +85,13 @@
 
     <!-- Table -->
     <div class="col-12">
-      <table class="table table-striped table-hover" id="brand-table">
+      <table class="table table-dark table-hover table-striped" id="brand-table">
         <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Brand</th>
           <th scope="col">Category</th>
           <th scope="col">Actions</th>
-          <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -153,7 +152,8 @@
 <!--  For upload button-->
 <div th:replace="snippets.html :: name_upload_modal"></div>
 </div> <!-- Container end-->
-
+<div class="space"></div>
+<div class="space"></div>
 <footer th:replace="snippets.html :: name_footer"></footer>
 
 <script th:src="@{/static/brand.js}"/></script>
