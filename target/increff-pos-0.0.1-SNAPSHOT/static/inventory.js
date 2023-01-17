@@ -225,9 +225,6 @@ function getList(){
 getInventoryList();
 }
 
-
-
-
 //INITIALIZATION CODE
 function init(){
     role= $("meta[name=role]").attr("content");

@@ -7,6 +7,12 @@ html {
 style-decoration:none;
 }
 
+.lightToDark .btn:hover{
+color:white;
+background-color:rgba(0,0,0,0.7);
+
+}
+
 .demo-wrap {
   overflow: hidden;
   position: relative;

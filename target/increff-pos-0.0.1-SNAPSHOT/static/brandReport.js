@@ -1,9 +1,5 @@
 var newBrands = {};
 var brandReportData;
-//function getInventoryReportUrl(){
-// 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-// 	return baseUrl + "/api/inventoryReport";
-// }
 
 function getBrandUrl()
 {
@@ -34,9 +30,7 @@ function displayBrandReportList(data)
         		+ '<td>'  + e.category + '</td>'
         		+ '</tr>';
                 $tbody.append(row);
-
         	}
-
 }
 
 
