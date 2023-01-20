@@ -38,7 +38,7 @@ public class CartController {
 
     @ApiOperation(value="Updating details of a particular item in the cart")
     @RequestMapping(path="/api/cart/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody CartEditForm f) throws ApiException {
+    public void update(@PathVariable int id, @RequestBody CartForm f) throws ApiException {
         cartDto.update(id,f);
     }
 
@@ -49,13 +49,13 @@ public class CartController {
     }
 
     @ApiOperation(value = "Deleting all items from the current order")
-    @RequestMapping(path = "/api/cartFlushs", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/api/cartFlush", method = RequestMethod.DELETE)
     public void deleteAll() throws ApiException {
         cartDto.flushAll();
     }
 
     @ApiOperation(value = "Creating a new order and pushing all items into an order")
-    @RequestMapping(path = "/api/cartFlush", method = RequestMethod.POST)
+    @RequestMapping(path = "/api/cartPushToOrder", method = RequestMethod.POST)
     public void pushToNewOrder(@RequestBody OrderForm f) throws ApiException {
         cartDto.pushToNewOrder(f);
     }

@@ -3,7 +3,6 @@ package com.increff.pos.controller;
 import com.increff.pos.dto.ProductDto;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
-import com.increff.pos.model.ProductUpdateForm;
 import com.increff.pos.service.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,12 +35,11 @@ public class ProductController {
     @RequestMapping(path="/api/product/{id}", method = RequestMethod.GET)
     public ProductData get(@PathVariable int id) throws ApiException {
         return productDto.get(id);
-        //before returning , we need to convert our ProductPojo type data into ProductData format
     }
 
     @ApiOperation(value="Updating details of a particular Product")
     @RequestMapping(path="/api/supervisor/product/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody ProductUpdateForm f) throws ApiException {
+    public void update(@PathVariable int id, @RequestBody ProductForm f) throws ApiException {
         productDto.update(id,f);
     }
 

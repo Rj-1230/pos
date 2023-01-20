@@ -29,19 +29,6 @@ public class NullCheckHelper {
 
     }
 
-    public static void checkNullable(ProductUpdateForm f) throws ApiException {
-        if(Objects.equals(f.getBarcode(), "")){
-            throw new ApiException("The barcode can't be empty");
-        }
-        if(Objects.equals(f.getName(), "")){
-            throw new ApiException("The product name field can't be empty");
-        }
-        if(f.getMrp()<=0.0d){
-            throw new ApiException("The MRP of product can't be 0 or negative");
-        }
-
-    }
-
 
     public static void checkNullable(InventoryForm f) throws ApiException {
         if(Objects.equals(f.getBarcode(), "")){
@@ -60,16 +47,6 @@ public class NullCheckHelper {
             throw new ApiException("The item quantity to be added in the cart can't be 0");
         }
     }
-
-    public static void checkNullable(CartEditForm f) throws ApiException {
-        if(f.getSellingPrice()<=0.0d){
-            throw new ApiException("The selling price can't be 0 or negative");
-        }
-        if(f.getQuantity()==0){
-            throw new ApiException("The item quantity to be added in the cart can't be 0");
-        }
-    }
-
 
     public static void checkNullable(OrderForm f) throws ApiException {
         if(Objects.equals(f.getCustomerName(),"")){

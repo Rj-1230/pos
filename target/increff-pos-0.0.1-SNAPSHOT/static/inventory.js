@@ -149,10 +149,6 @@ function displayInventoryList(data){
 	     buttonHtml +='<button class="btn btn-dark" onclick="displayEditInventory(' +e.productId + ')" ><i class="bi bi-plus"></i> </button>'
 		buttonHtml +='&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-dark" onclick="displayEditInventorys(' + e.productId + ')" ><i class="bi bi-dash"></i></button>'
 		}
-		else{
-		buttonHtml +='<button class="btn btn-dark" onclick="displayEditInventory(' +e.productId + ')" disabled><i class="bi bi-plus"></i> </button>'
-        		buttonHtml +='&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-dark" onclick="displayEditInventorys(' + e.productId + ')" disabled><i class="bi bi-dash"></i></button>'
-		}
 		var row = '<tr>'
 		+ '<td>' + e.productId + '</td>'
 		+ '<td>' + e.barcode + '</td>'

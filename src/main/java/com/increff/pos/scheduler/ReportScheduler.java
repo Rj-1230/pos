@@ -15,7 +15,6 @@ public class ReportScheduler {
     @Scheduled(cron = "${cron.expression}")
     public void createDailyReport()
     {
-        System.out.println("creating report");
         try {
             reportDto.createDailyReport();
         }

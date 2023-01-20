@@ -24,7 +24,6 @@ public class CartPojo {
     private int productId;
     @Column(name="SellingPrice", nullable=false)
     private Double sellingPrice ;
-
     @Column(name="CounterID", nullable=false)
     private int counterId;
 

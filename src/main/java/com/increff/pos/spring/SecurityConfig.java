@@ -31,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").hasAnyAuthority("supervisor", "operator")//
                 .antMatchers("/ui/supervisor/**").hasAuthority("supervisor")//
                 .antMatchers("/ui/**").hasAnyAuthority("supervisor", "operator")//
-//                .and()//
-//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())//
+                .and()//
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())//
                 // Ignore CSRF and CORS
                 .and().csrf().disable().cors().disable();
         logger.info("Configuration complete");
@@ -44,9 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html", "/webjars/**");
     }
 
-//    @Bean
-//    public AccessDeniedHandler accessDeniedHandler() {
-//        return new CustomAccessDeniedHandler();
-//    }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
 
 }

@@ -1,4 +1,4 @@
-
+var counterId;
 function getOrderUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/order";
@@ -12,7 +12,7 @@ function getCartUrl(){
 function addOrder(event){
 	var $form = $("#customer-form");
 	var json = toJson($form);
-	var url = getCartUrl() + 'Flush';
+	var url = getCartUrl() + 'PushToOrder';
 	$.ajax({
 	   url: url,
 	   type: 'POST',
@@ -137,18 +137,17 @@ function getCartItemList(){
 }
 
 function displayCartItemList(data){
-	if(data.length==0){
-	    document.getElementById("create-new-order").style.display = "none";
-	}
-	else{
-	document.getElementById("create-new-order").style.display = "block";
+	if(data.length>0){
+	    document.getElementById("create-new-order").style.display = "block";
+	    document.getElementById("empty-cart").style.display = "block";
+	    document.getElementById("cartItem-table").style.display = "block";
 	}
 	var $tbody = $('#cartItem-table').find('tbody');
 	$tbody.empty();
 
 	for(var i in data){
 		var e = data[i];
-		if(e.quantity==0){
+		if(e.quantity==0 || e.counterId!=counterId){
 		continue;
 		}
 		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditCartItem(' + e.cartItemId + ')" >Edit </button>'
@@ -194,7 +193,7 @@ function displayCartItemList(data){
 
     function emptyCart(event){
 
-    	var url = getCartUrl() + "Flushs";
+    	var url = getCartUrl() + "Flush";
     	$.ajax({
     	   url: url,
     	   type: 'DELETE',
@@ -204,6 +203,10 @@ function displayCartItemList(data){
                                 document.getElementById('toast-container').classList.add('bg-success');
                                 document.getElementById('my-message').innerHTML="The cart was emptied";
                                 $(".toast").toast('show');
+
+                document.getElementById("create-new-order").style.display = "none";
+                document.getElementById("empty-cart").style.display = "none";
+                document.getElementById("cartItem-table").style.display = "none";
 
     	   },
     	    error: function(response){
@@ -296,12 +299,15 @@ function createNewOrder(){
 
 
 function init(){
+counterId = $("meta[name=counterId]").attr("content")
+//flag = $("meta[name=flag]").attr("content")
 $('#update-cart').click(updateCart);
 	$('#create-order').click(addOrder);
 	$('#add-cartItem').click(addItemToCart);
 	$('#empty-cart').click(emptyCart);
     $('#create-new-order').click(createNewOrder);
 	$('#refresh-data').click(getOrderList);
+
 }
 
 $(document).ready(init);

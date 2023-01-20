@@ -1,7 +1,9 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.model.*;
+import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
+import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,26 +16,20 @@ import java.util.List;
 import static com.increff.pos.helper.GetCurrentTime.getCurrentDateTime;
 import static com.increff.pos.helper.NullCheckHelper.*;
 import static com.increff.pos.helper.OrderDtoHelper.*;
+import static com.increff.pos.helper.OrderItemDtoHelper.*;
+import static com.increff.pos.helper.OrderItemDtoHelper.getAllOrderItemsOfAgivenOrder;
 
 @Service
 
 public class OrderDto {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ProductService productService;
 
-    public int addOrder(OrderForm f) throws ApiException {
-        checkNullable(f);
-        normalize(f);
-        OrderPojo o = convert(f);
-        return  orderService.addOrder(o);
-    }
-
-    public void deleteOrder(@PathVariable int id){
-        orderService.deleteOrder(id);
-    }
 
     public OrderData getOrderDetails(int id) throws ApiException {
-        OrderPojo p = orderService.getOrderDetails(id);
+        OrderPojo p = orderService.getCheckOrder(id);
         return convert(p);
     }
 
@@ -41,22 +37,44 @@ public class OrderDto {
         checkNullable(f);
         normalize(f);
         OrderPojo o = convert(f);
-        orderService.updateOrder(id,o);
+        orderService.updateCustomerDetails(id,o);
     }
 
     public List<OrderData> getAll(){
         return getAllOrders(orderService.getAll());
     }
 
-    public List<OrderData> getDateFilter(DateFilterForm f) throws ApiException {
-        return ordersInDateRange(orderService.selectDateFilter(f));
-    }
 
     public void placeOrder(int id) throws ApiException
     {
         orderService.placeOrder(id);
     }
 
+    public void addOrderItem(OrderItemForm f) throws ApiException {
+        checkNullable(f);
+        normalize(f);
+        ProductPojo p= productService.getProductPojoFromBarcode(f.getBarcode());
+        OrderItemPojo o = convert(f,p);
+        orderService.addOrderItem(o);
+    }
+
+    public void deleteOrderItem(@PathVariable int id) throws ApiException {
+        orderService.deleteOrderItem(id);
+    }
+
+    public OrderItemData getOrderItem(int id) throws ApiException {
+        OrderItemPojo p = orderService.getCheckOrderItem(id);
+        return convert(p);
+    }
+
+    public void updateOrderItem(@PathVariable int id, @RequestBody OrderItemForm f) throws ApiException {
+        OrderItemPojo o = convert(f);
+        orderService.updateOrderItem(id,o);
+    }
+
+    public List<OrderItemData> getAllOrderItems(int orderId){
+        return getAllOrderItemsOfAgivenOrder(orderService.getAllOrderItems(orderId));
+    }
 
 
 

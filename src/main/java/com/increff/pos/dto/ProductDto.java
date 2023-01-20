@@ -2,7 +2,6 @@ package com.increff.pos.dto;
 
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
-import com.increff.pos.model.ProductUpdateForm;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.ApiException;
 import com.increff.pos.service.BrandService;
@@ -43,10 +42,10 @@ public class ProductDto {
         return convert(p);
     }
 
-    public void update(@PathVariable int id, @RequestBody ProductUpdateForm f) throws ApiException {
+    public void update(@PathVariable int id, @RequestBody ProductForm f) throws ApiException {
         checkNullable(f);
         normalize(f);
-        ProductPojo p = convertUpdate(f);
+        ProductPojo p = convert(f);
         productService.update(id,p);
     }
 

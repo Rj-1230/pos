@@ -8,5 +8,6 @@ import lombok.Setter;
 public class CartForm {
     private String barcode;
     private int quantity;
+    private double sellingPrice;
 
 }

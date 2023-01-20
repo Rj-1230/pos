@@ -14,111 +14,102 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+import static com.increff.pos.util.SecurityUtil.getPrincipal;
+
 @Service
 public class CartService {
 
     @Autowired
     private InventoryService inventoryService;
     @Autowired
-    private OrderItemService orderItemService;
-    @Autowired
     private OrderService orderService;
     @Autowired
     private CartDao cartDao;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(CartPojo p) throws ApiException {
-        InventoryPojo a = inventoryService.get(p.getProductId());
-        if(p.getQuantity()>a.getQuantity()){
-            throw new ApiException("Item can't be added to cart as it exceeds the inventory. Present inventory count : "+a.getQuantity());
+    public void add(CartPojo cartPojo) throws ApiException {
+        InventoryPojo inventoryPojo = inventoryService.get(cartPojo.getProductId());
+        if(cartPojo.getQuantity()>inventoryPojo.getQuantity()){
+            throw new ApiException("Item can't be added to cart as it exceeds the inventory. Present inventory count : "+inventoryPojo.getQuantity());
         }
-        CartPojo b = cartDao.getCartPojoFromProductId(p.getProductId());
-        if(Objects.nonNull(b)){
-            b.setQuantity(b.getQuantity()+p.getQuantity());
+        CartPojo exCartPojo = cartDao.getCartPojoFromProductIdAndCounterId(cartPojo.getProductId(), cartPojo.getCounterId());
+        if(Objects.nonNull(exCartPojo)){
+            if(exCartPojo.getQuantity()+cartPojo.getQuantity()>inventoryPojo.getQuantity()){
+                throw new ApiException("Item can't be added to cart as it exceeds the inventory. Items already in cart : "+exCartPojo.getQuantity() +" Present inventory count :"+inventoryPojo.getQuantity());
+            }
+            exCartPojo.setQuantity(exCartPojo.getQuantity()+cartPojo.getQuantity());
         }
         else{
-            cartDao.insert(p);
+            cartDao.insert(cartPojo);
         }
     }
 
     @Transactional(rollbackOn = ApiException.class)
     public void delete(int id) throws ApiException {
-        CartPojo ex = getCheck(id);
+        getCheck(id);
         cartDao.delete(id);
-    }
-
-    @Transactional(rollbackOn = ApiException.class)
-    public CartPojo get(int id) throws ApiException {
-        return getCheck(id);
     }
 
     @Transactional
     public List<CartPojo> getAll() {
-        return cartDao.selectAll();
+        return cartDao.selectAll(getPrincipal().getId());
     }
 
     @Transactional(rollbackOn  = ApiException.class)
-    public void deleteAll(List<CartData> list1) throws ApiException{
-        for(CartData d:list1){
-            delete(d.getCartItemId());
+    public void deleteAll(List<CartData> cartDataList) throws ApiException{
+        for(CartData cartData:cartDataList){
+            delete(cartData.getCartItemId());
         }
     }
 
     @Transactional(rollbackOn  = ApiException.class)
-    public void update(int id, CartPojo p) throws ApiException {
-        CartPojo ex = getCheck(id);
-        InventoryPojo a = inventoryService.get(ex.getProductId());
-        if(p.getQuantity()>a.getQuantity()){
-            throw new ApiException("Item can't be added to cart as it exceeds the inventory. Present inventory count : "+a.getQuantity());
+    public void update(int id, CartPojo newCartPojo) throws ApiException {
+        CartPojo exCartPojo = getCheck(id);
+        InventoryPojo inventoryPojo = inventoryService.get(exCartPojo.getProductId());
+        if(newCartPojo.getQuantity()>inventoryPojo.getQuantity()){
+            throw new ApiException("Item can't be updated as it exceeds the inventory. Present inventory count : "+inventoryPojo.getQuantity());
         }
-        ex.setSellingPrice(p.getSellingPrice());
-        ex.setQuantity(p.getQuantity());
+        exCartPojo.setSellingPrice(newCartPojo.getSellingPrice());
+        exCartPojo.setQuantity(newCartPojo.getQuantity());
     }
 
     @Transactional(rollbackOn  = ApiException.class)
     public CartPojo getCheck(int id) throws ApiException {
-            CartPojo p = cartDao.select(id);
-            if(!Objects.nonNull(p)){
+            CartPojo cartPojo = cartDao.select(id);
+            if(!Objects.nonNull(cartPojo)){
                 throw new ApiException("No such item exists in cart with given Id");
             }
-            return p;
+            return cartPojo;
     }
 
     @Transactional(rollbackOn  = ApiException.class)
-    public void pushToNewOrder(OrderForm f, List<CartData>list1 , OrderPojo p ) throws ApiException {
-        if(list1.size()==0){
+    public void pushToNewOrder(List<CartData> cartDataList, OrderPojo orderPojo) throws ApiException {
+        if(cartDataList.size()==0){
             throw new ApiException("The order can't be created as the cart is empty");
         }
-
-        for(CartData d : list1){
+        for(CartData d : cartDataList){
             InventoryPojo a = inventoryService.get(d.getProductId());
             if(d.getQuantity()>a.getQuantity()){
-                throw new ApiException("The item "+d.getProductName()+" can't be added to order because sufficient amount not present in inventory");
+                throw new ApiException("The item "+d.getProductName()+" can't be added to order because sufficient amount not present in inventory. Inventory count = "+a.getQuantity()+"Cart count ="+d.getQuantity());
             }
         }
-        System.out.println("Hello1");
-        int orderId = orderService.addOrder(p);
-
-        for(CartData d : list1){
-            OrderItemPojo o = new OrderItemPojo();
-            o.setOrderId(orderId);
-            o.setProductId(d.getProductId());
-            o.setProductName(d.getProductName());
-            InventoryPojo a = inventoryService.get(d.getProductId());
-            System.out.println("Helloa");
-            inventoryService.addSub(a,false,d.getQuantity());
-            System.out.println("Hellob");
-            o.setQuantity(d.getQuantity());
-            o.setSellingPrice(d.getSellingPrice());
-            orderItemService.add(o);
-            System.out.println("Helloc");
-
+        int orderId = orderService.addOrder(orderPojo);
+        System.out.println(cartDataList.size());
+        for(CartData cartData : cartDataList){
+            OrderItemPojo orderItemPojo = new OrderItemPojo();
+            orderItemPojo.setOrderId(orderId);
+            orderItemPojo.setProductId(cartData.getProductId());
+            orderItemPojo.setProductName(cartData.getProductName());
+//
+//            InventoryPojo inventoryPojo = inventoryService.get(cartData.getProductId());
+//            inventoryService.addSub(inventoryPojo,(-1)*(cartData.getQuantity()));
+//            System.out.println(cartData.getQuantity());
+            orderItemPojo.setQuantity(cartData.getQuantity());
+            orderItemPojo.setSellingPrice(cartData.getSellingPrice());
+            orderService.addOrderItem(orderItemPojo);
         }
-        System.out.println("Hello2");
 
-        deleteAll(list1);
-        System.out.println("Hell3");
-
+        deleteAll(cartDataList);
     }
 
 }

@@ -18,51 +18,52 @@ public class BrandService {
     private BrandDao brandDao;
 
     @Transactional(rollbackOn  = ApiException.class)
-    public void add(BrandPojo p) throws ApiException{
-        BrandPojo a = brandDao.getBrandPojoFromBrandCategory(p.getBrand(), p.getCategory());
-        if(Objects.nonNull(a)){
+    public void addBrand(BrandPojo p) throws ApiException{
+        BrandPojo brandPojo = brandDao.getBrandPojoFromBrandCategory(p.getBrand(), p.getCategory());
+        if(Objects.nonNull(brandPojo)){
             throw new ApiException("The given brand-category already exists");
         }
         brandDao.insert(p);
     }
     @Transactional
-    public void delete(int id) {
+    public void deleteBrand(int id) {
         brandDao.delete(id);
     }
     @Transactional(rollbackOn = ApiException.class)
-    public BrandPojo get(int id) throws ApiException {
-        return getCheck(id);
+    public BrandPojo getBrand(int id) throws ApiException {
+        return getCheckBrand(id);
     }
     @Transactional
     public List<BrandPojo> getAll() {
         return brandDao.selectAll();
     }
+
     @Transactional(rollbackOn  = ApiException.class)
-    public void update(int id, BrandPojo p) throws ApiException {
-        BrandPojo a = brandDao.getBrandPojoFromBrandCategory(p.getBrand(), p.getCategory());
-        if(Objects.nonNull(a)){
+    public void updateBrand(int id, BrandPojo newBrandPojo) throws ApiException {
+        BrandPojo brandPojo = brandDao.getBrandPojoFromBrandCategory(newBrandPojo.getBrand(), newBrandPojo.getCategory());
+        if(Objects.nonNull(brandPojo)){
             throw new ApiException("The given brand-category already exists");
         }
-        BrandPojo ex = getCheck(id);
-        ex.setBrand(p.getBrand());
-        ex.setCategory(p.getCategory());
+        BrandPojo exBrandPojo = getCheckBrand(id);
+        exBrandPojo.setBrand(newBrandPojo.getBrand());
+        exBrandPojo.setCategory(newBrandPojo.getCategory());
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public  BrandPojo getCheck(int id) throws ApiException {
-        BrandPojo a = brandDao.select(id);
-        if(!Objects.nonNull(a)){
+    public  BrandPojo getCheckBrand(int id) throws ApiException {
+        BrandPojo brandPojo = brandDao.select(id);
+        if(!Objects.nonNull(brandPojo)){
             throw new ApiException("No such brand-category with given id exists !");
         }
-        return a;
+        return brandPojo;
     }
 
     @Transactional(rollbackOn = ApiException.class)
     public int getBrandIdFromName(String brandName, String categoryName) throws ApiException {
-        BrandPojo a = brandDao.getBrandPojoFromBrandCategory(brandName,categoryName);
-        if(!Objects.nonNull(a)){
+        BrandPojo brandPojo = brandDao.getBrandPojoFromBrandCategory(brandName,categoryName);
+        if(Objects.isNull(brandPojo)){
             throw new ApiException("The given brand-category does not exist");
         }
-        return a.getId();
+        return brandPojo.getId();
     }
 }

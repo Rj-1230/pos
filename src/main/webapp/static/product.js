@@ -147,10 +147,6 @@ function displayProductList(data){
 		if(role=='supervisor'){
 		buttonHtml +='<button class="btn btn-dark" onclick="displayEditProduct(' + e.productId + ')"> <i class="bi bi-pen"></i></button>'
 		}
-		else{
-		buttonHtml +='<button class="btn btn-dark" onclick="displayEditProduct(' + e.productId + ')" disabled> <i class="bi bi-pen"></i></button>'
-
-		}
 		var row = '<tr>'
 		+ '<td>' + e.productId + '</td>'
 		+ '<td>' + e.barcode + '</td>'

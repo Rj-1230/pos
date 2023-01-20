@@ -21,9 +21,6 @@ import java.util.Map;
 public class RevenueDto {
 
     @Autowired
-    OrderItemService orderItemService;
-
-    @Autowired
     OrderService orderService;
 
     @Autowired
@@ -32,7 +29,7 @@ public class RevenueDto {
     @Autowired
     BrandService brandService;
 
-    public List<ProductRevenueData> get_revenue_product(DateFilterForm form) throws ApiException
+    public List<ProductRevenueData> getRevenueProduct(DateFilterForm form) throws ApiException
     {
         List<ProductRevenueData> list1 = new ArrayList<ProductRevenueData>();
 
@@ -60,7 +57,7 @@ public class RevenueDto {
         {
             int orderId = e.getOrderId();
 //            System.out.println(orderId);
-            List<OrderItemPojo> orderItemPojoList = orderItemService.getAll(orderId);
+            List<OrderItemPojo> orderItemPojoList = orderService.getAllOrderItems(orderId);
 
 //            System.out.println("Hello"+orderItemPojoList.size());
             for(OrderItemPojo p: orderItemPojoList)
@@ -91,13 +88,13 @@ public class RevenueDto {
         return list1;
     }
 
-    public List<BrandRevenueData> get_revenue_brand(DateFilterForm form) throws ApiException {
+    public List<BrandRevenueData> getRevenueBrand(DateFilterForm form) throws ApiException {
         List<BrandRevenueData> res = new ArrayList<BrandRevenueData>();
 
 //        key: brand name
         HashMap<String, BrandRevenueData> map = new HashMap<>();
 
-        List<ProductRevenueData> list1 = get_revenue_product(form);
+        List<ProductRevenueData> list1 = getRevenueProduct(form);
 
         for(ProductRevenueData p: list1)
         {
@@ -124,12 +121,12 @@ public class RevenueDto {
         return res;
     }
 
-    public List<CategoryRevenueData> get_revenue_category(DateFilterForm form) throws ApiException {
+    public List<CategoryRevenueData> getRevenueCategory(DateFilterForm form) throws ApiException {
         List<CategoryRevenueData> res = new ArrayList<>();
 
         HashMap<String, CategoryRevenueData> map = new HashMap<>();
 
-        List<ProductRevenueData> list1 = get_revenue_product(form);
+        List<ProductRevenueData> list1 = getRevenueProduct(form);
 
         for(ProductRevenueData p: list1)
         {
@@ -170,7 +167,7 @@ public class RevenueDto {
         productRevenueData.setTotal(0);
 
         int brandCategoryId = p.getBrandId();
-        BrandPojo brandPojo = brandService.get(brandCategoryId);
+        BrandPojo brandPojo = brandService.getBrand(brandCategoryId);
 
         productRevenueData.setBrand(brandPojo.getBrand());
         productRevenueData.setCategory(brandPojo.getCategory());

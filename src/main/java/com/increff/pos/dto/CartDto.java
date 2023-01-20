@@ -6,7 +6,9 @@ import com.increff.pos.pojo.CartPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.*;
+import com.increff.pos.util.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import java.util.List;
 import static com.increff.pos.helper.CartDtoHelper.*;
 import static com.increff.pos.helper.OrderDtoHelper.*;
 import static com.increff.pos.helper.NullCheckHelper.*;
+import static com.increff.pos.util.SecurityUtil.getPrincipal;
 
 @Service
 
@@ -28,9 +31,9 @@ public class CartDto {
     public void add(CartForm f) throws ApiException {
         checkNullable(f);
         normalize(f);
-        ProductPojo p= productService.getProductPojoFromBarcode(f.getBarcode());
-        CartPojo c = convert(f,p);
-        cartService.add(c);
+        ProductPojo productPojo= productService.getProductPojoFromBarcode(f.getBarcode());
+        CartPojo cartPojo = convert(f,productPojo);
+        cartService.add(cartPojo);
     }
 
     public void delete(@PathVariable int id) throws ApiException{
@@ -38,14 +41,14 @@ public class CartDto {
     }
 
     public CartData get(int id) throws ApiException {
-        CartPojo c = cartService.get(id);
-        return convert(c);
+        CartPojo cartPojo = cartService.getCheck(id);
+        return convert(cartPojo);
     }
 
-    public void update(@PathVariable int id, @RequestBody CartEditForm f) throws ApiException {
+    public void update(@PathVariable int id, @RequestBody CartForm f) throws ApiException {
         checkNullable(f);
-        CartPojo c = convert(f);
-        cartService.update(id,c);
+        CartPojo cartPojo = convert(f);
+        cartService.update(id,cartPojo);
     }
     public List<CartData> getAll(){
         return getAllCartItems(cartService.getAll());
@@ -60,9 +63,9 @@ public class CartDto {
     public void pushToNewOrder(OrderForm f) throws ApiException {
         checkNullable(f);
         normalize(f);
-        List<CartData>list1= getAll();
-        OrderPojo p = convert(f);
-       cartService.pushToNewOrder(f,list1,p);
+        List<CartData> cartDataList= getAll();
+        OrderPojo orderPojo = convert(f);
+        cartService.pushToNewOrder(cartDataList,orderPojo);
     }
 
     public void flushAll()throws ApiException{

@@ -41,7 +41,6 @@ function getBrandsList()
     	   url: url,
     	   type: 'GET',
     	   success: function(data) {
-    	   		console.log(data);
     	   		displayBrandsList(data);
     	   		brandReportData=data;
     	   		displayBrandReportList(data);
@@ -63,8 +62,6 @@ function getBrandsList()
        }
 
        newBrands["All"] = removeDuplicates(newBrands["All"]);
-       console.log(newBrands);
-
        var $elB = $("#inputFilterBrand");
 
        $elB.empty();
@@ -80,14 +77,8 @@ function getBrandsList()
 function displayCategoryList()
 {
     var $elC = $("#inputFilterCategory");
-
     $elC.empty();
-
-    console.log("this is it");
     var a = getBrandOption();
-
-    console.log(newBrands[a]);
-
     $elC.append($("<option></option>")
                     .attr("value", "All").text("All"));
 
@@ -100,11 +91,8 @@ function displayCategoryList()
 
 function applyBrandCategoryFilter()
 {
-console.log("this is it");
     var brandFilter = getBrandOption();
     var categoryFilter = getCategoryOption();
-    console.log(brandFilter);
-    console.log(categoryFilter);
     var data = [];
     for(var i = 0; i<brandReportData.length; i++){
         if(check(brandReportData[i].brand, brandFilter) && check(brandReportData[i].category, categoryFilter))
@@ -112,8 +100,6 @@ console.log("this is it");
     }
     displayBrandReportList(data);
 }
-
-// helpers
 
 function check(a, b)
 {
@@ -123,8 +109,7 @@ function check(a, b)
 }
 
 function removeDuplicates(arr) {
-        return arr.filter((item,
-            index) => arr.indexOf(item) === index);
+        return arr.filter((item,index) => arr.indexOf(item) === index);
 }
 
 function init()

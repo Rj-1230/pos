@@ -18,9 +18,7 @@ function displayDailySalesReportList(data)
         		+ '<td>'  + e.totalRevenue + '</td>'
         		+ '</tr>';
                 $tbody.append(row);
-
         	}
-
 }
 
 

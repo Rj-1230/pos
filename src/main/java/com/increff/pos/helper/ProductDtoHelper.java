@@ -14,14 +14,6 @@ public class ProductDtoHelper {
         f.setBarcode(f.getBarcode().toLowerCase().trim());
         f.setName(f.getName().toLowerCase().trim());
     }
-    public static ProductPojo convertUpdate(ProductUpdateForm f){
-        //The convert method will convert JSON format data received into ProductPojo format
-        ProductPojo p = new ProductPojo();
-        p.setName(f.getName());
-        p.setBarcode(f.getBarcode());
-        p.setMrp(f.getMrp());
-        return p;
-    }
 
     public static ProductData convert(ProductPojo p){
         ProductData d = new ProductData();
@@ -52,12 +44,6 @@ public class ProductDtoHelper {
         p.setBarcode(f.getBarcode());
         p.setMrp(f.getMrp());
         return p;
-    }
-
-
-    public static void normalize(ProductUpdateForm f) {
-        f.setName(f.getName().toLowerCase().trim());
-        f.setBarcode(f.getBarcode().toLowerCase().trim());
     }
 
     public static List<ProductData> getAllProducts(List<ProductPojo> list){

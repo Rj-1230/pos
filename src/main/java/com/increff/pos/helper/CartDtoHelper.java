@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.increff.pos.util.SecurityUtil.getPrincipal;
+
 @Service
 
 public class CartDtoHelper {
@@ -34,11 +37,11 @@ public class CartDtoHelper {
         c.setProductId(p.getProductId());
         c.setProductName(p.getName());
         c.setSellingPrice(p.getMrp());
-        c.setCounterId(1);
+        c.setCounterId(getPrincipal().getId());
         return c;
     }
 
-    public static CartPojo convert(CartEditForm f){
+    public static CartPojo convert(CartForm f){
         //The convert method will convert JSON format data received into OrderItemPojo format
         CartPojo p = new CartPojo();
         p.setQuantity(f.getQuantity());

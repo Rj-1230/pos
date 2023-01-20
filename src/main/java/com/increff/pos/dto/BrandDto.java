@@ -23,35 +23,28 @@ public class BrandDto {
     @Autowired
     private BrandService brandService;
 
-    @Autowired
-    private BrandDtoHelper brandDtoHelper;
-
-    public void add(BrandForm f)throws  ApiException{
+    public void addBrand(BrandForm f)throws  ApiException{
         checkNullable(f);
         normalize(f);
-        BrandPojo p = convert(f);
-        brandService.add(p);
+        BrandPojo brandPojo = convert(f);
+        brandService.addBrand(brandPojo);
     }
-    public void delete(@PathVariable int id){
-        brandService.delete(id);
+    public void deleteBrand(@PathVariable int id){
+        brandService.deleteBrand(id);
     }
 
-    public BrandData get(int id) throws ApiException {
-        BrandPojo p = brandService.get(id);
-        return convert(p);
+    public BrandData getBrand(int id) throws ApiException {
+        BrandPojo brandPojo = brandService.getBrand(id);
+        return convert(brandPojo);
     }
-    public void update(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
+    public void updateBrand(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
         checkNullable(f);
         normalize(f);
-        BrandPojo p = convert(f);
-        brandService.update(id,p);
+        BrandPojo brandPojo = convert(f);
+        brandService.updateBrand(id,brandPojo);
     }
     public List<BrandData> getAll(){
         return getAllBrands(brandService.getAll());
     }
 
-//    public List<BrandReportData> getBrandReport() throws ApiException
-//    {
-//        return brandDtoHelper.getBrandReportBrandCategory();
-//    }
 }

@@ -30,23 +30,23 @@ public class RevenueController {
 
     @ApiOperation(value = "Get Revenue on product items with date as filter")
     @RequestMapping(path = "/api/revenue-product", method = RequestMethod.POST)
-    public List<ProductRevenueData> get_revenue_product(@RequestBody DateFilterForm form) throws ApiException
+    public List<ProductRevenueData> getRevenueProduct(@RequestBody DateFilterForm form) throws ApiException
     {
-        return revenueDto.get_revenue_product(form);
+        return revenueDto.getRevenueProduct(form);
     }
 
     @ApiOperation(value = "Get Revenue on product items with date as filter")
     @RequestMapping(path = "/api/revenue-brand", method = RequestMethod.POST)
-    public List<BrandRevenueData> get_revenue_brand(@RequestBody DateFilterForm form) throws ApiException
+    public List<BrandRevenueData> getRevenueBrand(@RequestBody DateFilterForm form) throws ApiException
     {
-        return revenueDto.get_revenue_brand(form);
+        return revenueDto.getRevenueBrand(form);
     }
 
     @ApiOperation(value = "Get Revenue on product items with date as filter")
     @RequestMapping(path = "/api/revenue-category", method = RequestMethod.POST)
-    public List<CategoryRevenueData> get_revenue_category(@RequestBody DateFilterForm form) throws ApiException
+    public List<CategoryRevenueData> getRevenueCategory(@RequestBody DateFilterForm form) throws ApiException
     {
-        return revenueDto.get_revenue_category(form);
+        return revenueDto.getRevenueCategory(form);
     }
 
     @ApiOperation(value = "Get scheduled daily sales report ")

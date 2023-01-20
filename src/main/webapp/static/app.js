@@ -149,10 +149,13 @@ function displayUploadData(){
 
 
 
+
 function init(){
     role= $("meta[name=role]").attr("content");
+    $('#myCart').click(openMyCart);
 	if(role=='supervisor'){
 	document.getElementById("nav-supervisor").style.display = "block";
+	document.getElementById("actions-supervisor").style.display = "block";
 	}
     	if(role=='operator'){
     	var x = document.getElementsByClassName("supervisor");

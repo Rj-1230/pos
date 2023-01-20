@@ -3,12 +3,13 @@
 <html lang="en">
 
 <head th:replace="snippets.html :: name_head"></head>
+<title>Products</title>
 
 <body>
 
 <nav th:replace="snippets.html :: name_navbar"></nav>
 
-<div class="container">
+<div class="container" style="margin-bottom:20px;">
 
     <div th:replace="snippets.html :: name_toast"></div>
 
@@ -113,7 +114,7 @@
                     <th scope="col">Brand_category</th>
                     <th scope="col">Product name</th>
                     <th scope="col">MRP</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" id="actions-supervisor" style="display:none">Actions</th>
                 </tr>
                 </thead>
                 <tbody>

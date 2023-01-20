@@ -28,27 +28,26 @@ public class BrandController {
     @ApiOperation(value="Adding a brand")
     @RequestMapping(path="/api/supervisor/brand", method = RequestMethod.POST)
     public void add(@RequestBody BrandForm f) throws ApiException, Forbidden {
-        Authentication auth = getAuthentication();
-            brandDto.add(f);
+            brandDto.addBrand(f);
     }
 
     //    Although delete is disabled from UI, but method made for future use
     @ApiOperation(value="Deleting a brand")
     @RequestMapping(path="/api/supervisor/brand/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id){
-        brandDto.delete(id);
+        brandDto.deleteBrand(id);
     }
 
     @ApiOperation(value="Getting details of a brand from brandId")
     @RequestMapping(path="/api/brand/{id}", method = RequestMethod.GET)
     public BrandData get(@PathVariable int id) throws ApiException {
-        return brandDto.get(id);
+        return brandDto.getBrand(id);
     }
 
     @ApiOperation(value="Updating details of a particular brand-category combo")
     @RequestMapping(path="/api/supervisor/brand/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {
-        brandDto.update(id,f);
+        brandDto.updateBrand(id,f);
     }
 
     @ApiOperation(value="Getting details of all the brand-category")
@@ -57,10 +56,4 @@ public class BrandController {
         return brandDto.getAll();
     }
 
-//    @ApiOperation(value = "Get brand report of product items with brand-category")
-//    @RequestMapping(path = "/api/brandReport", method = RequestMethod.GET)
-//    public List<BrandReportData> getBrandReport() throws ApiException
-//    {
-//        return brandDto.getBrandReport();
-//    }
 }

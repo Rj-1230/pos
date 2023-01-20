@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class OrderForm {
 private String customerName;
-    private String customerPhone;
+private String customerPhone;
 
 }

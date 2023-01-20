@@ -8,6 +8,6 @@ public class AccessDeniedController {
 
     @GetMapping("/access-denied")
     public String getAccessDenied() {
-        return "index";
+        return "error403";
     }
 }

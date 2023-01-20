@@ -1,47 +1,63 @@
 package com.increff.pos.dao;
 
+import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.pojo.UserPojo;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class UserDao extends AbstractDao {
+public class UserDao{
 
-    private static String DELETE_BY_ID = "delete from UserPojo p where id=:id";
-    private static String select_id = "select p from UserPojo p where id=:id";
-    private static String SELECT_BY_EMAIL = "select p from UserPojo p where email=:email";
-    private static String SELECT_ALL = "select p from UserPojo p";
+    private static String delete_userpojo_by_id = "delete from UserPojo p where id=:id";
+    private static String selct_userpojo_by_id = "select p from UserPojo p where id=:id";
+    private static String selct_userpojo_by_email = "select p from UserPojo p where email=:email";
+    private static String select_all_userpojo= "select p from UserPojo p";
 
-
+    @PersistenceContext
+    EntityManager em;
     @Transactional
     public void insert(UserPojo p) {
-        em().persist(p);
+        em.persist(p);
     }
 
     public int delete(int id) {
-        Query query = em().createQuery(DELETE_BY_ID);
+        Query query = em.createQuery(delete_userpojo_by_id);
         query.setParameter("id", id);
         return query.executeUpdate();
     }
 
     public UserPojo select(int id) {
-        TypedQuery<UserPojo> query = getQuery(select_id, UserPojo.class);
-        query.setParameter("id", id);
-        return getSingle(query);
+        try {
+            TypedQuery<UserPojo> query = getQuery(selct_userpojo_by_id);
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        }
+         catch(NoResultException e){
+                return null;
+            }
     }
 
     public UserPojo select(String email) {
-        TypedQuery<UserPojo> query = getQuery(SELECT_BY_EMAIL, UserPojo.class);
+        try {
+        TypedQuery<UserPojo> query = getQuery(selct_userpojo_by_email);
         query.setParameter("email", email);
-        return getSingle(query);
+        return query.getSingleResult();
+    }
+        catch(NoResultException e){
+        return null;
+    }
     }
 
     public List<UserPojo> selectAll() {
-        TypedQuery<UserPojo> query = getQuery(SELECT_ALL, UserPojo.class);
+        TypedQuery<UserPojo> query = getQuery(select_all_userpojo);
         return query.getResultList();
     }
+
+    TypedQuery<UserPojo> getQuery(String jpql) {
+        return em.createQuery(jpql, UserPojo.class);
+    }
+
 }

@@ -31,11 +31,7 @@ public class InventoryDtoHelper {
         p.setQuantity(f.getQuantity());
         return p;
     }
-    public static InventoryPojo convert(InventoryEditForm f){
-        InventoryPojo p = new InventoryPojo();
-        p.setQuantity(f.getQuantity());
-        return p;
-    }
+
     public static InventoryData convert(InventoryPojo p){
         InventoryData d = new InventoryData();
         d.setProductId(p.getProductId());
@@ -77,9 +73,10 @@ public class InventoryDtoHelper {
 //        key: brandId
         HashMap<Integer, InventoryReportData> map = new HashMap<>();
 
+        //TODO: Explore Java 8 Streams map reduce
         for(InventoryPojo p: inventoryPojoList) {
             ProductPojo pp = productService.get(p.getProductId());
-            BrandPojo bp = brandService.get(pp.getBrandId());
+            BrandPojo bp = brandService.getBrand(pp.getBrandId());
 
             InventoryReportData inventoryReportData = convert(p,bp);
             if(map.containsKey(bp.getId())){

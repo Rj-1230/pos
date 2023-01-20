@@ -25,7 +25,7 @@ public class OrderItemDtoHelper {
         f.setBarcode(f.getBarcode().toLowerCase().trim());
     }
 
-    public static OrderItemPojo convert(CartEditForm f){
+    public static OrderItemPojo convert(OrderItemForm f){
         OrderItemPojo p = new OrderItemPojo();
         p.setSellingPrice(f.getSellingPrice());
         p.setQuantity(f.getQuantity());

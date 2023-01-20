@@ -2,47 +2,43 @@ package com.increff.pos.dao;
 
 import com.increff.pos.pojo.InventoryPojo;
 import org.springframework.stereotype.Repository;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Repository
 public class InventoryDao {
-    //fsz
-    private static String delete_id = "delete from InventoryPojo p where id=:id";
-    private static String select_id = "select p from InventoryPojo p where id=:id";
-    private static String select_all = "select p from InventoryPojo p";
+    private static String delete_inventoryPojo_by_id = "delete from InventoryPojo p where id=:id";
+    private static String select_inventoryPojo_by_id = "select p from InventoryPojo p where id=:id";
+    private static String select_all_inventoryPojo = "select p from InventoryPojo p";
 
-    //    private int id;
     @PersistenceContext
     EntityManager em;
 
     public void insert(InventoryPojo p) {
-//        removed the auto incrementing of ID manually
         em.persist(p);
     }
 
     public int delete(int id) {
-        Query query = em.createQuery(delete_id);
+        Query query = em.createQuery(delete_inventoryPojo_by_id);
         query.setParameter("id", id);
         return query.executeUpdate();
     }
 
     public InventoryPojo select(int id) {
-        TypedQuery<InventoryPojo> query = em.createQuery(select_id, InventoryPojo.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        try{
+            TypedQuery<InventoryPojo> query = getQuery(select_inventoryPojo_by_id);
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        }
+        catch(NoResultException e){
+            return null;
+        }
     }
 
     public List<InventoryPojo> selectAll() {
-        TypedQuery<InventoryPojo> query = em.createQuery(select_all, InventoryPojo.class);
+        TypedQuery<InventoryPojo> query = getQuery(select_all_inventoryPojo);
         return query.getResultList();
-    }
-
-    public void update(InventoryPojo p) {
-//        return;
     }
 
     TypedQuery<InventoryPojo> getQuery(String jpql) {

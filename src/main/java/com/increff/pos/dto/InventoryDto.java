@@ -1,7 +1,6 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.model.InventoryData;
-import com.increff.pos.model.InventoryEditForm;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.model.InventoryReportData;
 import com.increff.pos.pojo.InventoryPojo;
@@ -27,18 +26,11 @@ public class InventoryDto {
     @Autowired
     private InventoryDtoHelper inventoryDtoHelper;
 
-//    public void add(InventoryForm f) throws ApiException {
-//            checkNullable(f);
-//            normalize(f);
-//            InventoryPojo p = convert(f);
-//            inventoryService.add(p);
-//    }
     public void addSub(InventoryForm f) throws ApiException {
         checkNullable(f);
         normalize(f);
-        InventoryPojo p = convert(f);
-        boolean x = true;
-        inventoryService.addSub(p,x, p.getQuantity());
+        InventoryPojo inventoryPojo = convert(f);
+        inventoryService.addSub(inventoryPojo,inventoryPojo.getQuantity());
     }
 
     public void delete(@PathVariable int id){
@@ -46,19 +38,10 @@ public class InventoryDto {
     }
 
     public InventoryData get(int id) throws ApiException {
-        InventoryPojo p = inventoryService.get(id);
-        return convert(p);
+        InventoryPojo inventoryPojo = inventoryService.get(id);
+        return convert(inventoryPojo);
     }
 
-//    public void addIn(@PathVariable int id, @RequestBody InventoryEditForm f) throws ApiException {
-//        InventoryPojo p = convert(f);
-//        inventoryService.addIn(id,p);
-//    }
-//
-//    public void subIn(@PathVariable int id, @RequestBody InventoryEditForm f) throws ApiException {
-//        InventoryPojo p = convert(f);
-//        inventoryService.subIn(id, p);
-//    }
     public List<InventoryData> getAll(){
         return getAllInventory(inventoryService.getAll());
     }

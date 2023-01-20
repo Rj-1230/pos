@@ -113,9 +113,6 @@ function displayBrandList(data){
 		if(role=='supervisor'){
 		    buttonHtml+='<button class="btn btn-dark" onclick="displayEditbrand(' + e.id + ')"> <i class="bi bi-pen"></i></button>'
 		}
-		else{
-		    buttonHtml+='<button class="btn btn-dark" onclick="displayEditbrand(' + e.id + ')" disabled> <i class="bi bi-pen"></i></button>'
-		}
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.brand + '</td>'

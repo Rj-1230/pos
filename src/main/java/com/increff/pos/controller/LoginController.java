@@ -37,18 +37,16 @@ public class LoginController {
     private String supervisorEmail;
     @ApiOperation(value = "Logs in a user")
     @RequestMapping(path = "/session/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
-        UserPojo p = service.getByEmail(f.getEmail());
-        boolean authenticated = (p != null && Objects.equals(p.getPassword(), f.getPassword()));
+    public ModelAndView login(HttpServletRequest request, LoginForm f) throws ApiException {
+        UserPojo userPojo = service.getByEmail(f.getEmail());
+        boolean authenticated = (userPojo != null && Objects.equals(userPojo.getPassword(), f.getPassword()));
         if (!authenticated) {
             info.setMessage("Invalid username or password");
             return new ModelAndView("redirect:/site/login");
         }
 
-        // Create authentication object
-        Authentication authentication = convert(p);
-        // Create new session
-        HttpSession session = req.getSession(true);
+        Authentication authentication = convert(userPojo);
+        HttpSession session = request.getSession(true);
         // Attach Spring SecurityContext to this new session
         SecurityUtil.createContext(session);
         // Attach Authentication object to the Security Context
@@ -59,10 +57,7 @@ public class LoginController {
 
     @RequestMapping(path = "/session/logout", method = RequestMethod.GET)
     public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        session.invalidate();
-//        request.getSession(false);
-//        request.getSession().invalidate();
+        request.getSession().invalidate();
         return new ModelAndView("redirect:/site/logout");
     }
 

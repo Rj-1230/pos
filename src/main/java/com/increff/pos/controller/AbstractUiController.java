@@ -27,9 +27,12 @@ public abstract class AbstractUiController {
 
 		mav.addObject("info", info);
 		mav.addObject("role", info.getRole());
+		mav.addObject("counterId", principal == null ? 0 : principal.getId());
 		mav.addObject("baseUrl", baseUrl);
 		return mav;
+
 	}
+
 
 	protected ModelAndView mav (String page, OrderData orderData)
 	{
@@ -41,7 +44,7 @@ public abstract class AbstractUiController {
 
 		mav.addObject("info", info);
 		mav.addObject("orderId", orderData.getOrderId());
-//		mav.addObject("orderCode", orderData.getOrderCode());
+		mav.addObject("counterId", principal == null ? 0 : principal.getId());
 		mav.addObject("customerName", orderData.getCustomerName());
 		mav.addObject("status", orderData.getStatus());
 		mav.addObject("baseUrl", baseUrl);

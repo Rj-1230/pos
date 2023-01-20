@@ -19,30 +19,24 @@ public class InventoryService {
     private ProductService productService;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void addSub(InventoryPojo newP, boolean x,int quantity)throws ApiException {
-        ProductPojo a = productService.getProductPojoFromBarcode(newP.getBarcode());
-        newP.setProductId(a.getProductId());
-        InventoryPojo exP = get(newP.getProductId());
-        if(Objects.nonNull(exP)){
-            if(x){
-                exP.setQuantity(exP.getQuantity()+quantity);
+    public void addSub(InventoryPojo newInventoryPojo, int quantity) throws ApiException {
+        ProductPojo productPojo = productService.getProductPojoFromBarcode(newInventoryPojo.getBarcode());
+        newInventoryPojo.setProductId(productPojo.getProductId());
+        InventoryPojo exInventoryPojo = get(newInventoryPojo.getProductId());
+        if (Objects.nonNull(exInventoryPojo)) {
+            if (exInventoryPojo.getQuantity() + quantity < 0) {
+                throw new ApiException("There is not sufficient quantity in the inventory for the item");
             }
-            else{
-                if(exP.getQuantity()-quantity <0){
-                    throw new ApiException("There is not sufficient quantity in the inventory for the item");
-                }
-                exP.setQuantity(exP.getQuantity()-quantity);
-            }
-        }
-        else{
-            inventoryDao.insert(newP);
+            exInventoryPojo.setQuantity(exInventoryPojo.getQuantity() + quantity);
+        } else {
+            inventoryDao.insert(newInventoryPojo);
         }
     }
 
 
     @Transactional
-    public void delete (int id){
-            inventoryDao.delete(id);
+    public void delete(int id) {
+        inventoryDao.delete(id);
     }
 
     @Transactional(rollbackOn = ApiException.class)
@@ -54,25 +48,15 @@ public class InventoryService {
     public List<InventoryPojo> getAll() {
         return inventoryDao.selectAll();
     }
+
     @Transactional(rollbackOn = ApiException.class)
     public InventoryPojo getCheck(int id) throws ApiException {
-        try{
-            InventoryPojo p = inventoryDao.select(id);
-            return p;
-        }
-        catch(Exception e){
-            System.out.println(e);
-            return null;
-        }
-    }
 
-//    @Transactional(rollbackOn  = ApiException.class)
-//    public void subFromInventory(int id, int quantity) throws ApiException {
-//        InventoryPojo ex = getCheck(id);
-//        if(ex.getQuantity()-quantity <0){
-//            throw new ApiException("The product can't be added to order as there is not sufficient quantity in the inventory");
-//        }
-//        ex.setQuantity(ex.getQuantity()-quantity);
-//    }
+            InventoryPojo inventoryPojo = inventoryDao.select(id);
+        if(!Objects.nonNull(inventoryPojo)){
+            throw new ApiException("No such brand-category with given id exists !");
+        }
+        return inventoryPojo;
+    }
 
 }
