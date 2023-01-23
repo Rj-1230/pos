@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.increff.pos.helper.GetCurrentTime.getCurrentDateTime;
+import static com.increff.pos.util.SecurityUtil.getPrincipal;
 
 @Service
 public class OrderService {
@@ -24,6 +25,11 @@ public class OrderService {
     @Transactional(rollbackOn = ApiException.class)
     public int addOrder(OrderPojo p) throws ApiException {
         return orderDao.insertOrder(p);
+    }
+
+    @Transactional
+    public List<OrderPojo> getAllOrdersByCounterId() {
+        return orderDao.selectAllOrders(getPrincipal().getId());
     }
 
     @Transactional
@@ -66,14 +72,10 @@ public class OrderService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void addOrderItem(OrderItemPojo p) throws ApiException {
-        InventoryPojo a = inventoryService.get(p.getProductId());
-        if(p.getQuantity()>a.getQuantity()){
-            throw new ApiException("Item can't be added to order as it exceeds the inventory. Present inventory count : "+a.getQuantity());
-        }
         OrderItemPojo b = orderDao.getOrderItemPojoFromProductId(p.getProductId(),p.getOrderId());
-        inventoryService.addSub(a,-p.getQuantity());
         if(Objects.nonNull(b)){
             b.setQuantity(b.getQuantity()+p.getQuantity());
+            b.setSellingPrice(p.getSellingPrice());
         }
         else{
             orderDao.insertOrderItem(p);
@@ -83,9 +85,6 @@ public class OrderService {
 
     @Transactional(rollbackOn = ApiException.class)
     public void deleteOrderItem(int id) throws ApiException {
-        OrderItemPojo ex = getCheckOrderItem(id);
-        InventoryPojo a = inventoryService.get(ex.getProductId());
-        inventoryService.addSub(a,ex.getQuantity());
         orderDao.deleteOrderItem(id);
     }
 
@@ -96,10 +95,7 @@ public class OrderService {
 
 
     @Transactional(rollbackOn  = ApiException.class)
-    public void updateOrderItem(int id, OrderItemPojo p) throws ApiException {
-        OrderItemPojo ex = getCheckOrderItem(id);
-        InventoryPojo a = inventoryService.get(ex.getProductId());
-        inventoryService.addSub(a,-p.getQuantity()+ex.getQuantity());
+    public void updateOrderItem(OrderItemPojo ex, OrderItemPojo p) throws ApiException {
         ex.setQuantity(p.getQuantity());
         ex.setSellingPrice(p.getSellingPrice());
     }

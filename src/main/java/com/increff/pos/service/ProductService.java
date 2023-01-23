@@ -1,6 +1,7 @@
 package com.increff.pos.service;
 
 import com.increff.pos.dao.ProductDao;
+import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.pojo.ProductPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,17 @@ public class ProductService {
 
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private InventoryService inventoryService;
 
 
     @Transactional(rollbackOn = ApiException.class)
-    public void add(ProductPojo p) throws ApiException {
+    public int add(ProductPojo p) throws ApiException {
         ProductPojo a = productDao.getProductPojoFromBarcode(p.getBarcode());
         if(Objects.nonNull(a)){
             throw new ApiException("The product with given barcode already exists");
         }
-        productDao.insert(p);
+       return productDao.insert(p);
 
     }
 
@@ -31,10 +34,6 @@ public class ProductService {
         productDao.delete(id);
     }
 
-    @Transactional(rollbackOn = ApiException.class)
-    public ProductPojo get(int id) throws ApiException {
-        return getCheck(id);
-    }
 
     @Transactional
     public List<ProductPojo> getAll() {

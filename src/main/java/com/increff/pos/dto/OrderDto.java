@@ -1,5 +1,6 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.flow.OrderFlow;
 import com.increff.pos.model.*;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
@@ -25,6 +26,8 @@ public class OrderDto {
     @Autowired
     private OrderService orderService;
     @Autowired
+    private OrderFlow orderFlow;
+    @Autowired
     private ProductService productService;
 
 
@@ -38,6 +41,10 @@ public class OrderDto {
         normalize(f);
         OrderPojo o = convert(f);
         orderService.updateCustomerDetails(id,o);
+    }
+
+    public List<OrderData> getAllOrdersByCounterId(){
+        return getAllOrders(orderService.getAllOrdersByCounterId());
     }
 
     public List<OrderData> getAll(){
@@ -55,21 +62,24 @@ public class OrderDto {
         normalize(f);
         ProductPojo p= productService.getProductPojoFromBarcode(f.getBarcode());
         OrderItemPojo o = convert(f,p);
-        orderService.addOrderItem(o);
+        orderFlow.addOrderItem(o);
     }
 
     public void deleteOrderItem(@PathVariable int id) throws ApiException {
-        orderService.deleteOrderItem(id);
+        orderFlow.deleteOrderItem(id);
     }
 
     public OrderItemData getOrderItem(int id) throws ApiException {
+
         OrderItemPojo p = orderService.getCheckOrderItem(id);
         return convert(p);
     }
 
     public void updateOrderItem(@PathVariable int id, @RequestBody OrderItemForm f) throws ApiException {
+        checkNullable(f);
+        normalize(f);
         OrderItemPojo o = convert(f);
-        orderService.updateOrderItem(id,o);
+        orderFlow.updateOrderItem(id,o);
     }
 
     public List<OrderItemData> getAllOrderItems(int orderId){

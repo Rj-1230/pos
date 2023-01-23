@@ -9,16 +9,18 @@ import java.util.List;
 @Repository
 public class ProductDao {
 //This is JPQL : Java Persistence Query language
-    private static String delete_productPojo_by_id = "delete from ProductPojo p where id=:id";
-    private static String select_productPojo_by_id = "select p from ProductPojo p where id=:id";
+    private static String delete_productPojo_by_id = "delete from ProductPojo p where productId=:id";
+    private static String select_productPojo_by_id = "select p from ProductPojo p where productId=:id";
     private static String select_productPojo_by_barcode = "select p from ProductPojo p where barcode=:barcode";
     private static String select_all_productPojo = "select p from ProductPojo p";
 
     @PersistenceContext
     EntityManager em;
 
-    public void insert(ProductPojo p) {
+    public int insert(ProductPojo p) {
         em.persist(p);
+        em.flush();
+        return p.getProductId();
     }
 
     public ProductPojo getProductPojoFromBarcode(String barcode) {

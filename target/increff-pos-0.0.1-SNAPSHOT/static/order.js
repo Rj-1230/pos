@@ -3,6 +3,10 @@ function getOrderUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/order";
 }
+function getSupervisorOrderUrl(){
+	var baseUrl = $("meta[name=baseUrl]").attr("content")
+	return baseUrl + "/api/supervisor/order";
+}
 
 function getCartUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
@@ -80,20 +84,20 @@ function getOrderList(){
 	});
 }
 
-function deleteOrder(id){
-	var url = getOrderUrl() + "/" + id;
-
-	$.ajax({
-	   url: url,
-	   type: 'DELETE',
-	   success: function(data) {
-	   		getOrderList();
-	   },
-	    error: function(response){
-                               	   		 handleAjaxError(response);
-                               	   }
-	});
-}
+//function deleteOrder(id){
+//	var url = getOrderUrl() + "/" + id;
+//
+//	$.ajax({
+//	   url: url,
+//	   type: 'DELETE',
+//	   success: function(data) {
+//	   		getOrderList();
+//	   },
+//	    error: function(response){
+//                               	   		 handleAjaxError(response);
+//                               	   }
+//	});
+//}
 
 
 function displayOrderList(data){
@@ -141,6 +145,12 @@ function displayCartItemList(data){
 	    document.getElementById("create-new-order").style.display = "block";
 	    document.getElementById("empty-cart").style.display = "block";
 	    document.getElementById("cartItem-table").style.display = "block";
+	}
+	else{
+//	Ye else part isliye taki jb koi manually sare dleete kre ya empty cart kre
+		    document.getElementById("create-new-order").style.display = "none";
+    	    document.getElementById("empty-cart").style.display = "none";
+    	    document.getElementById("cartItem-table").style.display = "none";
 	}
 	var $tbody = $('#cartItem-table').find('tbody');
 	$tbody.empty();
@@ -297,6 +307,20 @@ function createNewOrder(){
 	$('#customerModal').modal('toggle');
 }
 
+function getAllOrders(){
+	var url = getSupervisorOrderUrl();
+	$.ajax({
+	   url: url,
+	   type: 'GET',
+	   success: function(data) {
+	   		displayOrderList(data);
+	   },
+	    error: function(response){
+                               	   		 handleAjaxError(response);
+                               	   }
+	});
+}
+
 
 function init(){
 counterId = $("meta[name=counterId]").attr("content")
@@ -307,6 +331,8 @@ $('#update-cart').click(updateCart);
 	$('#empty-cart').click(emptyCart);
     $('#create-new-order').click(createNewOrder);
 	$('#refresh-data').click(getOrderList);
+    $('#show-all-orders').click(getAllOrders);
+    $('#show-my-orders').click(getOrderList);
 
 }
 

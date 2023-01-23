@@ -29,10 +29,7 @@ public class BrandService {
     public void deleteBrand(int id) {
         brandDao.delete(id);
     }
-    @Transactional(rollbackOn = ApiException.class)
-    public BrandPojo getBrand(int id) throws ApiException {
-        return getCheckBrand(id);
-    }
+
     @Transactional
     public List<BrandPojo> getAll() {
         return brandDao.selectAll();

@@ -34,7 +34,7 @@ public class BrandDto {
     }
 
     public BrandData getBrand(int id) throws ApiException {
-        BrandPojo brandPojo = brandService.getBrand(id);
+        BrandPojo brandPojo = brandService.getCheckBrand(id);
         return convert(brandPojo);
     }
     public void updateBrand(@PathVariable int id, @RequestBody BrandForm f) throws ApiException {

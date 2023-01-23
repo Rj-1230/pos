@@ -2,12 +2,14 @@ package com.increff.pos.service;
 
 import com.increff.pos.dao.ReportDao;
 import com.increff.pos.pojo.DailyReportPojo;
+import com.increff.pos.pojo.OrderPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ReportService {
@@ -24,17 +26,17 @@ public class ReportService {
     }
 
     @Transactional
-    public List<DailyReportPojo> getAllReport() throws ApiException {
-        try {
-            return dao.selectAll();
-        } catch (Exception e) {
-            throw new ApiException(e.getMessage());
-        }
+    public DailyReportPojo getReportByDate(LocalDate date) throws ApiException {
+        return dao.select(date);
     }
 
     @Transactional
-    public DailyReportPojo getReportByDate(LocalDate date) throws ApiException {
-        return dao.select(date);
+    public List<DailyReportPojo> selectReportByDateFilter(LocalDate start, LocalDate endDate) throws ApiException {
+        List<DailyReportPojo> dailyReportPojoList = dao.selectReportByDateFilter(start, endDate);
+        if(Objects.isNull(dailyReportPojoList)){
+            throw new ApiException("No orders exists between the given dates");
+        }
+        return dailyReportPojoList;
     }
 
     @Transactional

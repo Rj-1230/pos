@@ -32,13 +32,13 @@
                         <div class="form-group">
                             <label for="inputQuantity">Quantity</label>
                             <div class="col-sm-10">
-                                <input type="number" min="0" class="form-control" name="quantity" placeholder="Enter product's quantity">
+                                <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" name="quantity" placeholder="Enter product's quantity">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Selling Price(discounted) :</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="sellingPrice" placeholder="Enter selling price">
+                                <input type="number" step=".01" class="form-control" name="sellingPrice" placeholder="Enter selling price">
                             </div>
                         </div>
                         <input type="hidden" name="cartItemId" >
@@ -103,7 +103,11 @@
                         </div>
                         <div class="form-group">
                             <label for="inputQuantity">Quantity</label>
-                            <input type="number" class="form-control" name="quantity" id="inputQuantity" placeholder="Enter product's quantity">
+                            <input type="number" min="0" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="quantity" id="inputQuantity" placeholder="Enter product's quantity">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSellingPrice">Selling Price</label>
+                            <input type="number" step=".01" class="form-control" name="sellingPrice" id="inputSellingPrice" placeholder="Enter product's selling price">
                         </div>
                         <div class="half-space">
                             <!--      Blank row -->
@@ -178,11 +182,18 @@
                     <button type="button" class="btn btn-success btn-lg" id="refresh-data"><i class="bi bi-arrow-clockwise"></i>
                     </button>
                 </div>
+
 <!--            </form>-->
 
         </div>
-
-        <div class="space">
+        <div class="half-space">
+            <!--      Blank row-->
+        </div>
+        <div class="col-12">
+        <button type="button" class="btn btn-primary supervisor" id="show-all-orders" style="margin-left:20px;"> Show all Orders </button>
+        <button type="button" class="btn btn-primary supervisor" id="show-my-orders" style="margin-left:20px;"> Show my Orders </button>
+        </div>
+            <div class="space">
             <!--      Blank row -->
         </div>
     </div>

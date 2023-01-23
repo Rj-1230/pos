@@ -10,6 +10,7 @@ function getOrderUrl(){
 	return baseUrl + "/api/order";
 }
 
+//After creation of an order, one can add more items to that order
 function addOrderItem(event){
 	var $form = $("#orderItem-form");
 	var json = toJson($form);
@@ -37,7 +38,7 @@ function addOrderItem(event){
 	return false;
 }
 
-
+//Getting the list of all order items with a given orderId
 function getOrderItemList(){
 	var url = getOrderItemUrl() + "s/" + orderId;
 	$.ajax({
@@ -53,7 +54,8 @@ function getOrderItemList(){
 	});
 }
 
-function deleteCartItem(id){
+//Deleting a particular order-item
+function deleteOrderItem(id){
 	var url = getOrderItemUrl() + "/" + id;
 	$.ajax({
 	   url: url,
@@ -71,14 +73,14 @@ function deleteCartItem(id){
 	});
 }
 
-
+//To display all the order-items under a given order ID
 function displayOrderItemList(data){
 	var $tbody = $('#orderItem-table').find('tbody');
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditCartItem(' + e.orderItemId + ')" >Edit </button>'
-        buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteCartItem(' + e.orderItemId + ')">Delete</button>'
+		var buttonHtml ='<button class="btn btn-warning" onclick="displayEditOrderItem(' + e.orderItemId + ')" >Edit </button>'
+        buttonHtml += '&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteOrderItem(' + e.orderItemId + ')">Delete</button>'
 		var row = '<tr>'
 		+ '<td>' + e.orderItemId + '</td>'
 		+ '<td>' + e.orderId + '</td>'
@@ -91,13 +93,14 @@ function displayOrderItemList(data){
 	}
 }
 
-function displayEditCartItem(id){
+function displayEditOrderItem(id){
 	var url = getOrderItemUrl() + "/" + id;
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
-	   		displayCartItem(data);
+	   console.log(data)
+	   		displayOrderItem(data);
 	   },
 	   error: function(response){
                             	   		 handleAjaxError(response);
@@ -128,19 +131,23 @@ function displayCustomerDetails(data){
 }
 
 
-function displayCartItem(data){
-	$("#cart-edit-form input[name=sellingPrice]").val(data.sellingPrice);
-	$("#cart-edit-form input[name=quantity]").val(data.quantity);
-	$("#cart-edit-form input[name=orderItemId]").val(data.orderItemId);
-	$('#edit-cart-modal').modal('toggle');
+function displayOrderItem(data){
+console.log(data)
+	$("#orderItem-edit-form input[name=sellingPrice]").val(data.sellingPrice);
+	$("#orderItem-edit-form input[name=quantity]").val(data.quantity);
+	$("#orderItem-edit-form input[name=orderItemId]").val(data.orderItemId);
+	$("#orderItem-edit-form input[name=orderId]").val(data.orderId);
+		$("#orderItem-edit-form input[name=barcode]").val("abcd");
+	$('#edit-orderItem-modal').modal('toggle');
 }
 
-function updateCart(event){
-	$('#edit-cart-modal').modal('toggle');
-	var id = $("#cart-edit-form input[name=orderItemId]").val();
+function updateOrderItem(event){
+	$('#edit-orderItem-modal').modal('toggle');
+	var id = $("#orderItem-edit-form input[name=orderItemId]").val();
 	var url = getOrderItemUrl() + "/" + id;
-    var $form = $("#cart-edit-form");
+    var $form = $("#orderItem-edit-form");
 	var json = toJson($form);
+	console.log(json);
 	$.ajax({
 	   url: url,
 	   type: 'PUT',
@@ -201,7 +208,7 @@ function init(){
 	document.getElementById('inputOrderId').value=orderId;
     $('#updateCustomerDetails').click(updateCustomerDetails)
 	$('#update-customer').click(updateCustomer)
-    $('#update-cart').click(updateCart);
+    $('#update-order-item').click(updateOrderItem);
 	$('#refresh-data').click(getOrderItemList);
 }
 $(document).ready(init);

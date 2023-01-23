@@ -11,11 +11,12 @@ import java.util.List;
 
 @Repository
 public class OrderDao {
-    private static String select_orderPojo_by_orderId = "select p from OrderPojo p where id=:id";
+    private static String select_orderPojo_by_orderId = "select p from OrderPojo p where orderId=:id";
     private static String select_all_orderPojo_between_startDate_and_endDate = "select p from OrderPojo p where orderPlaceTime>=:start and orderPlaceTime<=:end";
-    private static String select_all_orderPojo = "select p from OrderPojo p";
-    private static String delete_orderItemPojo_by_id = "delete from OrderItemPojo p where id=:id";
-    private static String select_orderItemPojo_by_id = "select p from OrderItemPojo p where id=:id";
+    private static String select_all_orderPojo_by_counterId = "select p from OrderPojo p where counterId=:id order by orderCreateTime desc";
+    private static String select_all_orderPojo = "select p from OrderPojo p order by orderCreateTime desc";
+    private static String delete_orderItemPojo_by_id = "delete from OrderItemPojo p where orderItemId=:id";
+    private static String select_orderItemPojo_by_id = "select p from OrderItemPojo p where orderItemId=:id";
     private static String select_all_orderItemPojos_by_orderID = "select p from OrderItemPojo p where orderId=:id";
     private static String select_OrderItemPojo_by_ProductId_and_orderId = "select p from OrderItemPojo p where productId=:productId and orderId=:orderId";
 
@@ -40,6 +41,11 @@ public class OrderDao {
     }
     }
 
+    public List<OrderPojo> selectAllOrders(int id) {
+        TypedQuery<OrderPojo> query = getQuery(select_all_orderPojo_by_counterId);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
     public List<OrderPojo> selectAllOrders() {
         TypedQuery<OrderPojo> query = getQuery(select_all_orderPojo);
         return query.getResultList();

@@ -1,5 +1,5 @@
-var newBrands = {};
-var brandReportData;
+var newBrands = [];
+var newCategs = [];
 
 function getBrandUrl()
 {
@@ -7,16 +7,10 @@ function getBrandUrl()
      	return baseUrl + "/api/brand";
 }
 
-function getBrandOption() {
-        selectElement = document.querySelector('#inputFilterBrand');
-        output = selectElement.options[selectElement.selectedIndex].value;
-        return output;
-}
-
-function getCategoryOption() {
-        selectElement = document.querySelector('#inputFilterCategory');
-        output = selectElement.options[selectElement.selectedIndex].value;
-        return output;
+function getBasicUrl()
+{
+    var baseUrl = $("meta[name=baseUrl]").attr("content")
+     	return baseUrl + "/api/";
 }
 
 function displayBrandReportList(data)
@@ -42,79 +36,69 @@ function getBrandsList()
     	   type: 'GET',
     	   success: function(data) {
     	   		displayBrandsList(data);
-    	   		brandReportData=data;
-    	   		displayBrandReportList(data);
     	   }
     	});
    }
 
    function displayBrandsList(data)
    {
-       Object.assign(newBrands, {"All":[]});
+//       newBrands.push("All");
+//       newCategs.push("All");
        for(var i in data)
        {
            var a = data[i].brand;
            var b = data[i].category;
-           if(!newBrands.hasOwnProperty(a))
-               Object.assign(newBrands, {[a]:[]});
-           newBrands[a].push(b);
-           newBrands["All"].push(b);
+               if(!newBrands.includes(a)){
+                newBrands.push(a);
+           }
+            if(!newCategs.includes(b)){
+                 newCategs.push(b);
+            }
+       }
+       for(var i = 0; i<newBrands.length; i++){
+            var option = document.createElement("option");
+            option.text = newBrands[i];
+            option.value = newBrands[i];
+            var select = document.getElementById("inputFilterBrand");
+            select.appendChild(option);
        }
 
-       newBrands["All"] = removeDuplicates(newBrands["All"]);
-       var $elB = $("#inputFilterBrand");
+         for(var i = 0; i<newCategs.length; i++){
+                   var option = document.createElement("option");
+                   option.text = newCategs[i];
+                   option.value = newCategs[i];
+                   var select = document.getElementById("inputFilterCategory");
+                   select.appendChild(option);
+              }
 
-       $elB.empty();
-
-       $.each(newBrands, function(key,value) {
-             $elB.append($("<option></option>")
-                .attr("value", key).text(key));
-           });
-
-       displayCategoryList();
    }
 
-function displayCategoryList()
+function applyBrandCategoryFilter(event)
 {
-    var $elC = $("#inputFilterCategory");
-    $elC.empty();
-    var a = getBrandOption();
-    $elC.append($("<option></option>")
-                    .attr("value", "All").text("All"));
+    var $form = $("#filter-brand-category-form");
+    	var json = toJson($form);
+    	var url = getBasicUrl()+"brand-category";
 
-    for(var i=0; i<newBrands[a].length; i++)
-    {
-        $elC.append($("<option></option>")
-            .attr("value", newBrands[a][i]).text(newBrands[a][i]));
-    }
-}
+    	$.ajax({
+    	   url: url,
+    	   type: 'POST',
+    	   data: json,
+    	   headers: {
+           	'Content-Type': 'application/json'
+           },
+    	   success: function(data) {
+    	   displayBrandReportList(data);
+    	   },
+    	   error: function(response){
+               handleAjaxError(response);
+    	   }
+    	});
 
-function applyBrandCategoryFilter()
-{
-    var brandFilter = getBrandOption();
-    var categoryFilter = getCategoryOption();
-    var data = [];
-    for(var i = 0; i<brandReportData.length; i++){
-        if(check(brandReportData[i].brand, brandFilter) && check(brandReportData[i].category, categoryFilter))
-            data.push(brandReportData[i]);
-    }
-    displayBrandReportList(data);
-}
-
-function check(a, b)
-{
-    if(b=="All" || a==b)
-        return true;
-    return false;
-}
-
-function removeDuplicates(arr) {
-        return arr.filter((item,index) => arr.indexOf(item) === index);
+    	return false;
 }
 
 function init()
 {
-    $('#inputFilterBrand').change(displayCategoryList);
     $('#apply-brand-category-filter').click(applyBrandCategoryFilter);
 }
 

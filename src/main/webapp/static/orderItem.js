@@ -99,6 +99,7 @@ function displayEditOrderItem(id){
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
+	   console.log(data)
 	   		displayOrderItem(data);
 	   },
 	   error: function(response){
@@ -131,18 +132,22 @@ function displayCustomerDetails(data){
 
 
 function displayOrderItem(data){
-	$("#cart-edit-form input[name=sellingPrice]").val(data.sellingPrice);
-	$("#cart-edit-form input[name=quantity]").val(data.quantity);
-	$("#cart-edit-form input[name=orderItemId]").val(data.orderItemId);
-	$('#edit-cart-modal').modal('toggle');
+console.log(data)
+	$("#orderItem-edit-form input[name=sellingPrice]").val(data.sellingPrice);
+	$("#orderItem-edit-form input[name=quantity]").val(data.quantity);
+	$("#orderItem-edit-form input[name=orderItemId]").val(data.orderItemId);
+	$("#orderItem-edit-form input[name=orderId]").val(data.orderId);
+		$("#orderItem-edit-form input[name=barcode]").val("abcd");
+	$('#edit-orderItem-modal').modal('toggle');
 }
 
 function updateOrderItem(event){
-	$('#edit-cart-modal').modal('toggle');
-	var id = $("#cart-edit-form input[name=orderItemId]").val();
+	$('#edit-orderItem-modal').modal('toggle');
+	var id = $("#orderItem-edit-form input[name=orderItemId]").val();
 	var url = getOrderItemUrl() + "/" + id;
-    var $form = $("#cart-edit-form");
+    var $form = $("#orderItem-edit-form");
 	var json = toJson($form);
+	console.log(json);
 	$.ajax({
 	   url: url,
 	   type: 'PUT',

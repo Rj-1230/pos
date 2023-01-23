@@ -38,7 +38,7 @@ public class UserDto {
     }
 
     public UserData getUser(int id) throws ApiException {
-        UserPojo p = userService.get(id);
+        UserPojo p = userService.getCheck(id);
         return convertUserPojoToUserData(p);
     }
 

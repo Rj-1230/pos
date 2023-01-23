@@ -75,8 +75,8 @@ public class InventoryDtoHelper {
 
         //TODO: Explore Java 8 Streams map reduce
         for(InventoryPojo p: inventoryPojoList) {
-            ProductPojo pp = productService.get(p.getProductId());
-            BrandPojo bp = brandService.getBrand(pp.getBrandId());
+            ProductPojo pp = productService.getCheck(p.getProductId());
+            BrandPojo bp = brandService.getCheckBrand(pp.getBrandId());
 
             InventoryReportData inventoryReportData = convert(p,bp);
             if(map.containsKey(bp.getId())){

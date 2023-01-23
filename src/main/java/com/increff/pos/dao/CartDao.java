@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public class CartDao {
-    private static String delete_cartPojo_by_id = "delete from CartPojo p where id=:id";
-    private static String select_cartPojo_by_id = "select p from CartPojo p where id=:id";
+    private static String delete_cartPojo_by_id = "delete from CartPojo p where cartItemId=:id";
+    private static String select_cartPojo_by_id = "select p from CartPojo p where cartItemId=:id";
     private static String select_cartPojo_by_ProductId_and_counterId = "select p from CartPojo p where productId=:productId and counterId=:counterId";
     private static String select_all_cartPojo_by_counterId = "select p from CartPojo p where counterId=:counterId";
 

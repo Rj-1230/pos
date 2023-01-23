@@ -24,10 +24,6 @@ public class UserService {
         }
         userDao.insert(p);
     }
-    @Transactional(rollbackOn = ApiException.class)
-    public UserPojo get(int id) throws ApiException {
-        return getCheck(id);
-    }
 
 
     @Transactional(rollbackOn = ApiException.class)
@@ -47,7 +43,6 @@ public class UserService {
 
     @Transactional(rollbackOn  = ApiException.class)
     public void update(int id, UserPojo p) throws ApiException {
-//        BrandPojo a = brandDao.getBrandPojoFromBrandCategory(p.getBrand(), p.getCategory());
         UserPojo ex = getCheck(id);
         ex.setEmail(p.getEmail());
         ex.setPassword(p.getPassword());

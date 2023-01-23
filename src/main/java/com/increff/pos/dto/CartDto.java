@@ -1,5 +1,6 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.flow.CartFlow;
 import com.increff.pos.model.*;
 import com.increff.pos.pojo.CartPojo;
 
@@ -26,6 +27,8 @@ public class CartDto {
     @Autowired
     private CartService cartService;
     @Autowired
+    private CartFlow cartFlow;
+    @Autowired
     private ProductService productService;
 
     public void add(CartForm f) throws ApiException {
@@ -33,7 +36,7 @@ public class CartDto {
         normalize(f);
         ProductPojo productPojo= productService.getProductPojoFromBarcode(f.getBarcode());
         CartPojo cartPojo = convert(f,productPojo);
-        cartService.add(cartPojo);
+        cartFlow.add(cartPojo);
     }
 
     public void delete(@PathVariable int id) throws ApiException{
@@ -47,29 +50,23 @@ public class CartDto {
 
     public void update(@PathVariable int id, @RequestBody CartForm f) throws ApiException {
         checkNullable(f);
+        normalize(f);
         CartPojo cartPojo = convert(f);
-        cartService.update(id,cartPojo);
+        cartFlow.update(id,cartPojo);
     }
     public List<CartData> getAll(){
         return getAllCartItems(cartService.getAll());
     }
 
-
-    public void deleteAll(List<CartData> list1) throws ApiException{
-        cartService.deleteAll(list1);
-    }
-
-
     public void pushToNewOrder(OrderForm f) throws ApiException {
         checkNullable(f);
         normalize(f);
-        List<CartData> cartDataList= getAll();
+        List<CartPojo> cartPojoList= cartService.getAll();
         OrderPojo orderPojo = convert(f);
-        cartService.pushToNewOrder(cartDataList,orderPojo);
+        cartFlow.pushToNewOrder(cartPojoList,orderPojo);
     }
 
     public void flushAll()throws ApiException{
-        List<CartData>list1= getAll();
-        deleteAll(list1);
+        cartService.deleteAll();
     }
 }

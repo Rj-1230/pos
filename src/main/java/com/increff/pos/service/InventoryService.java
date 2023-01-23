@@ -15,14 +15,11 @@ public class InventoryService {
 
     @Autowired
     private InventoryDao inventoryDao;
-    @Autowired
-    private ProductService productService;
+
 
     @Transactional(rollbackOn = ApiException.class)
     public void addSub(InventoryPojo newInventoryPojo, int quantity) throws ApiException {
-        ProductPojo productPojo = productService.getProductPojoFromBarcode(newInventoryPojo.getBarcode());
-        newInventoryPojo.setProductId(productPojo.getProductId());
-        InventoryPojo exInventoryPojo = get(newInventoryPojo.getProductId());
+        InventoryPojo exInventoryPojo = getCheck(newInventoryPojo.getProductId());
         if (Objects.nonNull(exInventoryPojo)) {
             if (exInventoryPojo.getQuantity() + quantity < 0) {
                 throw new ApiException("There is not sufficient quantity in the inventory for the item");
@@ -37,11 +34,6 @@ public class InventoryService {
     @Transactional
     public void delete(int id) {
         inventoryDao.delete(id);
-    }
-
-    @Transactional(rollbackOn = ApiException.class)
-    public InventoryPojo get(int id) throws ApiException {
-        return getCheck(id);
     }
 
     @Transactional

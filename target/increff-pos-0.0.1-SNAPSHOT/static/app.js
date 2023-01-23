@@ -152,7 +152,7 @@ function displayUploadData(){
 
 function init(){
     role= $("meta[name=role]").attr("content");
-    $('#myCart').click(openMyCart);
+    console.log(role)
 	if(role=='supervisor'){
 	document.getElementById("nav-supervisor").style.display = "block";
 	document.getElementById("actions-supervisor").style.display = "block";

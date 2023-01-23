@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputQuantity">Quantity</label>
-                    <input type="number" class="form-control" name="quantity" id="inputQuantity" placeholder="Enter product's quantity">
+                    <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" name="quantity" id="inputQuantity" placeholder="Enter product's quantity">
                 </div>
                 <div class="half-space">
                     <!--      Blank row -->
@@ -117,7 +117,7 @@
                         </div>
                         <div class="form-group">
                             <label>No. of items to add </label>
-                                <input type="number" min="0" class="form-control" name="quantity" placeholder="Enter quantity">
+                                <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" name="quantity" placeholder="Enter quantity">
                         </div>
                         <input type="hidden" name="id" >
                     </form>
@@ -152,7 +152,7 @@
                         <div class="form-group">
                             <label for="inputQuantity">No. of items to reduce</label>
                             <div class="col-sm-10">
-                                <input type="number" min="0" class="form-control" name="quantity" placeholder="Enter quantity">
+                                <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" name="quantity" placeholder="Enter quantity">
                             </div>
                         </div>
                         <input type="hidden" name="id" >
@@ -161,7 +161,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="subInventory">Update</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
                 </div>
             </div>
         </div>

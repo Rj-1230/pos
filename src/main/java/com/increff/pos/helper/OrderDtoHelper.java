@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.increff.pos.helper.GetCurrentTime.getCurrentDateTime;
+import static com.increff.pos.util.SecurityUtil.getPrincipal;
 
 @Service
 public class OrderDtoHelper {
@@ -21,6 +22,7 @@ public class OrderDtoHelper {
         p.setCustomerPhone(f.getCustomerPhone());
         p.setCustomerName(f.getCustomerName());
         p.setOrderCreateTime(getCurrentDateTime());
+        p.setCounterId(getPrincipal().getId());
         p.setStatus("created");
         p.setOrderPlaceTime("");
         return p;
@@ -30,6 +32,7 @@ public class OrderDtoHelper {
         OrderData d = new OrderData();
         d.setOrderId(p.getOrderId());
         d.setStatus(p.getStatus());
+        d.setCounterId(p.getCounterId());
         d.setOrderCreateTime(p.getOrderCreateTime());
         d.setOrderPlaceTime(p.getOrderPlaceTime());
         d.setCustomerName(p.getCustomerName());

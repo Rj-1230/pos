@@ -34,8 +34,8 @@ public class NullCheckHelper {
         if(Objects.equals(f.getBarcode(), "")){
             throw new ApiException("The barcode can't be empty");
         }
-        if(f.getQuantity()==0){
-            throw new ApiException("The item quantity to be added in the inventory can't be 0");
+        if(f.getQuantity()<=0){
+            throw new ApiException("The item quantity to be added in the inventory must be positive");
         }
     }
 
@@ -43,8 +43,11 @@ public class NullCheckHelper {
         if(Objects.equals(f.getBarcode(),"")){
             throw new ApiException("The barcode can't be null");
         }
-        if(f.getQuantity()==0){
-            throw new ApiException("The item quantity to be added in the cart can't be 0");
+        if(f.getQuantity()<=0){
+            throw new ApiException("The item quantity to be added in the cart must be positive");
+        }
+        if(f.getSellingPrice()<0){
+            throw new ApiException("The selling price of item must be positive");
         }
     }
 
@@ -74,8 +77,11 @@ public class NullCheckHelper {
         if(Objects.equals(f.getBarcode(),"")){
             throw new ApiException("The barcode can't be empty");
         }
-        if(f.getQuantity()==0){
-            throw new ApiException("The items to be added to order can't be 0");
+        if(f.getQuantity()<=0){
+            throw new ApiException("The items to be added to order must be positive");
+        }
+        if(f.getSellingPrice()<0){
+            throw new ApiException("The selling price of item must be positive");
         }
     }
 

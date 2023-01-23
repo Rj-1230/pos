@@ -25,7 +25,12 @@ public class OrderController {
 
     @ApiOperation(value = "Getting details of all the orders")
     @RequestMapping(path = "/api/order", method = RequestMethod.GET)
-    public List<OrderData> getAll() {
+    public List<OrderData> getAllOrdersByCounterId() {
+        return orderDto.getAllOrdersByCounterId();
+    }
+    @ApiOperation(value = "Getting details of all the orders")
+    @RequestMapping(path = "/api/supervisor/order", method = RequestMethod.GET)
+    public List<OrderData> getAllOrders() {
         return orderDto.getAll();
     }
 

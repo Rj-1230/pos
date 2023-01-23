@@ -8,4 +8,6 @@ public class OrderData  extends OrderForm{
    private String orderCreateTime;
     private String orderPlaceTime;
     private String status;
+
+    private int counterId;
 }

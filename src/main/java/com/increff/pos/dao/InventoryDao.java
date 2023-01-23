@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public class InventoryDao {
-    private static String delete_inventoryPojo_by_id = "delete from InventoryPojo p where id=:id";
-    private static String select_inventoryPojo_by_id = "select p from InventoryPojo p where id=:id";
+    private static String delete_inventoryPojo_by_id = "delete from InventoryPojo p where productId=:id";
+    private static String select_inventoryPojo_by_id = "select p from InventoryPojo p where productId=:id";
     private static String select_all_inventoryPojo = "select p from InventoryPojo p";
 
     @PersistenceContext

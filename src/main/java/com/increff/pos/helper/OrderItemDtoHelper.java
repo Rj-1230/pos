@@ -6,23 +6,28 @@ import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.ProductPojo;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderItemDtoHelper {
+    private static final NumberFormat formatter = new DecimalFormat("#0.00");
+
     public static OrderItemPojo convert(OrderItemForm f, ProductPojo p){
         OrderItemPojo o = new OrderItemPojo();
         o.setOrderId(f.getOrderId());
         o.setQuantity(f.getQuantity());
         o.setProductId(p.getProductId());
-        o.setSellingPrice(p.getMrp());
+        o.setSellingPrice(f.getSellingPrice());
         o.setProductName(p.getName());
         return o;
     }
 
     public static void normalize(OrderItemForm f) {
         f.setBarcode(f.getBarcode().toLowerCase().trim());
+        f.setSellingPrice(Double.parseDouble(formatter.format(f.getSellingPrice())));
     }
 
     public static OrderItemPojo convert(OrderItemForm f){

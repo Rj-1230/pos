@@ -40,16 +40,6 @@ public class UiController extends AbstractUiController{
         return mav("orders.html");
     }
 
-    @RequestMapping(value = "/ui/report")
-    public ModelAndView report() {
-        return mav("report.html");
-    }
-
-    @RequestMapping(value = "/ui/orderItems")
-    public ModelAndView orderItem() {
-        return mav("orderItems.html");
-    }
-
     @RequestMapping(value = "/ui/revenue")
     public ModelAndView revenue() {
         return mav("revenue.html");
@@ -80,12 +70,5 @@ public class UiController extends AbstractUiController{
         OrderData data = dto.getOrderDetails(id);
         return mav("orderItem.html", data);
     }
-
-    @RequestMapping(value = "/ui/cart")
-    public ModelAndView cartItems() {
-        return mav("cart.html");
-    }
-
-
 
 }

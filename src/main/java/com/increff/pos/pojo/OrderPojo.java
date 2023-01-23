@@ -27,6 +27,9 @@ public class OrderPojo {
     private String orderPlaceTime;
     @Column(name="OrderStatus",nullable = false)
     private String status;
+    @Column(name="CounterID", nullable=false)
+    private int counterId;
+
 
     @Column(name="CustomerPhone",nullable = false)
     private String customerPhone;

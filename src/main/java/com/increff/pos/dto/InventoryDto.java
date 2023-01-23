@@ -1,5 +1,6 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.flow.InventoryFlow;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.model.InventoryReportData;
@@ -24,13 +25,15 @@ public class InventoryDto {
     private InventoryService inventoryService;
 
     @Autowired
+    private InventoryFlow inventoryFlow;
+    @Autowired
     private InventoryDtoHelper inventoryDtoHelper;
 
     public void addSub(InventoryForm f) throws ApiException {
         checkNullable(f);
         normalize(f);
         InventoryPojo inventoryPojo = convert(f);
-        inventoryService.addSub(inventoryPojo,inventoryPojo.getQuantity());
+        inventoryFlow.addSub(inventoryPojo,inventoryPojo.getQuantity());
     }
 
     public void delete(@PathVariable int id){
@@ -38,7 +41,7 @@ public class InventoryDto {
     }
 
     public InventoryData get(int id) throws ApiException {
-        InventoryPojo inventoryPojo = inventoryService.get(id);
+        InventoryPojo inventoryPojo = inventoryService.getCheck(id);
         return convert(inventoryPojo);
     }
 

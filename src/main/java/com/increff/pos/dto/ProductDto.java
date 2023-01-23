@@ -1,5 +1,6 @@
 package com.increff.pos.dto;
 
+import com.increff.pos.flow.ProductFlow;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
 import com.increff.pos.pojo.ProductPojo;
@@ -21,6 +22,9 @@ import java.util.List;
 public class ProductDto {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductFlow productFlow;
     @Autowired
     private BrandService brandService;
 
@@ -30,7 +34,7 @@ public class ProductDto {
         int brandId = brandService.getBrandIdFromName(f.getBrandName(),f.getCategoryName());
         normalize(f);
         ProductPojo p = convert(f,brandId);
-        productService.add(p);
+        productFlow.add(p);
     }
 
     public void delete(@PathVariable int id){
@@ -38,7 +42,7 @@ public class ProductDto {
     }
 
     public ProductData get(int id) throws ApiException {
-        ProductPojo p = productService.get(id);
+        ProductPojo p = productService.getCheck(id);
         return convert(p);
     }
 
